@@ -15,6 +15,7 @@ public class ChromeVars {
     public ChromeOptions options() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("headless");
+        options.addArguments("--disable-gpu", "--disable-extensions", "--no-sandbox", "--disable-dev-shm-usage");
         return options;
     }
 }
