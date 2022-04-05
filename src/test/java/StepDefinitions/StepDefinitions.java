@@ -2,19 +2,22 @@ package StepDefinitions;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import loader.DManager;
+import loader.ChromeVars;
 import loader.Unidata;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
 import java.io.IOException;
+import java.time.Duration;
 
-public class StepDefinitions {
-    DManager driverManager;
+public class StepDefinitions extends ChromeVars {
+    //DManager driverManager;
     Unidata testUnidata;
     static WebDriver driver;
     static Wait<WebDriver> wait;
@@ -22,28 +25,17 @@ public class StepDefinitions {
 
     @Before
     public void i_connect() {
-        driverManager = new DManager();
-        driverManager.setupClass();
-        driver = driverManager.driver;
-        wait = driverManager.wait;
-        act = driverManager.act;
+        pathVars();
+        driver = new ChromeDriver( options());
+        wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofSeconds(5))
+                .ignoring(NoSuchElementException.class);
+        act = new Actions(driver);
         testUnidata = new Unidata(wait,driver, act);
-    }
-
-    //todo I need a given/before each personalized by type of test
-    @Given("I can connect")
-    public void i_can_connect() {
-        driverManager = new DManager();
-        driverManager.setupClass();
-        driver = driverManager.driver;
-        wait = driverManager.wait;
-        act = driverManager.act;
 
     }
-    @When("I install the FortiClient")
-    public void i_install_the_forti_client() {
-        driverManager.addFortiCientExtension();
-    }
+
 
     @When("I log in with user {string} and password {string}")
     public void i_log_in_with_user_and_password(String userName, String password) {
@@ -77,7 +69,7 @@ public class StepDefinitions {
     @After
     @Then("I close the driver")
     public void iCloseTheDriver(){
-        driverManager.teardown();
+        driver.quit();
     }
 
 
@@ -130,4 +122,5 @@ public class StepDefinitions {
     public void iCheckTheExcel() throws IOException {
         testUnidata.iCheckExcel();
     }
+
 }

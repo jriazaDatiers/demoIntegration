@@ -231,30 +231,30 @@ public class Unidata {
         WebElement unicatLink = driver.findElement(By.xpath("/html/body/div[4]/div[7]/span/a/img"));
         unicatLink.click();
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(2));
+        driver.switchTo().window(tabs.get(1));
         checkTitle("Unicat");
         checkTitle("Home");
         driver.close();
         System.out.println("tab closed");
-        driver.switchTo().window(tabs.get(1));
+        driver.switchTo().window(tabs.get(0));
 
         WebElement supportLink = driver.findElement(By.xpath("/html/body/div[4]/div[8]/a"));
         supportLink.click();
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs2.get(2));
+        driver.switchTo().window(tabs2.get(1));
         checkTitle("Service Desk - Jira Service Management");
         driver.close();
         System.out.println("tab closed");
-        driver.switchTo().window(tabs.get(1));
+        driver.switchTo().window(tabs.get(0));
 
         WebElement spincoLink = driver.findElement(By.xpath("/html/body/div[4]/div[10]/a/img"));
         spincoLink.click();
         ArrayList<String> tabs3 = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs3.get(2));
+        driver.switchTo().window(tabs3.get(1));
         checkTitle("SPINCO – Coordination & Source of Product Information");
         driver.close();
         System.out.println("tab closed");
-        driver.switchTo().window(tabs.get(1));
+        driver.switchTo().window(tabs.get(0));
 
         System.out.println("Checked links on unidata Home");
 

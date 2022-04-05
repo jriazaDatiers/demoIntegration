@@ -1,6 +1,5 @@
 package loader;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WindowType;
@@ -19,7 +18,7 @@ public class DManager {
 
     public void setupClass() {
 
-        WebDriverManager.chromedriver().setup();
+        //WebDriverManager.chromedriver().setup();
         //WebDriverManager.firefoxdriver().setup();
 
        //ProfilesIni profileIni = new ProfilesIni();
