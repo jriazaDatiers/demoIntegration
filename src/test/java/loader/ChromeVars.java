@@ -7,7 +7,7 @@ public class ChromeVars {
     }
 
     public void pathVars() {
-        String chromeDriverFile = "src/main/resources/chromedriver.exe";
+        String chromeDriverFile = "src/main/resources/chromedriver";
         String chromeProperty = "webdriver.chrome.driver";
         System.setProperty(chromeProperty, chromeDriverFile);
     }
