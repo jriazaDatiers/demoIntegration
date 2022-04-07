@@ -1,5 +1,5 @@
 Feature: Unidata home page, read only, check links
-
+@home
   Scenario Outline: read only users
 
     When I go to <url>
