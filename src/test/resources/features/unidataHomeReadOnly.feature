@@ -1,4 +1,4 @@
-Feature: Unidata home page, read only, check links
+Feature: MSDDEM-57
 @home
   Scenario Outline: read only users
 
