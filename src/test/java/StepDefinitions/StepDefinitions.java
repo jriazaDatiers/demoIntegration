@@ -1,7 +1,6 @@
 package StepDefinitions;
 
 import io.cucumber.java.After;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -20,14 +19,14 @@ public class StepDefinitions {
     static Wait<WebDriver> wait;
     static Actions act;
 
-    @Before
+    //@Before
     public void i_connect() {
-        /*driverManager = new DManager();
+        driverManager = new DManager();
         driverManager.setupClass();
         driver = driverManager.driver;
         wait = driverManager.wait;
         act = driverManager.act;
-        testUnidata = new Unidata(wait,driver, act);*/
+        testUnidata = new Unidata(wait,driver, act);
     }
 
     //todo I need a given/before each personalized by type of test
