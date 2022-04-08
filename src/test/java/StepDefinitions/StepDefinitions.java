@@ -22,12 +22,12 @@ public class StepDefinitions {
 
     @Before
     public void i_connect() {
-        driverManager = new DManager();
+        /*driverManager = new DManager();
         driverManager.setupClass();
         driver = driverManager.driver;
         wait = driverManager.wait;
         act = driverManager.act;
-        testUnidata = new Unidata(wait,driver, act);
+        testUnidata = new Unidata(wait,driver, act);*/
     }
 
     //todo I need a given/before each personalized by type of test
@@ -77,7 +77,8 @@ public class StepDefinitions {
     @After
     @Then("I close the driver")
     public void iCloseTheDriver(){
-        driverManager.teardown();
+        //driverManager.teardown();
+        System.out.println("End demo");
     }
 
 
@@ -129,5 +130,10 @@ public class StepDefinitions {
     @Then("I check the excel")
     public void iCheckTheExcel() throws IOException {
         testUnidata.iCheckExcel();
+    }
+
+    @When("I do demo")
+    public void iDoDemo() {
+        System.out.println("Demo");
     }
 }
