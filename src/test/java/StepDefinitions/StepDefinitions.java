@@ -135,4 +135,9 @@ public class StepDefinitions {
     public void iDoDemo() {
         System.out.println("Demo");
     }
+
+    @When("I am a precondition")
+    public void iAmAPrecondition() {
+        System.out.println("Precondition done");
+    }
 }
