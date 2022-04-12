@@ -140,4 +140,61 @@ public class StepDefinitions {
     public void iAmAPrecondition() {
         System.out.println("Precondition done");
     }
+
+    @When("I log in")
+    public void iLogIn() {
+    }
+
+    @Then("I Open the feedback at the top")
+    public void iOpenTheFeedbackAtTheTop() {
+    }
+
+    @Then("I Add an answering message")
+    public void iAddAnAnsweringMessage() {
+    }
+
+    @Then("I Add a new addressee in the Feedback")
+    public void iAddANewAddresseeInTheFeedback() {
+    }
+
+    @Then("I Save and close")
+    public void iSaveAndClose() {
+    }
+
+    @Then("I go to the menu item Feedback addressed to me")
+    public void iGoToTheMenuItemFeedbackAddressedToMe() {
+    }
+
+    @Then("I go to the menu item Feedback initiated by me")
+    public void iGoToTheMenuItemFeedbackInitiatedByMe() {
+    }
+
+    @Then("I Set the status of the Feedback message to Closed")
+    public void iSetTheStatusOfTheFeedbackMessageToClosed() {
+    }
+
+    @Then("I go to an article record")
+    public void iGoToAnArticleRecord() {
+    }
+
+    @Then("I go to the Feedback tab")
+    public void iGoToTheFeedbackTab() {
+    }
+
+    @Then("I create a Feedback with the + button")
+    public void iCreateAFeedbackWithTheButton() {
+    }
+
+    @Then("I address to a user")
+    public void iAddressToAUser() {
+    }
+
+    @Then("I add a Message")
+    public void iAddAMessage() {
+    }
+
+    @Then("I set a priority")
+    public void iSetAPriority() {
+    }
+
 }
