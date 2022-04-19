@@ -3,8 +3,6 @@ package loader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WindowType;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -22,26 +20,20 @@ public class DManager {
         WebDriverManager.chromedriver().setup();
         //WebDriverManager.firefoxdriver().setup();
 
-       //ProfilesIni profileIni = new ProfilesIni();
-        //FirefoxProfile profile = profileIni.getProfile("default");
-        //FirefoxOptions options = new FirefoxOptions();
-        //options.setProfile(profile);
-        //File extension = new File("C:\\ext\\webfilter.xpi");
-        //profile.addExtension(extension);
-
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+        //ChromeOptions options = new ChromeOptions();
+        //options.addArguments("--log-level=3","--disable-gpu","--disable-logging","--output=/dev/null","--disable-in-process-stack-traces");driver = new ChromeDriver(options);
+        //driver = new ChromeDriver(options);
+        //driver.manage().window().maximize();
         act = new Actions(driver);
         //FirefoxOptions options = new FirefoxOptions().addArguments("port:4444");
         //driver = new FirefoxDriver();
         wait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(30))
+                .withTimeout(Duration.ofSeconds(50))
                 .pollingEvery(Duration.ofSeconds(5))
                 .ignoring(NoSuchElementException.class);
         System.out.println("Driver started");
-        //driver.get("https://addons.mozilla.org/en-US/firefox/search/?q=fortiClient");
-        //System.out.println("Added extension");
-        driver.switchTo().newWindow(WindowType.TAB);
+
+        //driver.switchTo().newWindow(WindowType.TAB);
     }
 
 

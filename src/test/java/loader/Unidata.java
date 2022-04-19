@@ -16,6 +16,7 @@ import org.openqa.selenium.WindowType;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -23,7 +24,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
+
 import static org.junit.Assert.assertTrue;
 
 public class Unidata {
@@ -165,8 +168,28 @@ public class Unidata {
     }
 
     public void goToArticles(){
-        WebElement articles = driver.findElement(By.xpath("/html/body/div[1]/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/ul[3]/li[1]/div[2]/a"));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Articles')]")));
+        WebElement articles = driver.findElement(By.xpath("//*[contains(text(),'Articles')]"));
         articles.click();
+        System.out.println("Articles");
+    }
+
+    public void creteListFromExcel(){
+        driver.switchTo().frame("ebx-legacy-component");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List')]")));
+        WebElement createList = driver.findElement(By.xpath("//button[contains(text(),'Create List')]"));
+        act.click(createList).perform();
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type='file']")));
+        WebElement chooseFile = driver.findElement(By.cssSelector("input[type='file']"));
+        chooseFile.sendKeys("C:\\Users\\jmr\\IdeaProjects\\msf_demo\\src\\test\\resources\\Article-Belongs-to-List.xlsx");
+
+        WebElement listName = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/form/div[3]/table/tbody/tr[1]/td[3]/div/input"));
+        listName.sendKeys("Esco list " + getIntRandom());
+        System.out.println("createList");
+
+        WebElement upload = driver.findElement(By.xpath("//*[contains(text(),'Upload')]"));
+        upload.click();
+        System.out.println("List uploaded");
     }
 
     public void chooseArticle(){
@@ -206,15 +229,17 @@ public class Unidata {
     }
 
     public void clickOnArticleList(){
-        Function<WebDriver,WebElement> function;
-        function = arg0 ->
-        {
-            WebElement myUnidata = driver.findElement(By.xpath("/html/body/div/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/ul[3]/li[4]/div[2]/a"));
-            myUnidata.click();
-            return myUnidata;
-        };
-        wait.until(function);
-        System.out.println("Article List clicked");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/li[6]/div[2]/div/button")));
+        WebElement expanding = driver.findElement(By.xpath("/html/body/div/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/li[6]/div[2]/div/button"));
+
+        if(expanding.getAttribute("title").equals("Collapsed")){
+           expanding.click();
+        }
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Article Lists')]")));
+        WebElement articleLists = driver.findElement(By.xpath("//*[contains(text(),'Article Lists')]"));
+        articleLists.click();
+        System.out.println("Article List");
 
     }
 
@@ -228,24 +253,25 @@ public class Unidata {
     }
 
     public void checkUnidataHomeLinks(){
+        //TODO revisar los indices de los gets para hacerlo dinamico
         WebElement unicatLink = driver.findElement(By.xpath("/html/body/div[4]/div[7]/span/a/img"));
         unicatLink.click();
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(2));
+        driver.switchTo().window(tabs.get(1));
         checkTitle("Unicat");
         checkTitle("Home");
         driver.close();
         System.out.println("tab closed");
-        driver.switchTo().window(tabs.get(1));
+        driver.switchTo().window(tabs.get(0));
 
         WebElement supportLink = driver.findElement(By.xpath("/html/body/div[4]/div[8]/a"));
         supportLink.click();
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs2.get(2));
+        driver.switchTo().window(tabs2.get(tabs.size()));
         checkTitle("Service Desk - Jira Service Management");
         driver.close();
         System.out.println("tab closed");
-        driver.switchTo().window(tabs.get(1));
+        driver.switchTo().window(tabs.get(tabs.size()-1));
 
         WebElement spincoLink = driver.findElement(By.xpath("/html/body/div[4]/div[10]/a/img"));
         spincoLink.click();
@@ -266,23 +292,14 @@ public class Unidata {
     }
 
     public void iGoToCompositionLists(){
-        Function<WebDriver,WebElement> function;
-        function = arg0 ->
-        {
-            WebElement kitComposition = driver.findElement(By.xpath("//*[@id=\"_ebx-root\"]/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/li[5]/div[2]"));
-            kitComposition.click();
-            return kitComposition;
-        };
-        wait.until(function);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'STD')]")));
+        WebElement std = driver.findElement(By.xpath("//*[contains(text(),'STD')]"));
+        std.click();
 
-        Function<WebDriver,WebElement> function2;
-        function2 = arg0 ->
-        {
-            WebElement compositionLists = driver.findElement(By.xpath("//*[@id=\"_ebx-root\"]/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/ul[3]/li[2]/div[2]/a"));
-            compositionLists.click();
-            return compositionLists;
-        };
-        wait.until(function2);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Composition Lists')]")));
+        WebElement compositionLists = driver.findElement(By.xpath("//*[contains(text(),'Composition Lists')]"));
+        compositionLists.click();
+
         System.out.println("Composition");
 
     }
@@ -416,6 +433,40 @@ public class Unidata {
             }
         }
         return null;
+    }
+
+    private int getIntRandom(){
+
+        return ThreadLocalRandom.current().nextInt(100, 1000 + 1);
+    }
+
+    public void deleteArticleList(){
+        driver.switchTo().frame("ebx-legacy-component");
+
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Esco list')]")));
+        WebElement toDelete = driver.findElement(By.xpath("//*[contains(text(),'Esco list')]"));
+        toDelete.click();
+        act.doubleClick(toDelete).perform();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Actions')]")));
+        WebElement actionsButton = driver.findElement(By.xpath("//button[contains(text(),'Actions')]"));
+        actionsButton.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Delete')]")));
+        WebElement deleteButton = driver.findElement(By.xpath("//*[contains(text(),'Delete')]"));
+        deleteButton.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'OK')]")));
+        WebElement okButton = driver.findElement(By.xpath("//*[contains(text(),'OK')]"));
+        okButton.click();
+
+        System.out.println("deleted");
+
+
+
+
+
     }
 
 }

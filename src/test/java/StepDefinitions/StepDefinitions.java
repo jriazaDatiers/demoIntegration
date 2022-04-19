@@ -10,7 +10,6 @@ import loader.Unidata;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Wait;
-
 import java.io.IOException;
 
 public class StepDefinitions {
@@ -129,5 +128,25 @@ public class StepDefinitions {
     @Then("I check the excel")
     public void iCheckTheExcel() throws IOException {
         testUnidata.iCheckExcel();
+    }
+
+    @Then("I go Articles")
+    public void iGoArticles() {
+        testUnidata.goToArticles();
+    }
+
+    @Then("I go to Article Lists")
+    public void iGoToArticleLists() {
+        testUnidata.clickOnArticleList();
+    }
+
+    @Then("I click on create list from Excel")
+    public void iClickOnCreateListFromExcel() {
+        testUnidata.creteListFromExcel();
+    }
+
+    @Then("I delete an article list")
+    public void iDeleteAnArticleList() {
+        testUnidata.deleteArticleList();
     }
 }
