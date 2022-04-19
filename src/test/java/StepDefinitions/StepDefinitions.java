@@ -140,13 +140,14 @@ public class StepDefinitions {
         testUnidata.clickOnArticleList();
     }
 
-    @Then("I click on create list from Excel")
-    public void iClickOnCreateListFromExcel() {
-        testUnidata.creteListFromExcel();
-    }
-
     @Then("I delete an article list")
     public void iDeleteAnArticleList() {
         testUnidata.deleteArticleList();
     }
+
+    @Then("I click on create list from Excel {string}")
+    public void iClickOnCreateListFromExcelName(String name) {
+        testUnidata.creteListFromExcel(name);
+    }
+
 }

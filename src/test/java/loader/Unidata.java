@@ -174,7 +174,7 @@ public class Unidata {
         System.out.println("Articles");
     }
 
-    public void creteListFromExcel(){
+    public void creteListFromExcel(String name){
         driver.switchTo().frame("ebx-legacy-component");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List')]")));
         WebElement createList = driver.findElement(By.xpath("//button[contains(text(),'Create List')]"));
@@ -184,7 +184,7 @@ public class Unidata {
         chooseFile.sendKeys("C:\\Users\\jmr\\IdeaProjects\\msf_demo\\src\\test\\resources\\Article-Belongs-to-List.xlsx");
 
         WebElement listName = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/form/div[3]/table/tbody/tr[1]/td[3]/div/input"));
-        listName.sendKeys("Esco list " + getIntRandom());
+        listName.sendKeys(name + " list " + getIntRandom());
         System.out.println("createList");
 
         WebElement upload = driver.findElement(By.xpath("//*[contains(text(),'Upload')]"));
@@ -213,7 +213,7 @@ public class Unidata {
         };
         wait.until(function2);
 
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
         driver.switchTo().frame("ebx-legacy-component");
         WebElement article = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[2]/div/table/tbody/tr[4]/td[3]/div/div"));
@@ -443,7 +443,6 @@ public class Unidata {
     public void deleteArticleList(){
         driver.switchTo().frame("ebx-legacy-component");
 
-
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Esco list')]")));
         WebElement toDelete = driver.findElement(By.xpath("//*[contains(text(),'Esco list')]"));
         toDelete.click();
@@ -464,9 +463,8 @@ public class Unidata {
         System.out.println("deleted");
 
 
-
-
-
     }
+
+
 
 }

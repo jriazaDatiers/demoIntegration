@@ -3,6 +3,8 @@ package loader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -20,8 +22,9 @@ public class DManager {
         WebDriverManager.chromedriver().setup();
         //WebDriverManager.firefoxdriver().setup();
 
-        //ChromeOptions options = new ChromeOptions();
-        //options.addArguments("--log-level=3","--disable-gpu","--disable-logging","--output=/dev/null","--disable-in-process-stack-traces");driver = new ChromeDriver(options);
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--log-level=3","--disable-gpu","--disable-logging","--output=/dev/null","--disable-in-process-stack-traces");
+        driver = new ChromeDriver(options);
         //driver = new ChromeDriver(options);
         //driver.manage().window().maximize();
         act = new Actions(driver);
