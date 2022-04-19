@@ -140,14 +140,17 @@ public class StepDefinitions {
         testUnidata.clickOnArticleList();
     }
 
-    @Then("I delete an article list")
-    public void iDeleteAnArticleList() {
-        testUnidata.deleteArticleList();
-    }
-
     @Then("I click on create list from Excel {string}")
     public void iClickOnCreateListFromExcelName(String name) {
         testUnidata.creteListFromExcel(name);
     }
 
+    @Then("I delete an article list {string}")
+    public void iDeleteAnArticleListName(String name) {
+        testUnidata.deleteArticleList(name);
+    }
+
+    @Then("I delete an article list but fail not owner {string}")
+    public void iDeleteAnArticleListButFailNotOwnerName() {
+    }
 }

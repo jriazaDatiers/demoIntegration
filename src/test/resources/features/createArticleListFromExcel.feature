@@ -12,3 +12,4 @@ Feature: createArticleListFromExcel
     Examples:
       |url|user|password|name|
       | "https://staging.unidata.msf.org/" | "ESCDO" | "Downy2020!!" |"Escobar"|
+      | "https://staging.unidata.msf.org/" | "CONS" | "Conrad2020@" |"Conrad"|

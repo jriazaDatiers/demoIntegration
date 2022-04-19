@@ -169,15 +169,22 @@ public class Unidata {
 
     public void goToArticles(){
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Articles')]")));
-        WebElement articles = driver.findElement(By.xpath("//*[contains(text(),'Articles')]"));
-        articles.click();
+        String pathArticles = "//*[contains(text(),'Articles')]";
+        WebElement articles = driver.findElement(By.xpath(pathArticles));
+
+        if(articles.getAttribute("title").equals("Collapsed")){
+            articles.click();
+        }
+
         System.out.println("Articles");
     }
 
     public void creteListFromExcel(String name){
         driver.switchTo().frame("ebx-legacy-component");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List')]")));
-        WebElement createList = driver.findElement(By.xpath("//button[contains(text(),'Create List')]"));
+        WebElement createList = driver.findElement(By.xpath("//*[contains(text(),'Create List')]"));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List')]")));
+        createList.click();
         act.click(createList).perform();
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type='file']")));
         WebElement chooseFile = driver.findElement(By.cssSelector("input[type='file']"));
@@ -229,12 +236,6 @@ public class Unidata {
     }
 
     public void clickOnArticleList(){
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/li[6]/div[2]/div/button")));
-        WebElement expanding = driver.findElement(By.xpath("/html/body/div/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/li[6]/div[2]/div/button"));
-
-        if(expanding.getAttribute("title").equals("Collapsed")){
-           expanding.click();
-        }
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Article Lists')]")));
         WebElement articleLists = driver.findElement(By.xpath("//*[contains(text(),'Article Lists')]"));
@@ -440,11 +441,16 @@ public class Unidata {
         return ThreadLocalRandom.current().nextInt(100, 1000 + 1);
     }
 
-    public void deleteArticleList(){
+    public void deleteArticleList(String name){
         driver.switchTo().frame("ebx-legacy-component");
+        String toSearch = name + " list";
+        String expr = "//*[contains(text(),'"+ toSearch + "')]";
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Esco list')]")));
-        WebElement toDelete = driver.findElement(By.xpath("//*[contains(text(),'Esco list')]"));
+        //wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Juan list')]")));
+        //WebElement toDelete = driver.findElement(By.xpath("//*[contains(text(),'Esco list')]"));
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(expr)));
+        WebElement toDelete = driver.findElement(By.xpath(expr));
         toDelete.click();
         act.doubleClick(toDelete).perform();
 
@@ -464,6 +470,34 @@ public class Unidata {
 
 
     }
+
+    public void deleteArticleListFailWrongUser(String name){
+        driver.switchTo().frame("ebx-legacy-component");
+        String toSearch = name + " list";
+        String expr = "//*[contains(text(),'"+ toSearch + "')]";
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(expr)));
+        WebElement toDelete = driver.findElement(By.xpath(expr));
+        toDelete.click();
+        act.doubleClick(toDelete).perform();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Actions')]")));
+        WebElement actionsButton = driver.findElement(By.xpath("//button[contains(text(),'Actions')]"));
+        actionsButton.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Delete')]")));
+        WebElement deleteButton = driver.findElement(By.xpath("//*[contains(text(),'Delete')]"));
+        deleteButton.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'OK')]")));
+        WebElement okButton = driver.findElement(By.xpath("//*[contains(text(),'OK')]"));
+        okButton.click();
+
+        System.out.println("deleted");
+
+
+    }
+
 
 
 
