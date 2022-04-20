@@ -146,11 +146,17 @@ public class StepDefinitions {
     }
 
     @Then("I delete an article list {string}")
-    public void iDeleteAnArticleListName(String name) {
-        testUnidata.deleteArticleList(name);
+    public void iDeleteAnArticleListName(String name, String hasToSucced) {
+        testUnidata.deleteArticleList(name,hasToSucced);
     }
 
     @Then("I delete an article list but fail not owner {string}")
     public void iDeleteAnArticleListButFailNotOwnerName() {
     }
+
+    @Then("I delete an article list but fail not owner {string} {string}")
+    public void iDeleteAnArticleListButFailNotOwnerNameHasToSucceed(String name, String hasToSucceed) {
+        testUnidata.deleteArticleList(name,hasToSucceed);
+    }
+
 }

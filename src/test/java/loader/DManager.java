@@ -25,14 +25,14 @@ public class DManager {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--log-level=3","--disable-gpu","--disable-logging","--output=/dev/null","--disable-in-process-stack-traces");
         driver = new ChromeDriver(options);
-        //driver = new ChromeDriver(options);
+
         //driver.manage().window().maximize();
         act = new Actions(driver);
         //FirefoxOptions options = new FirefoxOptions().addArguments("port:4444");
         //driver = new FirefoxDriver();
         wait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(50))
-                .pollingEvery(Duration.ofSeconds(5))
+                .withTimeout(Duration.ofSeconds(45))
+                .pollingEvery(Duration.ofSeconds(3))
                 .ignoring(NoSuchElementException.class);
         System.out.println("Driver started");
 
