@@ -68,7 +68,7 @@ public class Unidata {
 
     public void login(String userName, String password){
 
-        WebElement element = driver.findElement(By.xpath("/html/body/div[4]/div[5]/a"));
+        WebElement element = driver.findElement(By.xpath("//*[contains(text(),'here')]"));
         element.click();
         WebElement userField = driver.findElement(By.id("login"));
         userField.sendKeys(userName);
@@ -444,13 +444,14 @@ public class Unidata {
     public void deleteArticleList(String name, String status){
         boolean hasToSucceed = Boolean.parseBoolean(status);
         driver.switchTo().frame("ebx-legacy-component");
-        String preText = "//div/table/tbody/tr/td[contains(text(),'";
-        String postText = name + " list";
-        //String expr = "//*[contains(text(),'"+ postText + "')][1]";
-        //String expr = preText + name + postText + "')";
-        String expr = "//div/table/tbody/tr/td[1][contains(text(),'Escobar list')]";
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/button")));
+        String preExpr = "//div/table/tbody/tr/td[1][contains(text(),'";
+        String expr = preExpr + name + " list')]";
 
         WebElement rowToDelete = driver.findElement(By.xpath(expr));
+        //TODO obtener el texto para mostrarlo en el log
+        String listToDelete = rowToDelete.getText();
         act.doubleClick(rowToDelete).perform();
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Actions')]")));
@@ -467,16 +468,15 @@ public class Unidata {
             WebElement okButton = driver.findElement(By.xpath("//*[contains(text(),'OK')]"));
             okButton.click();
 
-            System.out.println("deleted");
+            System.out.println(listToDelete + " deleted");
         } else {
 
             try {
                 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Delete')]")));
-                WebElement deleteButton = driver.findElement(By.xpath("//*[contains(text(),'Delete')]"));
-                deleteButton.click();
-            } catch (Exception e) {
-                System.out.println("Delete option not present, OK");
-            }
+                assertTrue("Error, Delete option available",false);
+                } catch (Exception e) {
+                    System.out.println("Delete option not present, test OK");
+                }
 
         }
 
