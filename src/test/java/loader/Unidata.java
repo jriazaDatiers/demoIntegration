@@ -13,7 +13,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -23,8 +22,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
-
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class Unidata {
 
@@ -475,7 +474,7 @@ public class Unidata {
         } else {
             try {
                 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Delete')]")));
-                assertTrue("Error, Delete option available",false);
+                fail("Error, Delete option available");
                 } catch (Exception e) {
                     System.out.println("Delete option not present, test OK");
                 }
@@ -487,20 +486,30 @@ public class Unidata {
 
     public void addParticipantOnList(String name, String participant){
         selectElementOnList(name);
-        String longestXpathEver ="/html/body/div[1]/div/div/div/div/div[2]/div[2]/form/div[2]/div[1]/div/div[2]/div[1]/table[2]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[5]/td[3]/div/div/div/div/div/div/button";
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(longestXpathEver))));
-        WebElement addParticipantButton = driver.findElement(By.xpath(longestXpathEver));
-        addParticipantButton.click();
-        WebElement inputParticipant = driver.findElement(By.xpath("//*[@id=\"___40_cfvAO__participants_5b_0_5d_\"]"));
-        inputParticipant.sendKeys(participant);
-        long timetoWait = 2000;
+        long timetoWait = 5000;
 
         try {
             Thread.sleep(timetoWait);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        String longestXpathEver ="/html/body/div[1]/div/div/div/div/div[2]/div[2]/form/div[2]/div[1]/div/div[2]/div[1]/table[2]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[5]/td[3]/div/div/div/div/div/div/button";
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(longestXpathEver))));
+        WebElement addParticipantButton = driver.findElement(By.xpath(longestXpathEver));
+        addParticipantButton.click();
+        WebElement inputParticipant = driver.findElement(By.xpath("//*[@id=\"___40_cfvAO__participants_5b_0_5d_\"]"));
+        inputParticipant.sendKeys(participant);
+        //long timetoWait2 = 5000;
+        long timetoWait2 = 8000;
+
+
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[@id=\"ebx_ISS_Item_0\"]"))));
+
         WebElement includeIcon = driver.findElement(By.xpath("//*[@id=\"ebx_ISS_Item_0\"]"));
         includeIcon.click();
 

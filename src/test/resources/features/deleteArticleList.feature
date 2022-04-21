@@ -11,4 +11,4 @@ Feature: delete Article list
 
     Examples:
       |url|user|password|name|hasToSucceed |
-      | "https://vm20.unidata.msf.org" | "ESCDO" | "Downy2020!!" |"Escobar"|"True"|
+      | "https://staging.unidata.msf.org/" | "ESCDO" | "Downy2020!!" |"Escobar"|"True"|
