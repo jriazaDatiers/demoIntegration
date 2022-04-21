@@ -159,4 +159,8 @@ public class StepDefinitions {
         testUnidata.deleteArticleList(name,hasToSucceed);
     }
 
+    @Then("I add a participant in my list {string} {string}")
+    public void iAddAParticipantInMyListNameParticipant(String name, String participant) {
+        testUnidata.addParticipantOnList(name, participant);
+    }
 }

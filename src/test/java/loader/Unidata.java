@@ -9,10 +9,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.WindowType;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
@@ -441,8 +438,7 @@ public class Unidata {
         return ThreadLocalRandom.current().nextInt(100, 1000 + 1);
     }
 
-    public void deleteArticleList(String name, String status){
-        boolean hasToSucceed = Boolean.parseBoolean(status);
+    private void selectElementOnList(String name){
         driver.switchTo().frame("ebx-legacy-component");
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/button")));
@@ -454,12 +450,20 @@ public class Unidata {
         String listToDelete = rowToDelete.getText();
         act.doubleClick(rowToDelete).perform();
 
+    }
+
+    private void clickOnActionsMenu(){
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Actions')]")));
         WebElement actionsButton = driver.findElement(By.xpath("//button[contains(text(),'Actions')]"));
         actionsButton.click();
+    }
+
+    public void deleteArticleList(String name, String status){
+        boolean hasToSucceed = Boolean.parseBoolean(status);
+        selectElementOnList(name);
+        clickOnActionsMenu();
 
         if (hasToSucceed) {
-
             wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Delete')]")));
             WebElement deleteButton = driver.findElement(By.xpath("//*[contains(text(),'Delete')]"));
             deleteButton.click();
@@ -467,10 +471,8 @@ public class Unidata {
             wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'OK')]")));
             WebElement okButton = driver.findElement(By.xpath("//*[contains(text(),'OK')]"));
             okButton.click();
-
-            System.out.println(listToDelete + " deleted");
+            System.out.println("List deleted");
         } else {
-
             try {
                 wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Delete')]")));
                 assertTrue("Error, Delete option available",false);
@@ -483,5 +485,29 @@ public class Unidata {
 
     }
 
+    public void addParticipantOnList(String name, String participant){
+        selectElementOnList(name);
+        String longestXpathEver ="/html/body/div[1]/div/div/div/div/div[2]/div[2]/form/div[2]/div[1]/div/div[2]/div[1]/table[2]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[5]/td[3]/div/div/div/div/div/div/button";
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(longestXpathEver))));
+        WebElement addParticipantButton = driver.findElement(By.xpath(longestXpathEver));
+        addParticipantButton.click();
+        WebElement inputParticipant = driver.findElement(By.xpath("//*[@id=\"___40_cfvAO__participants_5b_0_5d_\"]"));
+        inputParticipant.sendKeys(participant);
+        long timetoWait = 2000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[@id=\"ebx_ISS_Item_0\"]"))));
+        WebElement includeIcon = driver.findElement(By.xpath("//*[@id=\"ebx_ISS_Item_0\"]"));
+        includeIcon.click();
+
+        WebElement saveCloseButton = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
+        saveCloseButton.click();
+        System.out.println("Participant added");
+
+    }
 
 }

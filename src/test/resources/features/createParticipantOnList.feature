@@ -6,9 +6,10 @@ Feature: createArticleListFromExcel
     When I log in with user <user> and password <password>
     Then I go Articles
     Then I go to Article Lists
-    Then I click on create list from Excel <name>
+    Then I add a participant in my list <name> <participant>
+
 
 
     Examples:
-      |url|user|password|name|
-      | "https://vm20.unidata.msf.org/" | "ESCDO" | "Downy2020!!" |"Escobar"|
+      |url|user|password|name|participant|
+      | "https://staging.unidata.msf.org/" | "ESCDO" | "Downy2020!!" |"Escobar"|"Juan Manuel Moron Riaza"|
