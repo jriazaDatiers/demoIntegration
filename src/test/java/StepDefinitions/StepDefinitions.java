@@ -163,4 +163,9 @@ public class StepDefinitions {
     public void iAddAParticipantInMyListNameParticipant(String name, String participant) {
         testUnidata.addParticipantOnList(name, participant);
     }
+
+    @Then("I add an article to existing List")
+    public void iAddAnArticleToExistingList() {
+        testUnidata.addArticleOnExistingList();
+    }
 }

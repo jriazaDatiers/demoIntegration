@@ -75,20 +75,6 @@ public class Unidata {
         System.out.println("Logged in");
     }
 
-    public void myCrentialAndOut(String url){
-        driver.switchTo().newWindow(WindowType.TAB);
-        driver.get(url);
-        WebElement element = driver.findElement(By.xpath("/html/body/div[4]/div[4]/a"));
-        element.click();
-        WebElement userField = driver.findElement(By.id("login"));
-        userField.sendKeys("Juan.Moron-Consultant@msf.org");
-        WebElement passwordField = driver.findElement(By.id("password"));
-        passwordField.sendKeys("Recordando&16");
-        WebElement submit = driver.findElement(By.id("edit-submit"));
-        submit.click();
-        System.out.println("Logged in");
-    }
-
     public void unidataMSFME(){
 /*        Function<WebDriver,WebElement> function;
         function = arg0 ->
@@ -237,15 +223,6 @@ public class Unidata {
         WebElement articleLists = driver.findElement(By.xpath("//*[contains(text(),'Article Lists')]"));
         articleLists.click();
         System.out.println("Article List");
-
-    }
-
-    public void clickOnArticleListElement(){
-        driver.switchTo().frame("ebx-legacy-component");
-        WebElement element = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_mainScroller\"]/table/tbody/tr[2]/td[1]"));
-        act.doubleClick(element).perform();
-        System.out.println("Element clicked");
-
 
     }
 
@@ -443,6 +420,7 @@ public class Unidata {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/button")));
         String preExpr = "//div/table/tbody/tr/td[1][contains(text(),'";
         String expr = preExpr + name + " list')]";
+        //String expr = "//*[contains(text(),'Escobar list 683')]";
 
         WebElement rowToDelete = driver.findElement(By.xpath(expr));
         //TODO obtener el texto para mostrarlo en el log
@@ -478,10 +456,7 @@ public class Unidata {
                 } catch (Exception e) {
                     System.out.println("Delete option not present, test OK");
                 }
-
         }
-
-
     }
 
     public void addParticipantOnList(String name, String participant){
@@ -499,9 +474,8 @@ public class Unidata {
         addParticipantButton.click();
         WebElement inputParticipant = driver.findElement(By.xpath("//*[@id=\"___40_cfvAO__participants_5b_0_5d_\"]"));
         inputParticipant.sendKeys(participant);
-        //long timetoWait2 = 5000;
-        long timetoWait2 = 8000;
 
+        long timetoWait2 = 8000;
 
         try {
             Thread.sleep(timetoWait2);
@@ -516,6 +490,44 @@ public class Unidata {
         WebElement saveCloseButton = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
         saveCloseButton.click();
         System.out.println("Participant added");
+
+    }
+
+    public void addArticleOnExistingList(){
+        selectElementOnList("Escobar");
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[contains(text(),'Contains (Articles)')]"))));
+        WebElement containButton = driver.findElement(By.xpath("//*[contains(text(),'Contains (Articles)')]"));
+        act.click(containButton).perform();
+
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Attach')]"))));
+        WebElement attachButton = driver.findElement(By.xpath("//button[contains(text(),'Attach')]"));
+        act.click(attachButton).perform();
+
+        long timetoWait = 5000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        driver.switchTo().frame("ebx_InternalPopup_frame");
+
+        WebElement article1InputButton = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[16]/td[1]/label/input"));
+        //article1InputButton.click();
+        act.click(article1InputButton).perform();
+        WebElement article2InputButton = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[20]/td[1]/label/input"));
+        //article2InputButton.click();
+        act.click(article2InputButton).perform();
+
+        WebElement associateButton = driver.findElement(By.xpath("//button[contains(text(),'Associate')]"));
+        act.click(associateButton).perform();
+
+        WebElement okButton = driver.findElement(By.xpath("//button[contains(text(),'OK')]"));
+        act.click(okButton).perform();
+
+        System.out.println("Added Article");
+
 
     }
 
