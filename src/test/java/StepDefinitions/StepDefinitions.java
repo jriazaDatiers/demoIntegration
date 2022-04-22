@@ -168,4 +168,9 @@ public class StepDefinitions {
     public void iAddAnArticleToExistingList() {
         testUnidata.addArticleOnExistingList();
     }
+
+    @Then("I detach an article from existing List")
+    public void iDetachAnArticleFromExistingList() {
+        testUnidata.detachElementsFromList();
+    }
 }

@@ -514,10 +514,8 @@ public class Unidata {
         driver.switchTo().frame("ebx_InternalPopup_frame");
 
         WebElement article1InputButton = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[16]/td[1]/label/input"));
-        //article1InputButton.click();
         act.click(article1InputButton).perform();
         WebElement article2InputButton = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[20]/td[1]/label/input"));
-        //article2InputButton.click();
         act.click(article2InputButton).perform();
 
         WebElement associateButton = driver.findElement(By.xpath("//button[contains(text(),'Associate')]"));
@@ -526,9 +524,41 @@ public class Unidata {
         WebElement okButton = driver.findElement(By.xpath("//button[contains(text(),'OK')]"));
         act.click(okButton).perform();
 
+        WebElement saveCloseButton = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
+        saveCloseButton.click();
+
         System.out.println("Added Article");
-
-
     }
 
+    public void detachElementsFromList() {
+        selectElementOnList("Escobar");
+
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[contains(text(),'Contains (Articles)')]"))));
+        WebElement containButton = driver.findElement(By.xpath("//*[contains(text(),'Contains (Articles)')]"));
+        act.click(containButton).perform();
+
+        long timetoWait = 5000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        WebElement article1InputButton = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/form/div[2]/div[1]/div/div[2]/div[2]/table/tbody/tr[1]/td[3]/div/div/div[2]/div[3]/div/table/tbody/tr[1]/td[1]/label/input"));
+        act.click(article1InputButton).perform();
+
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Detach')]"))));
+        WebElement detachButton = driver.findElement(By.xpath("//button[contains(text(),'Detach')]"));
+        act.click(detachButton).perform();
+
+        WebElement okButton = driver.findElement(By.xpath("//button[contains(text(),'OK')]"));
+        act.click(okButton).perform();
+
+        WebElement saveCloseButton = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
+        saveCloseButton.click();
+
+        System.out.println("Detached Article from list");
+
+    }
 }
