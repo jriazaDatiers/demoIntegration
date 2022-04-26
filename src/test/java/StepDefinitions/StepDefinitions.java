@@ -130,8 +130,8 @@ public class StepDefinitions {
         testUnidata.iCheckExcel();
     }
 
-    @Then("I go Articles")
-    public void iGoArticles() {
+    @Then("I go to Articles")
+    public void iGotoArticles() {
         testUnidata.goToArticles();
     }
 
@@ -172,5 +172,15 @@ public class StepDefinitions {
     @Then("I detach an article from existing List")
     public void iDetachAnArticleFromExistingList() {
         testUnidata.detachElementsFromList();
+    }
+
+    @Then("I go to Feedback Menu")
+    public void iGoToFeedbackMenu() {
+        testUnidata.goToFeedback();
+    }
+
+    @Then("I create a new feedback addressing to {string}")
+    public void iCreateANewFeedbackAddressingToAssignee(String assignee) {
+        testUnidata.createFeedbackToAssignee(assignee);
     }
 }

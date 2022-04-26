@@ -161,6 +161,18 @@ public class Unidata {
         System.out.println("Articles");
     }
 
+    public void goToFeedback(){
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Feedback')]")));
+        String pathFeedback = "//*[@id=\"_ebx-root\"]/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/li[9]/div[2]/div/button";
+        WebElement feedbackMenu = driver.findElement(By.xpath(pathFeedback));
+
+        if(feedbackMenu.getAttribute("title").equals("Collapsed")){
+            feedbackMenu.click();
+        }
+
+        System.out.println("Feedback Menu");
+    }
+
     public void creteListFromExcel(String name){
         driver.switchTo().frame("ebx-legacy-component");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List')]")));
@@ -574,6 +586,20 @@ public class Unidata {
         saveCloseButton.click();
 
         System.out.println("Detached Article from list");
+
+    }
+
+    public void createFeedbackToAssignee(String assignee){
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Feedback (All)')]")));
+        String pathFeedback = "//*[contains(text(),'Feedback (All)')]";
+        WebElement feedbackAllMenu = driver.findElement(By.xpath(pathFeedback));
+        feedbackAllMenu.click();
+        //act.doubleClick(feedbackAllMenu);
+        //act.click(feedbackAllMenu);
+
+
+        System.out.println("Feedback Menu");
 
     }
 }
