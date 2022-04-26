@@ -468,24 +468,39 @@ public class Unidata {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        String longestXpathEver ="/html/body/div[1]/div/div/div/div/div[2]/div[2]/form/div[2]/div[1]/div/div[2]/div[1]/table[2]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[5]/td[3]/div/div/div/div/div/div/button";
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(longestXpathEver))));
-        WebElement addParticipantButton = driver.findElement(By.xpath(longestXpathEver));
+
+        String addParticpantButton = "//button[@title = 'Add an occurrence']";
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(addParticpantButton))));
+        WebElement addParticipantButton = driver.findElement(By.xpath(addParticpantButton));
         addParticipantButton.click();
-        WebElement inputParticipant = driver.findElement(By.xpath("//*[@id=\"___40_cfvAO__participants_5b_0_5d_\"]"));
-        inputParticipant.sendKeys(participant);
 
-        long timetoWait2 = 8000;
+        boolean participantEmpty = false;
+        int iterator = 0;
 
-        try {
-            Thread.sleep(timetoWait2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[@id=\"ebx_ISS_Item_0\"]"))));
+        do {
+            WebElement inputParticipant = driver.findElement(By.xpath("//*[@id=\"___40_cfvAO__participants_5b_"+iterator+"_5d_\"]"));
+            System.out.println(inputParticipant.getAttribute("value"));
+            if(inputParticipant.getAttribute("value").contains("not defined")){
+                inputParticipant.sendKeys(participant);
 
-        WebElement includeIcon = driver.findElement(By.xpath("//*[@id=\"ebx_ISS_Item_0\"]"));
-        includeIcon.click();
+                long timetoWait2 = 3000;
+
+                try {
+                    Thread.sleep(timetoWait2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                WebElement includeIcon = driver.findElement(By.xpath("//*[@id=\"ebx_ISS_Item_0\"]"));
+                includeIcon.click();
+                participantEmpty = true;
+            }
+            if(iterator>=20){
+                participantEmpty=true;
+                fail("We reach 20 participant tries, something is wrong");
+            }
+            iterator++;
+        } while (!participantEmpty);
+
 
         WebElement saveCloseButton = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
         saveCloseButton.click();
