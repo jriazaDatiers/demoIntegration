@@ -11,6 +11,7 @@ Feature: Participate in Article list management
     Then I add an article to existing List as Participant
     Then I delete an article list as Participant
     Then I Change the name of the Article list fail due rights
+    Then I Delete the article list fail due rights
 
 
 

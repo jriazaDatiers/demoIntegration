@@ -147,7 +147,9 @@ public class StepDefinitions {
 
     @Then("I delete an article list {string}")
     public void iDeleteAnArticleListName(String name, String hasToSucced) {
-        testUnidata.deleteArticleList(name,hasToSucced);
+        testUnidata.selectElementOnList(name);
+        testUnidata.clickOnActionsMenu();
+        testUnidata.deleteArticleList(hasToSucced);
     }
 
     @Then("I delete an article list but fail not owner {string}")
@@ -156,7 +158,9 @@ public class StepDefinitions {
 
     @Then("I delete an article list but fail not owner {string} {string}")
     public void iDeleteAnArticleListButFailNotOwnerNameHasToSucceed(String name, String hasToSucceed) {
-        testUnidata.deleteArticleList(name,hasToSucceed);
+        testUnidata.selectElementOnList(name);
+        testUnidata.clickOnActionsMenu();
+        testUnidata.deleteArticleList(hasToSucceed);
     }
 
     @Then("I add a participant in my list {string} {string}")
@@ -220,7 +224,9 @@ public class StepDefinitions {
     @Then("I delete an article list")
     public void iDeleteAnArticleList(String participantName ) {
         String status = "true";
-        testUnidata.deleteArticleList(participantName,status);
+        testUnidata.selectElementOnList(participantName);
+        testUnidata.clickOnActionsMenu();
+        testUnidata.deleteArticleList(status);
     }
 
     @Then("I find the lists where I am participant")
@@ -241,7 +247,12 @@ public class StepDefinitions {
 
     @Then("I Change the name of the Article list fail due rights")
     public void iChangeTheNameOfTheArticleListFailDueRights() {
+        testUnidata.changeListNameFail();
     }
 
 
+    @Then("I Delete the article list fail due rights")
+    public void iDeleteTheArticleListFailDueRights() {
+        testUnidata.deleteArticleList("false");
+    }
 }

@@ -428,7 +428,7 @@ public class Unidata {
         return ThreadLocalRandom.current().nextInt(100, 1000 + 1);
     }
 
-    private void selectElementOnList(String name){
+    public void selectElementOnList(String name){
         driver.switchTo().frame("ebx-legacy-component");
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/button")));
@@ -443,16 +443,14 @@ public class Unidata {
 
     }
 
-    private void clickOnActionsMenu(){
+    public void clickOnActionsMenu(){
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Actions')]")));
         WebElement actionsButton = driver.findElement(By.xpath("//button[contains(text(),'Actions')]"));
         actionsButton.click();
     }
 
-    public void deleteArticleList(String name, String status){
+    public void deleteArticleList(String status){
         boolean hasToSucceed = Boolean.parseBoolean(status);
-        selectElementOnList(name);
-        clickOnActionsMenu();
 
         if (hasToSucceed) {
             wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Delete')]")));
@@ -570,7 +568,7 @@ public class Unidata {
             e.printStackTrace();
         }
 
-        WebElement element = driver.findElement(By.xpath("//div[@id='ebx_workspaceTable_mainScroller']/table/tbody/tr/td"));
+        WebElement element = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_mainScroller\"]/table/tbody/tr/td[1]"));
         act.doubleClick(element).perform();
 
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[contains(text(),'Contains (Articles)')]"))));
@@ -740,7 +738,7 @@ public class Unidata {
 
     public void filterAsParticipant(){
         driver.switchTo().frame("ebx-legacy-component");
-        long timetoWait = 5000;
+
         long timetoWait2 = 2000;
         driver.findElement(By.xpath("//button[@id='ebx_filtersButton']/span")).click();
         driver.findElement(By.id("ebx_SimpleSearchFilterNodeSelectorList_FILTER_0")).click();
@@ -760,18 +758,39 @@ public class Unidata {
             e.printStackTrace();
         }
         driver.findElement(By.xpath("//div[2]/input[2]")).sendKeys(Keys.ENTER);
-
         driver.findElement(By.id("FILTER_0_applyButton")).click();
-
 
         try {
             Thread.sleep(timetoWait2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        driver.findElement(By.id("FILTER_0_applyButton")).click();
 
+        System.out.println("Filter as participant added");
     }
+
+    public void changeListNameFail(){
+        long timetoWait2 = 2000;
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        WebElement element = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_mainScroller\"]/table/tbody/tr/td[1]"));
+        act.doubleClick(element).perform();
+        driver.findElement(By.xpath("//*[@id=\"ebx_TabTitle____homeGroup\"]/a")).click();
+        boolean found = false;
+        try {
+            driver.findElement(By.xpath("//*[@id=\"___40_cfvAO__listName\"]"));
+        } catch (Exception e) {
+            found = true;
+            System.out.println("Unable to change name due lack of rights. Correct");
+        }
+
+        assertTrue(found);
+    }
+
+
 
 
 }
