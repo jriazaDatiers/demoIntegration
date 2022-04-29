@@ -6,7 +6,7 @@ Feature: delete Article list
     When I log in with user <user> and password <password>
     Then I go to Articles
     Then I go to Article Lists
-    Then I delete an article list but fail not owner <name> <hasToSucceed>
+    Then I delete an article list
 
 
     Examples:

@@ -183,4 +183,65 @@ public class StepDefinitions {
     public void iCreateANewFeedbackAddressingToAssignee(String assignee) {
         testUnidata.createFeedbackToAssignee(assignee);
     }
+
+    @Then("I select the Biomed Articles view")
+    public void iSelectTheBiomedArticlesView() {
+        testUnidata.selectBiomedArticlesView();
+    }
+
+    @Then("I export a number of articles with the service code-label-image")
+    public void iExportANumberOfArticlesWithTheServiceCodeLabelImage() {
+    }
+
+    @Then("I check if the results are sorted alphabetically on code")
+    public void iCheckIfTheResultsAreSortedAlphabeticallyOnCode() {
+    }
+
+    @Then("I go to Descriptions Menu")
+    public void iGoToDescriptionsMenu() {
+        //testUnidata.goToDescriptions();
+    }
+
+    @Then("I click on a Description")
+    public void iClickOnADescription() {
+        //testUnidata.clickOnDescriptionElement();
+    }
+
+    @Then("I close the record")
+    public void iCloseTheRecord() {
+        //testUnidata.closeRecord();
+    }
+
+    @Then("I validate I am on the description table again")
+    public void iValidateIAmOnTheDescriptionTableAgain() {
+        //testUnidata.validateIamOnDescriptions();
+    }
+
+    @Then("I delete an article list")
+    public void iDeleteAnArticleList(String participantName ) {
+        String status = "true";
+        testUnidata.deleteArticleList(participantName,status);
+    }
+
+    @Then("I find the lists where I am participant")
+    public void iFindTheListsWhereIAmParticipant() {
+        testUnidata.filterAsParticipant();
+
+        }
+
+    @Then("I add an article to existing List as Participant")
+    public void iAddAnArticleToExistingListAsParticipant() {
+        testUnidata.addArticleOnExistingListAsParticipant();
+    }
+
+    @Then("I delete an article list as Participant")
+    public void iDeleteAnArticleListAsParticipant() {
+        testUnidata.detachElementsFromListAsParticipant();
+    }
+
+    @Then("I Change the name of the Article list fail due rights")
+    public void iChangeTheNameOfTheArticleListFailDueRights() {
+    }
+
+
 }

@@ -13,6 +13,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -22,6 +23,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
+
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -554,7 +556,61 @@ public class Unidata {
         WebElement saveCloseButton = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
         saveCloseButton.click();
 
+        driver.switchTo().defaultContent();
         System.out.println("Added Article");
+    }
+
+    public void addArticleOnExistingListAsParticipant(){
+        //wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[@id=\"FILTER_0_applyButton\"]"))));
+        long timetoWait = 2000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        WebElement element = driver.findElement(By.xpath("//div[@id='ebx_workspaceTable_mainScroller']/table/tbody/tr/td"));
+        act.doubleClick(element).perform();
+
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[contains(text(),'Contains (Articles)')]"))));
+        WebElement containButton = driver.findElement(By.xpath("//*[contains(text(),'Contains (Articles)')]"));
+        act.click(containButton).perform();
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Attach')]"))));
+        WebElement attachButton = driver.findElement(By.xpath("//button[contains(text(),'Attach')]"));
+        act.click(attachButton).perform();
+
+        long timetoWait2 = 3000;
+
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        driver.switchTo().frame("ebx_InternalPopup_frame");
+        WebElement article1InputButton = driver.findElement(By.xpath("(//input[@type='checkbox'])[19]"));
+        act.click(article1InputButton).perform();
+        WebElement article2InputButton = driver.findElement(By.xpath("(//input[@type='checkbox'])[18]"));
+        act.click(article2InputButton).perform();
+
+        WebElement associateButton = driver.findElement(By.xpath("//button[contains(text(),'Associate')]"));
+        act.click(associateButton).perform();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'OK')]")));
+        WebElement okButton = driver.findElement(By.xpath("//button[contains(text(),'OK')]"));
+        act.click(okButton).perform();
+
+        driver.switchTo().defaultContent();
+        System.out.println("Add article");
+
     }
 
     public void detachElementsFromList() {
@@ -589,17 +645,133 @@ public class Unidata {
 
     }
 
+    public void detachElementsFromListAsParticipant() {
+
+        long timetoWait = 5000;
+        long timetoWait2 = 3000;
+
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        driver.switchTo().frame("ebx-legacy-component");
+        //wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//li[2]/a/em/span/span/b"))));
+        WebElement containButton = driver.findElement(By.xpath("//li[2]/a/em/span/span/b"));
+        act.click(containButton).perform();
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        WebElement article1InputButton = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/form/div[2]/div[1]/div/div[2]/div[2]/table/tbody/tr[1]/td[3]/div/div/div[2]/div[3]/div/table/tbody/tr[1]/td[1]/label/input"));
+        act.click(article1InputButton).perform();
+
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Detach')]"))));
+        WebElement detachButton = driver.findElement(By.xpath("//button[contains(text(),'Detach')]"));
+        act.click(detachButton).perform();
+
+        WebElement okButton = driver.findElement(By.xpath("//button[contains(text(),'OK')]"));
+        act.click(okButton).perform();
+
+        WebElement saveCloseButton = driver.findElement(By.xpath("//button[contains(text(),'Close')]"));
+        saveCloseButton.click();
+
+        System.out.println("Detached Article from list");
+
+    }
+
     public void createFeedbackToAssignee(String assignee){
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Feedback (All)')]")));
-        String pathFeedback = "//*[contains(text(),'Feedback (All)')]";
-        WebElement feedbackAllMenu = driver.findElement(By.xpath(pathFeedback));
-        feedbackAllMenu.click();
-        //act.doubleClick(feedbackAllMenu);
-        //act.click(feedbackAllMenu);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Articles (All)')]")));
+        String pathArticlesAll = "//*[contains(text(),'Articles (All)')]";
+        WebElement articlesAllMenu = driver.findElement(By.xpath(pathArticlesAll));
+        articlesAllMenu.click();
 
+        driver.switchTo().frame("ebx-legacy-component");
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[14]/td[1]/table/tbody/tr/td[2]/button")));
+        String pathArticleToSelect = "//div/table/tbody/tr/td[contains(text(),'ADAPADAP2I')]";
+        WebElement articleToSelect = driver.findElement(By.xpath(pathArticleToSelect));
+        act.doubleClick(articleToSelect).perform();
+
+        //wait.until(ExpectedConditions.)
+        WebElement feedbackTabButton = driver.findElement(By.xpath("//*[@id=\"ebx_WorkspaceFormTabviewTabs\"]/li[8]/a"));
+        act.doubleClick(feedbackTabButton).perform();
+
+        WebElement addFeedbackButton = driver.findElement(By.xpath("//button[@title='Create']"));
+        addFeedbackButton.click();
+        //act.click(addFeedbackButton).perform();
 
         System.out.println("Feedback Menu");
 
     }
+
+    public void selectBiomedArticlesView(){
+
+        driver.switchTo().frame("ebx-legacy-component");
+        WebElement viewButton = driver.findElement(By.xpath("//button[contains(text(),'View')]"));
+        act.click(viewButton).perform();
+
+        WebElement biomedOption = driver.findElement(By.xpath("//a[contains(text(),'Biomed Articles')]"));
+        act.click(biomedOption).perform();
+
+        WebElement firstElement = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[1]/td[1]/label/input"));
+        act.click(firstElement).perform();
+        WebElement secondElement = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[1]/td[1]/label/input"));
+        act.click(secondElement).perform();
+        WebElement thirdElement = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[1]/td[1]/label/input"));
+        act.click(thirdElement).perform();
+
+        WebElement servicesButton = driver.findElement(By.xpath("//button[contains(text(),'Services')]"));
+        act.click(servicesButton).perform();
+
+        WebElement exportExcelOption = driver.findElement(By.xpath("//*[contains(text(),'Export to Excel')]"));
+        act.click(exportExcelOption).perform();
+
+        WebElement launchExport = driver.findElement(By.xpath("//*[contains(text(),'Launch export')]"));
+        act.click(launchExport).perform();
+
+        System.out.println("View BioMed");
+    }
+
+    public void filterAsParticipant(){
+        driver.switchTo().frame("ebx-legacy-component");
+        long timetoWait = 5000;
+        long timetoWait2 = 2000;
+        driver.findElement(By.xpath("//button[@id='ebx_filtersButton']/span")).click();
+        driver.findElement(By.id("ebx_SimpleSearchFilterNodeSelectorList_FILTER_0")).click();
+        {
+            WebElement dropdown = driver.findElement(By.id("ebx_SimpleSearchFilterNodeSelectorList_FILTER_0"));
+            dropdown.findElement(By.xpath("//option[. = 'Participants']")).click();
+        }
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        driver.findElement(By.xpath("//div[2]/input[2]")).sendKeys("Mr Escobar Datamaster");
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        driver.findElement(By.xpath("//div[2]/input[2]")).sendKeys(Keys.ENTER);
+
+        driver.findElement(By.id("FILTER_0_applyButton")).click();
+
+
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        driver.findElement(By.id("FILTER_0_applyButton")).click();
+
+    }
+
+
 }
