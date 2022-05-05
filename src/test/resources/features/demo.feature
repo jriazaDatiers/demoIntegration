@@ -1,7 +1,5 @@
-Feature: MSFDEM-57
+Feature: Do demo
 
-  @TEST_MSFDEM-57
-  Scenario: MSFDEM-121
+  @TEST_MSFDEM-126
+  Scenario: Do demo
     When I do demo
-
-
