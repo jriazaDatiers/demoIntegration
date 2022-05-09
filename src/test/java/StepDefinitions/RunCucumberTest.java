@@ -7,8 +7,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin={"junit:target/cucumber-reports/cucumber.xml"},
-        features = {"src/test/resources/features"},
-        tags = "@TEST_MSFDEM-126"
+        features = {"src/test/resources/features"}
 )
 public class RunCucumberTest {
 }
