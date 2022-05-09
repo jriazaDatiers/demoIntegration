@@ -1,5 +1,5 @@
 Feature: Unidata home page, read only, check links
-  @TEST_SPIN-163 @staging
+
   Scenario Outline: read only users
 
     When I go to <url>
