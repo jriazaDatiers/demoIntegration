@@ -4,6 +4,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import loader.AuxOperations;
 import loader.DManager;
 import loader.Unidata;
 import org.openqa.selenium.WebDriver;
@@ -12,12 +13,15 @@ import org.openqa.selenium.support.ui.Wait;
 
 import java.io.IOException;
 
-public class StepDefinitions {
+public class StepDefinitions extends AuxOperations {
     DManager driverManager;
     Unidata testUnidata;
     static WebDriver driver;
     static Wait<WebDriver> wait;
     static Actions act;
+    private String user;
+    private String password;
+    private String url;
 
     //@Before
     public void i_connect() {
@@ -134,6 +138,10 @@ public class StepDefinitions {
     @When("I do demo")
     public void iDoDemo() {
         System.out.println("Demo");
+        String role = System.getProperty("role");
+        String environment = System.getProperty("environment");
+
+        System.out.println(role + " " + environment);
     }
 
     @When("I am a precondition")
@@ -197,4 +205,24 @@ public class StepDefinitions {
     public void iSetAPriority() {
     }
 
+    @When("I go to url")
+    public void iGoToUrl() {
+        String role = System.getProperty("role");
+        String environment = System.getProperty("url");
+        System.out.println(role + " " + environment);
+        AuxOperations operations = new AuxOperations();
+        operations.performUnidata(role,environment);
+
+        user = operations.roleDataMap.get("user");
+        password = operations.roleDataMap.get("password");
+        url = operations.environmentsDataMap.get("environment");
+
+
+        testUnidata.iGoTo(url);
+    }
+
+    @Then("I log in with user and password")
+    public void iLogInWithUserAndPassword() {
+        testUnidata.login(user,password);
+    }
 }
