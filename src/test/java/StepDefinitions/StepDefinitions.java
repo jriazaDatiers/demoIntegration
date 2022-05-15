@@ -1,6 +1,7 @@
 package StepDefinitions;
 
 import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -23,7 +24,7 @@ public class StepDefinitions extends AuxOperations {
     private String password;
     private String url;
 
-    //@Before
+    @Before
     public void i_connect() {
         driverManager = new DManager();
         driverManager.setupClass();
@@ -215,7 +216,7 @@ public class StepDefinitions extends AuxOperations {
 
         user = operations.roleDataMap.get("user");
         password = operations.roleDataMap.get("password");
-        url = operations.environmentsDataMap.get("environment");
+        url = operations.environmentsDataMap.get(environment);
 
 
         testUnidata.iGoTo(url);

@@ -1,2 +1,2 @@
 PROD,https://unidata.msf.org
-STAGING,https://staging.unidata.msf.org/
+STAGING,https://staging.unidata.msf.org
