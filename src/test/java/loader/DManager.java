@@ -31,8 +31,8 @@ public class DManager {
         //options.setProfile(profile);
         //File extension = new File("C:\\ext\\webfilter.xpi");
         //profile.addExtension(extension);
-        ChromeOptions options = new ChromeOptions();
-        options.setHeadless(true);
+        //ChromeOptions options = new ChromeOptions();
+        //options.setHeadless(true);
 
 
         driver = new ChromeDriver(options);
