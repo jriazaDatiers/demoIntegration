@@ -209,7 +209,7 @@ public class StepDefinitions extends AuxOperations {
     @When("I go to url")
     public void iGoToUrl() {
         String role = System.getProperty("role");
-        String environment = System.getProperty("url");
+        String environment = System.getProperty("omgeving");
         System.out.println(role + " " + environment);
         AuxOperations operations = new AuxOperations();
         operations.performUnidata(role,environment);
