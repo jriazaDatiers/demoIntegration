@@ -5,7 +5,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -35,7 +34,7 @@ public class DManager {
         //options.setHeadless(true);
 
 
-        driver = new ChromeDriver(options);
+        driver = new ChromeDriver();
 
         act = new Actions(driver);
         //FirefoxOptions options = new FirefoxOptions().addArguments("port:4444");
