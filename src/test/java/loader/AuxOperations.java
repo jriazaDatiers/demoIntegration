@@ -42,11 +42,11 @@ public class AuxOperations {
        String basePath = "src/test/resources/";
 
         switch (role) {
-            case "dataOwner":
+            case "UD_dataOwner":
                 fileRolePath = basePath + "dataOwnerData.txt";
                 break;
-            case "readOnly":
-                fileRolePath = basePath + "readOnlyData.txt";
+            case "UD_DataSteward":
+                fileRolePath = basePath + "dataStewardData.txt";
                 break;
         }
     }
