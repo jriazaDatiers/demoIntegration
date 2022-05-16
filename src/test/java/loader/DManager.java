@@ -35,7 +35,7 @@ public class DManager {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-setuid-sandbox");
 
-        //options.addArguments("--remote-debugging-port=9222");
+        options.addArguments("--remote-debugging-port=9222");
         options.setHeadless(true);
 
 
