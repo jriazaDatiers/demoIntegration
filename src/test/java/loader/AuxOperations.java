@@ -45,7 +45,7 @@ public class AuxOperations {
             case "UD_dataOwner":
                 fileRolePath = basePath + "dataOwnerData.txt";
                 break;
-            case "UD_DataSteward":
+            case "UD_dataSteward":
                 fileRolePath = basePath + "dataStewardData.txt";
                 break;
         }
