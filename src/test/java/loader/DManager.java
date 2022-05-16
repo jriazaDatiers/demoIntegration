@@ -20,8 +20,8 @@ public class DManager {
     public void setupClass() {
 
         //WebDriverManager.chromedriver().setup();
-        WebDriverManager.chromedriver().browserVersion("99.0.4844.51").setup();
-        WebDriverManager.chromedriver().driverVersion("99.0.4844.51").setup();
+        WebDriverManager.chromedriver().browserVersion("98.0.4758.102").setup();
+        WebDriverManager.chromedriver().driverVersion("98.0.4758.102").setup();
         //WebDriverManager.firefoxdriver().setup();
 
        //ProfilesIni profileIni = new ProfilesIni();
