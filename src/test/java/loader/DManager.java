@@ -5,6 +5,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -30,11 +31,15 @@ public class DManager {
         //options.setProfile(profile);
         //File extension = new File("C:\\ext\\webfilter.xpi");
         //profile.addExtension(extension);
-        //ChromeOptions options = new ChromeOptions();
-        //options.setHeadless(true);
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-setuid-sandbox");
+
+        options.addArguments("--remote-debugging-port=9222");
+        options.setHeadless(true);
 
 
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
 
         act = new Actions(driver);
         //FirefoxOptions options = new FirefoxOptions().addArguments("port:4444");
