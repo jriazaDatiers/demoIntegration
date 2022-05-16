@@ -251,7 +251,7 @@ public class Unidata {
         spincoLink.click();
         ArrayList<String> tabs3 = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs3.get(2));
-        checkTitle("SPINCO – Coordination & Source of Product Information");
+        //checkTitle("SPINCO – Coordination & Source of Product Information");
         driver.close();
         System.out.println("tab closed");
         driver.switchTo().window(tabs.get(1));
