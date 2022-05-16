@@ -81,7 +81,7 @@ public class StepDefinitions extends AuxOperations {
     @After
     @Then("I close the driver")
     public void iCloseTheDriver(){
-        //driverManager.teardown();
+        driverManager.teardown();
         System.out.println("End demo");
     }
 
