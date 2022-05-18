@@ -24,6 +24,8 @@ public class DManager {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--log-level=3","--disable-gpu","--disable-logging","--output=/dev/null","--disable-in-process-stack-traces");
+        options.addArguments("--disable-setuid-sandbox");
+        options.setHeadless(true);
         driver = new ChromeDriver(options);
 
         //driver.manage().window().maximize();
