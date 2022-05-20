@@ -1,2 +1,8 @@
 user,ESCDO
 password,Downy2020!!
+name,Escobar
+addressee,Juan Manuel Moron Riaza
+participant,Juan
+hasToSucceed,false
+newEmail,juan.moron-consultant@msf.org
+oldEmail,test.ignore@msf.org

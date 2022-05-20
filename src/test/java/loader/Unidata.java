@@ -26,6 +26,7 @@ import java.util.function.Function;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 public class Unidata {
 
@@ -33,6 +34,7 @@ public class Unidata {
     WebDriver driver;
     Actions act;
     ArrayList<String> articleList = new ArrayList<>();
+    Article article = new Article();
 
     public Unidata(Wait<WebDriver> wait, WebDriver driver, Actions act) {
         this.wait = wait;
@@ -225,7 +227,7 @@ public class Unidata {
 
 
         System.out.println("Article clicked");
-        WebElement closeButton = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/form/div[3]/div[1]/button[3]"));
+        WebElement closeButton = driver.findElement(By.xpath("//button[contains(text(),'Close')]"));
         closeButton.click();
         System.out.println("Close article");
 
@@ -279,17 +281,55 @@ public class Unidata {
         System.out.println("Title :" + requiredTitle + ", checked");
     }
 
-    public void iGoToCompositionLists(){
+    public void iGoToKitCompositions(){
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'STD')]")));
         WebElement std = driver.findElement(By.xpath("//*[contains(text(),'STD')]"));
         std.click();
+    }
 
+    public void iClickOnTreeView(){
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Tree View')]")));
+        WebElement std = driver.findElement(By.xpath("//*[contains(text(),'Tree View')]"));
+        std.click();
+    }
+
+    public void iGoToCompositionLists(){
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Composition Lists')]")));
         WebElement compositionLists = driver.findElement(By.xpath("//*[contains(text(),'Composition Lists')]"));
         compositionLists.click();
 
         System.out.println("Composition");
 
+    }
+
+    public void iClickOnKitArticle(){
+        driver.switchTo().frame("ebx-legacy-component");
+        Function<WebDriver,WebElement> function;
+        function = arg0 ->
+        {
+            WebElement checkbox1 = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[4]/td[1]/label/input"));
+            checkbox1.click();
+            return checkbox1;
+        };
+        wait.until(function);
+
+        WebElement article = driver.findElement(By.xpath("//*[contains(text(),'KADMKLIF08')]"));
+        //compositionLists.click();
+        //act.click(article);
+        act.doubleClick(article).perform();
+        System.out.println("Click on Kit Article");
+    }
+
+    public void iClickOnKitArticleTabs(){
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/form/div[2]/div[1]/div/div[1]/ul/li[4]/a")));
+        WebElement containsModulesButton = driver.findElement(By.xpath("//*[contains(text(),'Contains (Modules)')]"));
+        containsModulesButton.click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Close')]")));
+
+        iReviewArticleModules();
+
+        System.out.println("Composition");
     }
 
     public void iSelectKitArticles(){
@@ -336,7 +376,7 @@ public class Unidata {
         WebElement article3 = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_mainScroller\"]/table/tbody/tr[1]/td[1]/table/tbody/tr/td[1]"));
         articleList.add(iExtractArticleFromWeb(article3.getText()));
         System.out.println("Kit articles selected");
-
+        //TODO to review
         WebElement contains = driver.findElement(By.xpath("//*[contains(text(),'KADMKADM1EX')]"));
         System.out.println(contains.getText());
         System.out.println("Done");
@@ -371,6 +411,49 @@ public class Unidata {
             e.printStackTrace();
         }
         System.out.println("Excel downloaded");
+    }
+
+    public void iClickOnTreeViewBranch(){
+        driver.switchTo().frame("ebx-legacy-component");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'KADMKLIF08')]")));
+        WebElement KADMKLIF08 = driver.findElement(By.xpath("//*[contains(text(),'KADMKLIF08')]"));
+
+        WebElement clickStarButton = driver.findElement(with(By.className("ygtvspacer")).toLeftOf(KADMKLIF08));
+        clickStarButton.click();
+        WebElement clickStarButtonBelow = driver.findElement(with(By.className("ygtvspacer")).toLeftOf(By.xpath("//span/a/span[3][contains(text(),'KADMKLIF08')]")));
+        clickStarButtonBelow.click();
+
+        article.setModulesKADMKLIF08();
+        iReviewArticleModules();
+
+        KADMKLIF08.click();
+        System.out.println("Branch");
+        driver.switchTo().parentFrame();
+        }
+
+    public void iReviewArticleModules(){
+
+        for (String module : article.getModules()) {
+            WebElement moduleToCheck = driver.findElement(By.xpath("//*[contains(text(),'"+module+"')]"));
+            assertTrue(moduleToCheck.getText().contains(module));
+            System.out.println(module);
+        }
+    }
+
+    public void iCollectArticleData(){
+
+        driver.switchTo().frame("ebx-legacy-component");
+        driver.switchTo().frame("ebx_SubSessioniFrame");
+
+
+        WebElement status = driver.findElement(By.xpath("//div[1]/table/tbody/tr[15]/td[3]/div/div"));
+        article.setCode(status.getText().replaceAll("[^\\d]", ""));
+        System.out.println("Collected");
+
+        WebElement buttonClose = driver.findElement(By.xpath("//button[contains(text(),'Close')]"));
+        buttonClose.click();
+        driver.switchTo().parentFrame();
+        driver.switchTo().parentFrame();
     }
 
     public String iExtractDataFromExcel(String rawString){
@@ -692,6 +775,7 @@ public class Unidata {
         driver.switchTo().frame("ebx-legacy-component");
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[14]/td[1]/table/tbody/tr/td[2]/button")));
+        //TODO TO REVIEW
         String pathArticleToSelect = "//div/table/tbody/tr/td[contains(text(),'ADAPADAP2I')]";
         WebElement articleToSelect = driver.findElement(By.xpath(pathArticleToSelect));
         act.doubleClick(articleToSelect).perform();

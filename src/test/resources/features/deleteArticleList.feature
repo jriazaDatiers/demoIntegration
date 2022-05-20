@@ -1,14 +1,9 @@
 Feature: delete Article list
+@deleteArticleLists
+  Scenario: Delete Article Lists
 
-  Scenario Outline: Delete Article Lists
-
-    When I go to <url>
-    When I log in with user <user> and password <password>
+    When I go to url
+    When I log in with user and password
     Then I go to Articles
     Then I go to Article Lists
     Then I delete an article list
-
-
-    Examples:
-      |url|user|password|name|hasToSucceed |
-      | "https://staging.unidata.msf.org/" | "ESCDO" | "Downy2020!!" |"Escobar"|"True"|

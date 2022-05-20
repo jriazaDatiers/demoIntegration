@@ -13,15 +13,14 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Wait;
 import java.io.IOException;
 
-public class StepDefinitions extends AuxOperations {
+public class StepDefinitions {
     DManager driverManager;
     Unidata testUnidata;
     static WebDriver driver;
     static Wait<WebDriver> wait;
     static Actions act;
-    private String user;
-    private String password;
-    private String url;
+    private final AuxOperations operations = new AuxOperations();
+
 
     @Before
     public void i_connect() {
@@ -31,9 +30,17 @@ public class StepDefinitions extends AuxOperations {
         wait = driverManager.wait;
         act = driverManager.act;
         testUnidata = new Unidata(wait,driver, act);
+        //String role = System.getProperty("role");
+        String role = "UD_readOnly";
+        //String environment = System.getProperty("omgeving");
+        String environment = "STAGING";
+        System.out.println(role + " " + environment);
+
+        operations.performUnidata(role,environment);
+
     }
 
-    //To deprecate
+    //To deprecate?
     @Given("I can connect")
     public void i_can_connect() {
         driverManager = new DManager();
@@ -41,6 +48,7 @@ public class StepDefinitions extends AuxOperations {
         driver = driverManager.driver;
         wait = driverManager.wait;
         act = driverManager.act;
+
 
     }
     @When("I install the FortiClient")
@@ -52,16 +60,6 @@ public class StepDefinitions extends AuxOperations {
     public void i_log_in_with_user_and_password(String userName, String password) {
 
         testUnidata.login(userName,password);
-    }
-
-    @Then("I am able to update the email with {string}")
-    public void i_am_able_to_update_the_email_with(String newEmail) {
-        testUnidata.updateEmail(newEmail);
-
-    }
-    @Then("I am able to check the email {string}")
-    public void i_am_able_to_check_the_email(String emailToCheck) {
-        testUnidata.checkEmail(emailToCheck);
     }
 
     @Then("I go to My Unidata")
@@ -94,11 +92,6 @@ public class StepDefinitions extends AuxOperations {
     public void iClickOnArticle() {
         testUnidata.chooseArticle();
 
-    }
-
-    @When("I go to {string}")
-    public void iGoToUrl(String url) {
-        testUnidata.iGoTo(url);
     }
 
     @Then("I check the links in Unidata Home")
@@ -144,9 +137,9 @@ public class StepDefinitions extends AuxOperations {
         testUnidata.clickOnArticleList();
     }
 
-    @Then("I click on create list from Excel {string}")
-    public void iClickOnCreateListFromExcelName(String name) {
-        testUnidata.creteListFromExcel(name);
+    @Then("I click on create list from Excel")
+    public void iClickOnCreateListFromExcelName() {
+        testUnidata.creteListFromExcel(operations.getName());
     }
 
     @Then("I delete an article list {string}")
@@ -156,20 +149,16 @@ public class StepDefinitions extends AuxOperations {
         testUnidata.deleteArticleList(hasToSucced);
     }
 
-    @Then("I delete an article list but fail not owner {string}")
-    public void iDeleteAnArticleListButFailNotOwnerName() {
-    }
-
-    @Then("I delete an article list but fail not owner {string} {string}")
-    public void iDeleteAnArticleListButFailNotOwnerNameHasToSucceed(String name, String hasToSucceed) {
-        testUnidata.selectElementOnList(name);
+    @Then("I delete an article list but fail not owner")
+    public void iDeleteAnArticleListButFailNotOwner() {
+        testUnidata.selectElementOnList(operations.getName());
         testUnidata.clickOnActionsMenu();
-        testUnidata.deleteArticleList(hasToSucceed);
+        testUnidata.deleteArticleList(operations.getHasToSucceed());
     }
 
-    @Then("I add a participant in my list {string} {string}")
-    public void iAddAParticipantInMyListNameParticipant(String name, String participant) {
-        testUnidata.addParticipantOnList(name, participant);
+    @Then("I add a participant in my list")
+    public void iAddAParticipantInMyListNameParticipant() {
+        testUnidata.addParticipantOnList(operations.getName(), operations.getParticipant());
     }
 
     @Then("I add an article to existing List")
@@ -187,9 +176,9 @@ public class StepDefinitions extends AuxOperations {
         testUnidata.goToFeedback();
     }
 
-    @Then("I create a new feedback addressing to {string}")
-    public void iCreateANewFeedbackAddressingToAssignee(String assignee) {
-        testUnidata.createFeedbackToAssignee(assignee);
+    @Then("I create a new feedback addressing to addressee")
+    public void iCreateANewFeedbackAddressingToAssignee() {
+        testUnidata.createFeedbackToAssignee(operations.getAddressee());
     }
 
     @Then("I select the Biomed Articles view")
@@ -226,9 +215,9 @@ public class StepDefinitions extends AuxOperations {
     }
 
     @Then("I delete an article list")
-    public void iDeleteAnArticleList(String participantName ) {
+    public void iDeleteAnArticleList( ) {
         String status = "true";
-        testUnidata.selectElementOnList(participantName);
+        testUnidata.selectElementOnList(operations.getParticipant());
         testUnidata.clickOnActionsMenu();
         testUnidata.deleteArticleList(status);
     }
@@ -262,25 +251,65 @@ public class StepDefinitions extends AuxOperations {
 
     @When("I go to url")
     public void iGoToUrl() {
-        String role = System.getProperty("role");
-        String environment = System.getProperty("omgeving");
-        System.out.println(role + " " + environment);
-        AuxOperations operations = new AuxOperations();
-        operations.performUnidata(role,environment);
-
-        user = operations.roleDataMap.get("user");
-        password = operations.roleDataMap.get("password");
-        url = operations.environmentsDataMap.get(environment);
-
-
-        testUnidata.iGoTo(url);
+        testUnidata.iGoTo(operations.getUrl());
     }
 
     @Then("I log in with user and password")
     public void iLogInWithUserAndPassword() {
-        testUnidata.login(user,password);
+        testUnidata.login(operations.getUser(),operations.getPassword());
     }
 
+
+    @Then("I update the email with newEmail")
+    public void iUpdateTheEmailWithNewEmail() {
+        testUnidata.updateEmail(operations.getNewEmail());
+    }
+
+    @Then("I check the email newEmail")
+    public void iCheckTheEmailNewEmail() {
+        testUnidata.checkEmail(operations.getNewEmail());
+    }
+
+    @Then("I update the email with oldEmail")
+    public void iUpdateTheEmailWithOldEmail() {
+        testUnidata.updateEmail(operations.getOldEmail());
+    }
+
+    @Then("I check the email oldEmail")
+    public void iCheckTheEmailOldEmail() {
+        testUnidata.checkEmail(operations.getOldEmail());
+    }
+
+    @Then("I go to Kit Compositions")
+    public void iGoToKitCompositions() {
+        testUnidata.iGoToKitCompositions();
+    }
+
+    @Then("I click on TreeView")
+    public void iClickOnTreeView() {
+        testUnidata.iClickOnTreeView();
+    }
+
+    @Then("I click on a Tree View branch")
+    public void iClickOnATreeViewBranch() {
+        testUnidata.iClickOnTreeViewBranch();
+    }
+
+    @Then("I click on a Kit Article")
+    public void iClickOnAKitArticle() {
+        testUnidata.iClickOnKitArticle();
+    }
+
+    @Then("I click on Kit Article tabs")
+    public void iClickOnKitArticleTabs() {
+        testUnidata.iClickOnKitArticleTabs();
+    }
+
+
+    @Then("I collect Article information")
+    public void iCollectArticleInformation() {
+        testUnidata.iCollectArticleData();
+    }
 }
 
 
