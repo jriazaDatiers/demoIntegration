@@ -178,7 +178,7 @@ public class StepDefinitions {
 
     @Then("I create a new feedback addressing to addressee")
     public void iCreateANewFeedbackAddressingToAssignee() {
-        testUnidata.createFeedbackToAssignee(operations.getAddressee());
+        testUnidata.createFeedbackToAddressee(operations.getAddressee());
     }
 
     @Then("I select the Biomed Articles view")

@@ -765,7 +765,7 @@ public class Unidata {
 
     }
 
-    public void createFeedbackToAssignee(String assignee){
+    public void createFeedbackToAddressee(String assignee){
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Articles (All)')]")));
         String pathArticlesAll = "//*[contains(text(),'Articles (All)')]";
@@ -780,13 +780,40 @@ public class Unidata {
         WebElement articleToSelect = driver.findElement(By.xpath(pathArticleToSelect));
         act.doubleClick(articleToSelect).perform();
 
+        try {
+            Thread.sleep(10000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         //wait.until(ExpectedConditions.)
         WebElement feedbackTabButton = driver.findElement(By.xpath("//*[@id=\"ebx_WorkspaceFormTabviewTabs\"]/li[8]/a"));
         act.doubleClick(feedbackTabButton).perform();
 
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        wait.until(ExpectedConditions.presenceOfElementLocated((By.xpath("//button[@title='Create']"))));
         WebElement addFeedbackButton = driver.findElement(By.xpath("//button[@title='Create']"));
         addFeedbackButton.click();
         //act.click(addFeedbackButton).perform();
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        driver.switchTo().frame("ebx_InternalPopup_frame");
+
+        //WebElement showSubject = driver.findElement(By.xpath("//tbody/tr[2]/td[3]/div/div/div/div/div/div/div/table/tbody/tr/td[1]/label/input"));
+        //showSubject.click();
+
+        addAddressee();
+        addPriorityToMessage();
+
+        WebElement saveCloseButton = driver.findElement(By.xpath("//button[@title='Save and go back to the table']"));
+        act.click(saveCloseButton).perform();
 
         System.out.println("Feedback Menu");
 
@@ -872,6 +899,68 @@ public class Unidata {
         }
 
         assertTrue(found);
+    }
+
+    private void addAddressee(){
+
+        try {
+            Thread.sleep(4000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        WebElement addAddressee = driver.findElement(By.xpath("//table[4]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/div/button"));
+        act.click(addAddressee).perform();
+
+        try {
+            Thread.sleep(3000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[1]/td[3]/div/div/div/div/div/ol/li[1]/div/div/div/div/input[2]")));
+        driver.findElement(By.xpath("//tr[1]/td[3]/div/div/div/div/div/ol/li[1]/div/div/div/div/input[2]")).sendKeys("Juan Manuel Moron Riaza");
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        driver.findElement(By.xpath("//tr[1]/td[3]/div/div/div/div/div/ol/li[1]/div/div/div/div/input[2]")).sendKeys(Keys.ENTER);
+        WebElement toHook = driver.findElement(By.xpath("//*[contains(text(),'Addressed to MSF Entity')]"));
+        toHook.click();
+        //driver.findElement(By.id("FILTER_0_applyButton")).click();
+
+
+
+        System.out.println("Added addressee");
+    }
+
+    private void addPriorityToMessage(){
+        long timetoWait2 = 2000;
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        WebElement priorityDropdown = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/button[2]"));
+        priorityDropdown.sendKeys("!! High Priority");
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //driver.findElement(By.xpath("tr[1]/td[3]/div/div/div/div/div/ol/li[1]/div/div/div/div/input[2]")).sendKeys(Keys.ENTER);
+        WebElement toHook = driver.findElement(By.xpath("//*[contains(text(),'Addressed to MSF Entity')]"));
+        toHook.click();
+        //driver.findElement(By.id("FILTER_0_applyButton")).click();
+
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Select Priority");
     }
 
 
