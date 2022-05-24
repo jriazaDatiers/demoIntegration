@@ -310,6 +310,16 @@ public class StepDefinitions {
     public void iCollectArticleInformation() {
         testUnidata.iCollectArticleData();
     }
+
+    @Then("I go to Feedback Addressed to me")
+    public void iGoToFeedbackAddressedToMe() {
+        testUnidata.goToFeedBackAddressedToMe();
+    }
+
+    @Then("I type a new message Feedback")
+    public void iTypeANewMessageFeedback() {
+        testUnidata.addNewMessageFeedback();
+    }
 }
 
 

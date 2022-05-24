@@ -641,7 +641,6 @@ public class Unidata {
     }
 
     public void addArticleOnExistingListAsParticipant(){
-        //wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[@id=\"FILTER_0_applyButton\"]"))));
         long timetoWait = 2000;
 
         try {
@@ -923,7 +922,6 @@ public class Unidata {
         driver.findElement(By.xpath("//tr[1]/td[3]/div/div/div/div/div/ol/li[1]/div/div/div/div/input[2]")).sendKeys(Keys.ENTER);
         WebElement toHook = driver.findElement(By.xpath("//*[contains(text(),'Addressed to MSF Entity')]"));
         toHook.click();
-        //driver.findElement(By.id("FILTER_0_applyButton")).click();
 
         System.out.println("Added addressee");
     }
@@ -958,6 +956,46 @@ public class Unidata {
         System.out.println("Select Priority and message added");
     }
 
+    public void goToFeedBackAddressedToMe(){
+        goToFeedback();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Feedback (Addressed to Me)')]")));
+        WebElement feedBackMeMenu = driver.findElement(By.xpath("//*[contains(text(),'Feedback (Addressed to Me)')]"));
+        act.click(feedBackMeMenu);
+
+    }
+
+    public void addNewMessageFeedback(){
+
+        WebElement addNewMessage = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[2]/td[3]/div/div/div/div/div/div/button"));
+        act.click(addNewMessage);
+
+        WebElement newMessageTextArea = findNewTextAreaMessageFeedback();
+
+
+    }
+
+    private WebElement findNewTextAreaMessageFeedback(){
+        WebElement newMessageTextArea;
+        int iteration=1;
+        boolean newTextArea;
+        String composedXpath;
+
+        do{
+            composedXpath = "//tr[2]/td[3]/div/div/div/div/div/ol/li["+iteration+"]/div/div/table/tbody/tr[4]/td[3]/div/div/div/textarea";
+            try {
+                newMessageTextArea = driver.findElement(By.xpath(composedXpath));
+                newTextArea = false;
+            } catch (Exception e) {
+                System.out.println("Text area used");
+                newMessageTextArea = driver.findElement(By.xpath("//tr[2]/td[3]/div/div/div/div/div/ol/li["+(iteration-1)+"]/div/div/table/tbody/tr[4]/td[3]/div/div/div/textarea"));
+                newTextArea = true;
+            }
+            iteration++;
+        }while(newTextArea);
+
+        return newMessageTextArea;
+    }
 
 
 
