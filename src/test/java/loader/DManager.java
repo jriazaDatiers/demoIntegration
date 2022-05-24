@@ -25,7 +25,8 @@ public class DManager {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--log-level=3","--disable-gpu","--disable-logging","--output=/dev/null","--disable-in-process-stack-traces");
         options.addArguments("--disable-setuid-sandbox");
-        options.addArguments("--remote-debugging-port=9222");
+        options.addArguments("start-maximized");
+        //options.addArguments("--remote-debugging-port=9222");
         //options.setHeadless(true);
         driver = new ChromeDriver(options);
 

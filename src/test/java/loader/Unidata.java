@@ -445,7 +445,6 @@ public class Unidata {
         driver.switchTo().frame("ebx-legacy-component");
         driver.switchTo().frame("ebx_SubSessioniFrame");
 
-
         WebElement status = driver.findElement(By.xpath("//div[1]/table/tbody/tr[15]/td[3]/div/div"));
         article.setCode(status.getText().replaceAll("[^\\d]", ""));
         System.out.println("Collected");
@@ -775,18 +774,17 @@ public class Unidata {
         driver.switchTo().frame("ebx-legacy-component");
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[14]/td[1]/table/tbody/tr/td[2]/button")));
-        //TODO TO REVIEW
+
         String pathArticleToSelect = "//div/table/tbody/tr/td[contains(text(),'ADAPADAP2I')]";
         WebElement articleToSelect = driver.findElement(By.xpath(pathArticleToSelect));
         act.doubleClick(articleToSelect).perform();
 
         try {
-            Thread.sleep(10000);
+            Thread.sleep(2000);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        //wait.until(ExpectedConditions.)
         WebElement feedbackTabButton = driver.findElement(By.xpath("//*[@id=\"ebx_WorkspaceFormTabviewTabs\"]/li[8]/a"));
         act.doubleClick(feedbackTabButton).perform();
 
@@ -805,9 +803,6 @@ public class Unidata {
             e.printStackTrace();
         }
         driver.switchTo().frame("ebx_InternalPopup_frame");
-
-        //WebElement showSubject = driver.findElement(By.xpath("//tbody/tr[2]/td[3]/div/div/div/div/div/div/div/table/tbody/tr/td[1]/label/input"));
-        //showSubject.click();
 
         addAddressee();
         addPriorityToMessage();
@@ -904,7 +899,7 @@ public class Unidata {
     private void addAddressee(){
 
         try {
-            Thread.sleep(4000);
+            Thread.sleep(2000);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -913,7 +908,7 @@ public class Unidata {
         act.click(addAddressee).perform();
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -930,37 +925,37 @@ public class Unidata {
         toHook.click();
         //driver.findElement(By.id("FILTER_0_applyButton")).click();
 
-
-
         System.out.println("Added addressee");
     }
 
     private void addPriorityToMessage(){
-        long timetoWait2 = 2000;
+        long timetoWait2 = 1000;
+        WebElement clearPriority = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/button[1]"));
+        act.click(clearPriority).perform();
         try {
             Thread.sleep(timetoWait2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        WebElement priorityDropdown = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/button[2]"));
-        priorityDropdown.sendKeys("!! High Priority");
+        WebElement priorityMenu = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/input[2]"));
+        priorityMenu.sendKeys("!! High Priority");
+
         try {
             Thread.sleep(timetoWait2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //driver.findElement(By.xpath("tr[1]/td[3]/div/div/div/div/div/ol/li[1]/div/div/div/div/input[2]")).sendKeys(Keys.ENTER);
+
+        driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/input[2]")).sendKeys(Keys.ENTER);
         WebElement toHook = driver.findElement(By.xpath("//*[contains(text(),'Addressed to MSF Entity')]"));
         toHook.click();
-        //driver.findElement(By.id("FILTER_0_applyButton")).click();
 
-        try {
-            Thread.sleep(timetoWait2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        WebElement addMessage = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[2]/td[3]/div/div/div/div/div/div/button"));
+        act.click(addMessage).perform();
+        WebElement textArea = driver.findElement(By.xpath("//tr[2]/td[3]/div/div/div/div/div/ol/li[1]/div/div/table/tbody/tr[4]/td[3]/div/div/div/textarea"));
+        textArea.sendKeys("Test comment");
 
-        System.out.println("Select Priority");
+        System.out.println("Select Priority and message added");
     }
 
 
