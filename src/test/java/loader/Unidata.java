@@ -895,7 +895,7 @@ public class Unidata {
         assertTrue(found);
     }
 
-    private void addAddressee(){
+    public void addAddressee(){
 
         try {
             Thread.sleep(2000);
@@ -926,7 +926,7 @@ public class Unidata {
         System.out.println("Added addressee");
     }
 
-    private void addPriorityToMessage(){
+    public void addPriorityToMessage(){
         long timetoWait2 = 1000;
         WebElement clearPriority = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/button[1]"));
         act.click(clearPriority).perform();
@@ -936,7 +936,13 @@ public class Unidata {
             e.printStackTrace();
         }
         WebElement priorityMenu = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/input[2]"));
-        priorityMenu.sendKeys("!! High Priority");
+
+        try {
+            WebElement findPriority = driver.findElement(By.xpath("//*[contains(text(),'!! High Priority')]"));
+            priorityMenu.sendKeys("! Normal Priority");
+        } catch (Exception e) {
+            priorityMenu.sendKeys("!! High Priority");
+        }
 
         try {
             Thread.sleep(timetoWait2);
@@ -968,10 +974,10 @@ public class Unidata {
     public void addNewMessageFeedback(){
 
         WebElement addNewMessage = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[2]/td[3]/div/div/div/div/div/div/button"));
-        act.click(addNewMessage);
 
         WebElement newMessageTextArea = findNewTextAreaMessageFeedback();
-
+        act.click(addNewMessage);
+        newMessageTextArea.sendKeys("Text answer");
 
     }
 
@@ -997,6 +1003,9 @@ public class Unidata {
         return newMessageTextArea;
     }
 
-
+    public void saveAndClose(){
+        WebElement saveCloseButton = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
+        saveCloseButton.click();
+    }
 
 }

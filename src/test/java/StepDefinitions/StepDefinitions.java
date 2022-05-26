@@ -320,6 +320,21 @@ public class StepDefinitions {
     public void iTypeANewMessageFeedback() {
         testUnidata.addNewMessageFeedback();
     }
+
+    @Then("I add and addressee")
+    public void iAddAndAddressee() {
+        testUnidata.addAddressee();
+    }
+
+    @Then("I change the priority")
+    public void iChangeThePriority() {
+        testUnidata.addPriorityToMessage();
+    }
+
+    @Then("I save and close the feedback")
+    public void iSaveAndCloseTheFeedback() {
+        testUnidata.saveAndClose();
+    }
 }
 
 
