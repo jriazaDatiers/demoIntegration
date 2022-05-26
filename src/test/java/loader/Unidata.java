@@ -21,8 +21,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -394,6 +396,7 @@ public class Unidata {
     }
 
     public void iDownloadExcel(){
+        //Todo Remember to place a destiny
         Function<WebDriver,WebElement> function;
         function = arg0 ->
         {
@@ -468,8 +471,8 @@ public class Unidata {
 
     public void iCheckExcel() throws IOException {
         ArrayList<String> fromExcel = new ArrayList<>();
-
-        String lastFile = String.valueOf(findLast("C:\\Users\\jmr\\Downloads"));
+        //Todo Remember to place a different source for the file
+        String lastFile = String.valueOf(findLast("C:\\excelDownloads"));
 
         FileInputStream fs = new FileInputStream(lastFile);
         XSSFWorkbook workbook = new XSSFWorkbook(fs);
@@ -822,6 +825,10 @@ public class Unidata {
         WebElement biomedOption = driver.findElement(By.xpath("//a[contains(text(),'Biomed Articles')]"));
         act.click(biomedOption).perform();
 
+        System.out.println("View BioMed");
+    }
+
+    public void exportArticlesBiomedExcel(){
         WebElement firstElement = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[1]/td[1]/label/input"));
         act.click(firstElement).perform();
         WebElement secondElement = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[1]/td[1]/label/input"));
@@ -838,7 +845,43 @@ public class Unidata {
         WebElement launchExport = driver.findElement(By.xpath("//*[contains(text(),'Launch export')]"));
         act.click(launchExport).perform();
 
-        System.out.println("View BioMed");
+        System.out.println("Export excel Biomed");
+    }
+
+    public void checkResultsExcelAlphaOrder(){
+        boolean isEqual = false;
+        ArrayList<String> fromExcel = new ArrayList<>();
+        //Todo Remember to place a different source for the file
+        String lastFile = String.valueOf(findLast("C:\\excelDownloads\\biomed"));
+
+        try {
+            FileInputStream fs = new FileInputStream(lastFile);
+            XSSFWorkbook workbook = new XSSFWorkbook(fs);
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rowItr = sheet.rowIterator();
+
+            while ( rowItr.hasNext() ) {
+                XSSFRow row = (XSSFRow) rowItr.next();
+                XSSFCell cell;
+
+                Iterator<Cell> cellItr = row.cellIterator();
+
+                if(cellItr.hasNext()) {
+                    cell = (XSSFCell) cellItr.next();
+                    fromExcel.add(iExtractDataFromExcel(cell.toString()));
+                }
+            }
+
+            List<String> sortedList = fromExcel.stream().sorted().collect(Collectors.toList());
+
+            isEqual = fromExcel.equals(sortedList);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(isEqual);
+        assertTrue(isEqual);
+        System.out.println("Excel checked");
     }
 
     public void filterAsParticipant(){

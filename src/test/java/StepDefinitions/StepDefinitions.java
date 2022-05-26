@@ -188,10 +188,12 @@ public class StepDefinitions {
 
     @Then("I export a number of articles with the service code-label-image")
     public void iExportANumberOfArticlesWithTheServiceCodeLabelImage() {
+        testUnidata.exportArticlesBiomedExcel();
     }
 
     @Then("I check if the results are sorted alphabetically on code")
     public void iCheckIfTheResultsAreSortedAlphabeticallyOnCode() {
+        testUnidata.checkResultsExcelAlphaOrder();
     }
 
     @Then("I go to Descriptions Menu")
