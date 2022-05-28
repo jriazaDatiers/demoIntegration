@@ -337,6 +337,16 @@ public class StepDefinitions {
     public void iSaveAndCloseTheFeedback() {
         testUnidata.saveAndClose();
     }
+
+    @Then("I click on specific article")
+    public void iClickOnSpecificArticle() {
+        testUnidata.clickSpecificArticle();
+    }
+
+    @Then("I validate the content of the product in Unicat")
+    public void iValidateTheContentOfTheProductInUnicat() {
+        testUnidata.validateOpenTabUnicat();
+    }
 }
 
 

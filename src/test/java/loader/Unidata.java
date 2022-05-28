@@ -1051,4 +1051,30 @@ public class Unidata {
         saveCloseButton.click();
     }
 
+    public void clickSpecificArticle(){
+        driver.switchTo().frame("ebx-legacy-component");
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div/table/tbody/tr/td[contains(text(),'ADAPADAP2I')]")));
+        //wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[14]/td[1]/table/tbody/tr/td[2]/button")));
+
+        WebElement elementADAPADAP2I = driver.findElement(By.xpath("//*[contains(text(),'ADAPADAP2I')]"));
+        WebElement shareLinkButton = driver.findElement(with(By.xpath("(//button[@type='button'])")).toLeftOf(elementADAPADAP2I));
+
+        shareLinkButton.click();
+
+    }
+
+    public void validateOpenTabUnicat(){
+        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
+
+        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(tabs2.get(1));
+        checkTitle("Unicat");
+        checkTitle("ADAPTER USB");
+        driver.findElements(By.xpath("//*[contains(text(),'ADAPADAP2I')]"));
+        driver.close();
+        System.out.println("tab closed");
+        driver.switchTo().window(tabs.get(0));
+        System.out.println("Link content validated");
+    }
+
 }
