@@ -27,7 +27,7 @@ public class DManager {
         options.addArguments("--disable-setuid-sandbox");
         options.addArguments("start-maximized");
         options.addArguments("--remote-debugging-port=9222");
-        options.setHeadless(true);
+        //options.setHeadless(true);
         driver = new ChromeDriver(options);
 
         //driver.manage().window().maximize();
