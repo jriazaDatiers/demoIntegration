@@ -170,11 +170,11 @@ public class Unidata {
     public void goToFeedback(){
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Feedback')]")));
         String pathFeedback = "//*[@id=\"_ebx-root\"]/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/li[9]/div[2]/div/button";
-        WebElement feedbackMenu = driver.findElement(By.xpath(pathFeedback));
-
-        if(feedbackMenu.getAttribute("title").equals("Collapsed")){
+        WebElement feedbackMenu = driver.findElement(By.xpath("//*[contains(text(),'Feedback')]"));
+        act.click(feedbackMenu).perform();
+        /*if(feedbackMenu.getAttribute("title").equals("Collapsed")){
             feedbackMenu.click();
-        }
+        }*/
 
         System.out.println("Feedback Menu");
     }
@@ -188,7 +188,7 @@ public class Unidata {
         act.click(createList).perform();
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type='file']")));
         WebElement chooseFile = driver.findElement(By.cssSelector("input[type='file']"));
-        chooseFile.sendKeys("C:\\Users\\jmr\\IdeaProjects\\msf_demo\\src\\test\\resources\\Article-Belongs-to-List.xlsx");
+        chooseFile.sendKeys("target/test-classes/Article-Belongs-to-List.xlsx");
 
         WebElement listName = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/form/div[3]/table/tbody/tr[1]/td[3]/div/input"));
         listName.sendKeys(name + " list " + getIntRandom());
@@ -296,6 +296,15 @@ public class Unidata {
     }
 
     public void iGoToCompositionLists(){
+
+        long timetoWait = 2000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Composition Lists')]")));
         WebElement compositionLists = driver.findElement(By.xpath("//*[contains(text(),'Composition Lists')]"));
         compositionLists.click();
@@ -421,10 +430,32 @@ public class Unidata {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'KADMKLIF08')]")));
         WebElement KADMKLIF08 = driver.findElement(By.xpath("//*[contains(text(),'KADMKLIF08')]"));
 
+        long timetoWait = 2000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         WebElement clickStarButton = driver.findElement(with(By.className("ygtvspacer")).toLeftOf(KADMKLIF08));
         clickStarButton.click();
+
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         WebElement clickStarButtonBelow = driver.findElement(with(By.className("ygtvspacer")).toLeftOf(By.xpath("//span/a/span[3][contains(text(),'KADMKLIF08')]")));
         clickStarButtonBelow.click();
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         article.setModulesKADMKLIF08();
         iReviewArticleModules();
@@ -448,14 +479,22 @@ public class Unidata {
         driver.switchTo().frame("ebx-legacy-component");
         driver.switchTo().frame("ebx_SubSessioniFrame");
 
-        WebElement status = driver.findElement(By.xpath("//div[1]/table/tbody/tr[15]/td[3]/div/div"));
+        long timetoWait = 2000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        WebElement status = driver.findElement(By.xpath("//div[2]/div[1]/table/tbody/tr[12]/td[3]/div/div"));
         article.setCode(status.getText().replaceAll("[^\\d]", ""));
         System.out.println("Collected");
 
         WebElement buttonClose = driver.findElement(By.xpath("//button[contains(text(),'Close')]"));
         buttonClose.click();
-        driver.switchTo().parentFrame();
-        driver.switchTo().parentFrame();
+        //driver.switchTo().parentFrame();
+        //driver.switchTo().parentFrame();
     }
 
     public String iExtractDataFromExcel(String rawString){
@@ -472,7 +511,7 @@ public class Unidata {
     public void iCheckExcel() throws IOException {
         ArrayList<String> fromExcel = new ArrayList<>();
         //Todo Remember to place a different source for the file
-        String lastFile = String.valueOf(findLast("C:\\excelDownloads"));
+        String lastFile = String.valueOf(findLast("C:\\Users\\jmr\\Downloads"));
 
         FileInputStream fs = new FileInputStream(lastFile);
         XSSFWorkbook workbook = new XSSFWorkbook(fs);
@@ -636,6 +675,7 @@ public class Unidata {
         WebElement okButton = driver.findElement(By.xpath("//button[contains(text(),'OK')]"));
         act.click(okButton).perform();
 
+        driver.switchTo().parentFrame();
         WebElement saveCloseButton = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
         saveCloseButton.click();
 
@@ -791,19 +831,19 @@ public class Unidata {
         act.doubleClick(feedbackTabButton).perform();
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        wait.until(ExpectedConditions.presenceOfElementLocated((By.xpath("//button[@title='Create']"))));
-        WebElement addFeedbackButton = driver.findElement(By.xpath("//button[@title='Create']"));
+        wait.until(ExpectedConditions.presenceOfElementLocated((By.xpath("//tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button/span"))));
+        WebElement addFeedbackButton = driver.findElement(By.xpath("//tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"));
         addFeedbackButton.click();
         //act.click(addFeedbackButton).perform();
-        try {
+       /* try {
             Thread.sleep(2000);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         driver.switchTo().frame("ebx_InternalPopup_frame");
 
         addAddressee();
@@ -819,6 +859,7 @@ public class Unidata {
     public void selectBiomedArticlesView(){
 
         driver.switchTo().frame("ebx-legacy-component");
+
         WebElement viewButton = driver.findElement(By.xpath("//button[contains(text(),'View')]"));
         act.click(viewButton).perform();
 
@@ -829,11 +870,13 @@ public class Unidata {
     }
 
     public void exportArticlesBiomedExcel(){
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[3]/table/tbody/tr[1]/td[1]/table/tbody/tr/td[2]/button")));
+
         WebElement firstElement = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[1]/td[1]/label/input"));
         act.click(firstElement).perform();
-        WebElement secondElement = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[1]/td[1]/label/input"));
+        WebElement secondElement = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[2]/td[1]/label/input"));
         act.click(secondElement).perform();
-        WebElement thirdElement = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[1]/td[1]/label/input"));
+        WebElement thirdElement = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_fixedScroller\"]/table/tbody/tr[4]/td[1]/label/input"));
         act.click(thirdElement).perform();
 
         WebElement servicesButton = driver.findElement(By.xpath("//button[contains(text(),'Services')]"));
@@ -1008,14 +1051,17 @@ public class Unidata {
     public void goToFeedBackAddressedToMe(){
         goToFeedback();
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Feedback (Addressed to Me)')]")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Feedback (Addressed to Me)')]")));
         WebElement feedBackMeMenu = driver.findElement(By.xpath("//*[contains(text(),'Feedback (Addressed to Me)')]"));
-        act.click(feedBackMeMenu);
+        //WebElement linkFeedBackMenu = driver.findElement(with(By.className("_ebx-link-tree_item")).toLeftOf(feedBackMeMenu));
+        act.click(feedBackMeMenu).perform();
+
+
 
     }
 
     public void addNewMessageFeedback(){
-
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[2]/td[3]/div/div/div/div/div/div/button")));
         WebElement addNewMessage = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[2]/td[3]/div/div/div/div/div/div/button"));
 
         WebElement newMessageTextArea = findNewTextAreaMessageFeedback();
@@ -1064,6 +1110,14 @@ public class Unidata {
     }
 
     public void validateOpenTabUnicat(){
+        long timetoWait2 = 2000;
+
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
 
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
@@ -1075,6 +1129,54 @@ public class Unidata {
         System.out.println("tab closed");
         driver.switchTo().window(tabs.get(0));
         System.out.println("Link content validated");
+    }
+
+    public void iSelectFeedbacckAddressedToMe(){
+        long timetoWait2 = 1000;
+        driver.switchTo().frame("ebx-legacy-component");
+        driver.switchTo().frame("feedbackFrame");
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        driver.switchTo().frame("ebx-legacy-component");
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[2]/div/table/tbody/tr[1]/td[1]/label/input")));
+        WebElement feedbackElement = driver.findElement(By.xpath("//*[contains(text(),'Open')]"));
+        act.doubleClick(feedbackElement).perform();
+        System.out.println("Feedback selected");
+
+    }
+
+    public void createNSTArticle(){
+        driver.switchTo().frame("ebx-legacy-component");
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[2]/div[1]/div[1]/div[1]/button")));
+        WebElement addArticleButton = driver.findElement(By.xpath("//div[2]/div[1]/div[1]/div[1]/button"));
+        act.click(addArticleButton).perform();
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Save and close')]")));
+
+        WebElement groupDropDown = driver.findElement(By.xpath("//tr[3]/td[3]/div/div/div/div/div/button[2]"));
+        act.click(groupDropDown).perform();
+        WebElement groupInput = driver.findElement(By.xpath("//tr[3]/td[3]/div/div/div/div/div/input[2]"));
+        groupInput.sendKeys("N - Nutrition");
+        act.sendKeys(Keys.ENTER);
+       /* long timetoWait = 2000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        groupInput.click();
+        act.doubleClick(groupInput).perform();
+        //groupInput.sendKeys(Keys.ENTER);
+        //groupInput.sendKeys(Keys.RETURN);
+        WebElement anchor = driver.findElement(By.xpath("//div[1]/table/tbody/tr[2]/td[3]/div/span"));
+        act.click(anchor).perform();
+
+        System.out.println("Anchor");
     }
 
 }

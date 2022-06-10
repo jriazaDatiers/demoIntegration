@@ -1,7 +1,7 @@
 Feature: Detach article to existing list
-@detachArticleList
-  Scenario: Detach article to existing list
 
+  @TEST_SPIN-289 @demo04 @detachArticleExistingList
+  Scenario: Detach article to existing list
     When I go to url
     When I log in with user and password
     Then I go to Articles
