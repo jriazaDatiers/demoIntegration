@@ -7,6 +7,7 @@ public class Article {
 
     public String code;
     public int MSFid;
+    public String type;
     public String lifeCycleStatus;
     public ArrayList<String> modules = new ArrayList<>();
 
@@ -50,5 +51,13 @@ public class Article {
         modules.add("KADMMLIFB08");
         modules.add("KADMMLIFC08");
         modules.add("KADMMLIFF08");
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

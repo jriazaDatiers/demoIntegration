@@ -31,7 +31,7 @@ public class StepDefinitions {
         act = driverManager.act;
         testUnidata = new Unidata(wait,driver, act);
         //String role = System.getProperty("role");
-        String role = "UD_readOnly";
+        String role = "UD_dataOwner";
         //String environment = System.getProperty("omgeving");
         String environment = "STAGING";
         System.out.println(role + " " + environment);
@@ -346,6 +346,16 @@ public class StepDefinitions {
     @Then("I validate the content of the product in Unicat")
     public void iValidateTheContentOfTheProductInUnicat() {
         testUnidata.validateOpenTabUnicat();
+    }
+
+    @Then("I select a feedback addressed to me")
+    public void iSelectAFeedbackAddressedToMe() {
+        testUnidata.iSelectFeedbacckAddressedToMe();
+    }
+
+    @Then("I create a NST Article")
+    public void iCreateANSTArticle() {
+        testUnidata.createNSTArticle();
     }
 }
 
