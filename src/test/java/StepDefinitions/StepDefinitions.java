@@ -49,7 +49,6 @@ public class StepDefinitions {
         wait = driverManager.wait;
         act = driverManager.act;
 
-
     }
     @When("I install the FortiClient")
     public void i_install_the_forti_client() {
@@ -78,7 +77,7 @@ public class StepDefinitions {
     @After
     @Then("I close the driver")
     public void iCloseTheDriver(){
-        //driverManager.teardown();
+        driverManager.teardown();
     }
 
 
