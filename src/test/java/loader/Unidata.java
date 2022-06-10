@@ -493,8 +493,9 @@ public class Unidata {
 
         WebElement buttonClose = driver.findElement(By.xpath("//button[contains(text(),'Close')]"));
         buttonClose.click();
-        //driver.switchTo().parentFrame();
-        //driver.switchTo().parentFrame();
+        driver.switchTo().alert().accept();
+        driver.switchTo().parentFrame();
+        driver.switchTo().parentFrame();
     }
 
     public String iExtractDataFromExcel(String rawString){
