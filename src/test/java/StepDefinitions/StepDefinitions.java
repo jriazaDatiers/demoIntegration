@@ -78,7 +78,7 @@ public class StepDefinitions {
     @After
     @Then("I close the driver")
     public void iCloseTheDriver(){
-        driverManager.teardown();
+        //driverManager.teardown();
     }
 
 
