@@ -1,7 +1,7 @@
-Feature: Share Unicat link
-@shareLink
-  Scenario: Share Unicat link
+Feature: Sharing unicat links from UniData
 
+  @TEST_SPIN-138 @UD_AllProfiles @UD_DataOwner @UD_DataSteward @UD_ReadOnly @UD_Referent @shareUnicatLink @unicat_MSF
+  Scenario: Sharing unicat links from UniData
     When I go to url
     When I log in with user and password
     Then I go to Articles
