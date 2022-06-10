@@ -1,5 +1,5 @@
 Feature: Unidata home page, read only, check links
-
+@demo04
   Scenario: read only users
 
     When I go to url

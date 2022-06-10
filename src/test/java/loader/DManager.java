@@ -30,7 +30,7 @@ public class DManager {
         options.setHeadless(true);
         driver = new ChromeDriver(options);
 
-        //driver.manage().window().maximize();
+        driver.manage().window().maximize();
         act = new Actions(driver);
         //FirefoxOptions options = new FirefoxOptions().addArguments("port:4444");
         //driver = new FirefoxDriver();
