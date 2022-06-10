@@ -1,10 +1,10 @@
-Feature: Change Elements of UniData & Me
+Feature: Change elements of UniData account
 
-@checkUnidataMe
-Scenario: Update email, check, update back and check
-
-  When I go to url
-  When I log in with user and password
+	#Change elements of UniData & Me
+  @TEST_SPIN-126 @UD_AllProfiles @UD_DataOwner @UD_DataServices @UD_DataSteward @UD_ReadOnly @UD_Referent @UD_Warrantor @UD_staging @changeElements
+  Scenario: Change elements of UniData account
+    When I go to url
+    When I log in with user and password
     Then I go to My Unidata and inside
     Then I update the email with newEmail
     Then I check the email newEmail
