@@ -188,7 +188,7 @@ public class Unidata {
         act.click(createList).perform();
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type='file']")));
         WebElement chooseFile = driver.findElement(By.cssSelector("input[type='file']"));
-        chooseFile.sendKeys("C:\\Users\\jmr\\IdeaProjects\\msf_demo\\src\\test\\resources\\Article-Belongs-to-List.xlsx");
+        chooseFile.sendKeys("target/test-classes/Article-Belongs-to-List.xlsx");
 
         WebElement listName = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/form/div[3]/table/tbody/tr[1]/td[3]/div/input"));
         listName.sendKeys(name + " list " + getIntRandom());
@@ -296,6 +296,15 @@ public class Unidata {
     }
 
     public void iGoToCompositionLists(){
+
+        long timetoWait = 2000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Composition Lists')]")));
         WebElement compositionLists = driver.findElement(By.xpath("//*[contains(text(),'Composition Lists')]"));
         compositionLists.click();
@@ -421,10 +430,32 @@ public class Unidata {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'KADMKLIF08')]")));
         WebElement KADMKLIF08 = driver.findElement(By.xpath("//*[contains(text(),'KADMKLIF08')]"));
 
+        long timetoWait = 2000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         WebElement clickStarButton = driver.findElement(with(By.className("ygtvspacer")).toLeftOf(KADMKLIF08));
         clickStarButton.click();
+
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         WebElement clickStarButtonBelow = driver.findElement(with(By.className("ygtvspacer")).toLeftOf(By.xpath("//span/a/span[3][contains(text(),'KADMKLIF08')]")));
         clickStarButtonBelow.click();
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         article.setModulesKADMKLIF08();
         iReviewArticleModules();
@@ -448,14 +479,22 @@ public class Unidata {
         driver.switchTo().frame("ebx-legacy-component");
         driver.switchTo().frame("ebx_SubSessioniFrame");
 
-        WebElement status = driver.findElement(By.xpath("//div[1]/table/tbody/tr[15]/td[3]/div/div"));
+        long timetoWait = 2000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        WebElement status = driver.findElement(By.xpath("//div[2]/div[1]/table/tbody/tr[12]/td[3]/div/div"));
         article.setCode(status.getText().replaceAll("[^\\d]", ""));
         System.out.println("Collected");
 
         WebElement buttonClose = driver.findElement(By.xpath("//button[contains(text(),'Close')]"));
         buttonClose.click();
-        driver.switchTo().parentFrame();
-        driver.switchTo().parentFrame();
+        //driver.switchTo().parentFrame();
+        //driver.switchTo().parentFrame();
     }
 
     public String iExtractDataFromExcel(String rawString){
@@ -792,19 +831,19 @@ public class Unidata {
         act.doubleClick(feedbackTabButton).perform();
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        wait.until(ExpectedConditions.presenceOfElementLocated((By.xpath("//button[@title='Create']"))));
-        WebElement addFeedbackButton = driver.findElement(By.xpath("//button[@title='Create']"));
+        wait.until(ExpectedConditions.presenceOfElementLocated((By.xpath("//tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button/span"))));
+        WebElement addFeedbackButton = driver.findElement(By.xpath("//tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"));
         addFeedbackButton.click();
         //act.click(addFeedbackButton).perform();
-        try {
+       /* try {
             Thread.sleep(2000);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         driver.switchTo().frame("ebx_InternalPopup_frame");
 
         addAddressee();
@@ -1071,6 +1110,14 @@ public class Unidata {
     }
 
     public void validateOpenTabUnicat(){
+        long timetoWait2 = 2000;
+
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
 
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
