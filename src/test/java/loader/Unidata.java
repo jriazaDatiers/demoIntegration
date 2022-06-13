@@ -655,7 +655,7 @@ public class Unidata {
         WebElement attachButton = driver.findElement(By.xpath("//button[contains(text(),'Attach')]"));
         act.click(attachButton).perform();
 
-        long timetoWait = 5000;
+        long timetoWait = 6000;
 
         try {
             Thread.sleep(timetoWait);
@@ -677,6 +677,7 @@ public class Unidata {
         act.click(okButton).perform();
 
         driver.switchTo().parentFrame();
+        driver.switchTo().frame("ebx-legacy-component");
         WebElement saveCloseButton = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
         saveCloseButton.click();
 
@@ -896,7 +897,11 @@ public class Unidata {
         boolean isEqual = false;
         ArrayList<String> fromExcel = new ArrayList<>();
         //Todo Remember to place a different source for the file
-        String lastFile = String.valueOf(findLast("C:\\excelDownloads\\biomed"));
+
+        String dir = System.getProperty("user.dir");
+        System.out.println(dir);
+        String path = dir + "/src/test/resources/biomed";
+        String lastFile = String.valueOf(findLast(path));
 
         try {
             FileInputStream fs = new FileInputStream(lastFile);
