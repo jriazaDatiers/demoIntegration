@@ -191,7 +191,7 @@ public class Unidata {
         String dir = System.getProperty("user.dir");
 
         chooseFile.sendKeys(dir + "/target/test-classes/Article-Belongs-to-List.xlsx");
-
+        System.out.println(dir);
         WebElement listName = driver.findElement(By.xpath("//html/body/div[1]/div/div/div/div/div[2]/div/form/div[3]/table/tbody/tr[1]/td[3]/div/input"));
         listName.sendKeys(name + " list " + getIntRandom());
         System.out.println("createList");
