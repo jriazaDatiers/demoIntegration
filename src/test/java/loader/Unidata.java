@@ -180,6 +180,13 @@ public class Unidata {
     }
 
     public void creteListFromExcel(String name){
+        long timetoWait = 2000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         driver.switchTo().frame("ebx-legacy-component");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List')]")));
         WebElement createList = driver.findElement(By.xpath("//*[contains(text(),'Create List')]"));
