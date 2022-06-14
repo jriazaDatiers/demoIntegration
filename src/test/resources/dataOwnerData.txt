@@ -6,3 +6,4 @@ participant,Juan
 hasToSucceed,false
 newEmail,juan.moron-consultant@msf.org
 oldEmail,test.ignore@msf.org
+param22, NSL_24

@@ -70,7 +70,7 @@ public class Unidata {
 
     public void login(String userName, String password){
 
-        WebElement element = driver.findElement(By.xpath("//*[contains(text(),'here')]"));
+        WebElement element = driver.findElement(By.xpath("//a[contains(text(),'here')]"));
         element.click();
         WebElement userField = driver.findElement(By.id("login"));
         userField.sendKeys(userName);
@@ -188,9 +188,11 @@ public class Unidata {
         act.click(createList).perform();
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type='file']")));
         WebElement chooseFile = driver.findElement(By.cssSelector("input[type='file']"));
-        chooseFile.sendKeys("target/test-classes/Article-Belongs-to-List.xlsx");
+        String dir = System.getProperty("user.dir");
 
-        WebElement listName = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/form/div[3]/table/tbody/tr[1]/td[3]/div/input"));
+        chooseFile.sendKeys(dir + "/target/test-classes/Article-Belongs-to-List.xlsx");
+
+        WebElement listName = driver.findElement(By.xpath("//html/body/div[1]/div/div/div/div/div[2]/div/form/div[3]/table/tbody/tr[1]/td[3]/div/input"));
         listName.sendKeys(name + " list " + getIntRandom());
         System.out.println("createList");
 
@@ -290,9 +292,10 @@ public class Unidata {
     }
 
     public void iClickOnTreeView(){
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Tree View')]")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Tree View')]")));
         WebElement std = driver.findElement(By.xpath("//*[contains(text(),'Tree View')]"));
-        std.click();
+        //std.click();
+        act.click(std).perform();
     }
 
     public void iGoToCompositionLists(){
@@ -837,10 +840,10 @@ public class Unidata {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        wait.until(ExpectedConditions.presenceOfElementLocated((By.xpath("//tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button/span"))));
-        WebElement addFeedbackButton = driver.findElement(By.xpath("//tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"));
-        addFeedbackButton.click();
-        //act.click(addFeedbackButton).perform();
+        wait.until(ExpectedConditions.presenceOfElementLocated((By.xpath("//div[8]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"))));
+        WebElement addFeedbackButton = driver.findElement(By.xpath("//div[8]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"));
+        //addFeedbackButton.click();
+        act.click(addFeedbackButton).perform();
        /* try {
             Thread.sleep(2000);
         } catch (Exception e) {
@@ -994,12 +997,15 @@ public class Unidata {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//table[4]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/div/button")));
         WebElement addAddressee = driver.findElement(By.xpath("//table[4]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/div/button"));
-        act.click(addAddressee).perform();
+        WebElement anchorToMove = driver.findElement(By.xpath("//*[contains(text(),'Copy to WG Leader?')]"));
+        act.moveToElement(anchorToMove);
+        addAddressee.click();
+        //act.click(addAddressee).perform();
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(4000);
         } catch (Exception e) {
             e.printStackTrace();
         }
