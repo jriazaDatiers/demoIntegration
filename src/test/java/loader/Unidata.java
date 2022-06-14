@@ -187,11 +187,25 @@ public class Unidata {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("wait 1");
+
         driver.switchTo().frame("ebx-legacy-component");
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("wait 2");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List')]")));
         WebElement createList = driver.findElement(By.xpath("//*[contains(text(),'Create List')]"));
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List')]")));
         createList.click();
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("wait 3");
         act.click(createList).perform();
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type='file']")));
         WebElement chooseFile = driver.findElement(By.cssSelector("input[type='file']"));
