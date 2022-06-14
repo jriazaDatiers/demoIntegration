@@ -1,8 +1,8 @@
 user,ITCDS
 password,Donata0202@
 name,Donata
-addressee,Juan Manuel Moron Riaza
-participant,Juan
+addressee,Mr Escobar Datamaster
+participant,Mr Escobar Datamaster
 hasToSucceed,false
 newEmail,juan.moron-consultant@msf.org
 oldEmail,test.ignore@msf.org

@@ -37,11 +37,13 @@ public class Unidata {
     Actions act;
     ArrayList<String> articleList = new ArrayList<>();
     Article article = new Article();
+    final AuxOperations operations;
 
-    public Unidata(Wait<WebDriver> wait, WebDriver driver, Actions act) {
+    public Unidata(Wait<WebDriver> wait, WebDriver driver, Actions act, AuxOperations operations) {
         this.wait = wait;
         this.driver = driver;
         this.act = act;
+        this.operations = operations;
     }
 
     public void firstSteps(){
@@ -1002,6 +1004,8 @@ public class Unidata {
         WebElement addAddressee = driver.findElement(By.xpath("//table[4]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/div/button"));
         WebElement anchorToMove = driver.findElement(By.xpath("//*[contains(text(),'Copy to WG Leader?')]"));
         act.moveToElement(anchorToMove);
+        System.out.println(addAddressee.getAttribute("disabled"));
+
         addAddressee.click();
         //act.click(addAddressee).perform();
 
@@ -1011,7 +1015,7 @@ public class Unidata {
             e.printStackTrace();
         }
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[1]/td[3]/div/div/div/div/div/ol/li[1]/div/div/div/div/input[2]")));
-        driver.findElement(By.xpath("//tr[1]/td[3]/div/div/div/div/div/ol/li[1]/div/div/div/div/input[2]")).sendKeys("Juan Manuel Moron Riaza");
+        driver.findElement(By.xpath("//tr[1]/td[3]/div/div/div/div/div/ol/li[1]/div/div/div/div/input[2]")).sendKeys(operations.getAddressee());
         try {
             Thread.sleep(2000);
         } catch (Exception e) {
@@ -1145,14 +1149,16 @@ public class Unidata {
     }
 
     public void iSelectFeedbacckAddressedToMe(){
-        long timetoWait2 = 1000;
-        driver.switchTo().frame("ebx-legacy-component");
-        driver.switchTo().frame("feedbackFrame");
+        long timetoWait2 = 2000;
+
         try {
             Thread.sleep(timetoWait2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        driver.switchTo().frame("ebx-legacy-component");
+        driver.switchTo().frame("feedbackFrame");
 
         driver.switchTo().frame("ebx-legacy-component");
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[2]/div/table/tbody/tr[1]/td[1]/label/input")));

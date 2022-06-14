@@ -1,5 +1,5 @@
 Feature: Add article to existing list
-
+@addArticleToExistingList
   Scenario: Add article to existing list
 
     When I go to url

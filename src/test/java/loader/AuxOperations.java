@@ -64,7 +64,11 @@ public class AuxOperations {
         while (scanner.hasNextLine()){
             rawNextLine = scanner.nextLine().split(COMMA_DELIMETER);
             key = rawNextLine[0].replaceAll(" ","");
-            value = rawNextLine[1].replaceAll(" ","");
+            if (key.contains("addressee") || key.contains("participant") ) {
+                value = rawNextLine[1];
+            } else {
+                value = rawNextLine[1].replaceAll(" ","");
+            }
             roleDataMap.put(key,value);
         }
         closeFile(scanner);

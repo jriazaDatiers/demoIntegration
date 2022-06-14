@@ -19,7 +19,7 @@ public class StepDefinitions {
     static WebDriver driver;
     static Wait<WebDriver> wait;
     static Actions act;
-    private final AuxOperations operations = new AuxOperations();
+    final AuxOperations operations = new AuxOperations();
 
 
     @Before
@@ -29,7 +29,7 @@ public class StepDefinitions {
         driver = driverManager.driver;
         wait = driverManager.wait;
         act = driverManager.act;
-        testUnidata = new Unidata(wait,driver, act);
+        testUnidata = new Unidata(wait,driver, act, operations);
         //String role = System.getProperty("role");
         String role = "UD_dataOwner";
         //String environment = System.getProperty("omgeving");
