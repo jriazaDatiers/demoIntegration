@@ -189,7 +189,8 @@ public class Unidata {
         WebElement createList = driver.findElement(By.xpath("//*[contains(text(),'Create List')]"));
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List')]")));
         createList.click();
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type='file']")));
+        act.click(createList).perform();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[type='file']")));
         WebElement chooseFile = driver.findElement(By.cssSelector("input[type='file']"));
         String dir = System.getProperty("user.dir");
 
