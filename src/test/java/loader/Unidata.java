@@ -498,8 +498,9 @@ public class Unidata {
         article.setCode(status.getText().replaceAll("[^\\d]", ""));
         System.out.println("Collected");
 
-        WebElement buttonClose = driver.findElement(By.xpath("//button[contains(text(),'Close')]"));
-        buttonClose.click();
+        WebElement buttonClose = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
+        //buttonClose.click();
+        act.click(buttonClose).perform();
         driver.switchTo().alert().accept();
         driver.switchTo().parentFrame();
         driver.switchTo().parentFrame();
@@ -1215,4 +1216,40 @@ public class Unidata {
         System.out.println("Anchor");
     }
 
+    public void goToDescriptions() {
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Descriptions')]")));
+        WebElement descriptionMenu = driver.findElement(By.xpath("//*[contains(text(),'Descriptions')]"));
+        act.click(descriptionMenu).perform();
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Descriptions (All)')]")));
+        System.out.println("Descriptions");
+
+    }
+
+
+    public void clickOnDescriptionElement() {
+        driver.switchTo().frame("ebx-legacy-component");
+        WebElement record = driver.findElement(By.xpath("//div[2]/div/table/tbody/tr[7]/td[2]/div/div"));
+        act.doubleClick(record).perform();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'URL to View Only')]")));
+
+        System.out.println("Record");
+
+    }
+
+    public void closeRecord() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[contains(text(),'Close')]")));
+        WebElement buttonClose = driver.findElement(By.xpath("//button[contains(text(),'Close')]"));
+        act.click(buttonClose).perform();
+
+        System.out.println("Close record");
+
+    }
+
+    public void validateIamOnDescriptions() {
+        driver.switchTo().parentFrame();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Descriptions (All)')]")));
+        System.out.println("Descriptions All");
+    }
 }

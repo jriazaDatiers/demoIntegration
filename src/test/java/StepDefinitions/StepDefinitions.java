@@ -197,22 +197,22 @@ public class StepDefinitions {
 
     @Then("I go to Descriptions Menu")
     public void iGoToDescriptionsMenu() {
-        //testUnidata.goToDescriptions();
+        testUnidata.goToDescriptions();
     }
 
     @Then("I click on a Description")
     public void iClickOnADescription() {
-        //testUnidata.clickOnDescriptionElement();
+        testUnidata.clickOnDescriptionElement();
     }
 
     @Then("I close the record")
     public void iCloseTheRecord() {
-        //testUnidata.closeRecord();
+        testUnidata.closeRecord();
     }
 
     @Then("I validate I am on the description table again")
     public void iValidateIAmOnTheDescriptionTableAgain() {
-        //testUnidata.validateIamOnDescriptions();
+        testUnidata.validateIamOnDescriptions();
     }
 
     @Then("I delete an article list")
