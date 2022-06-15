@@ -120,6 +120,10 @@ public class AuxOperations {
         return roleDataMap.get("addressee");
     }
 
+    public String getListOwner() {
+        return roleDataMap.get("listOwner");
+    }
+
     public String getParticipant() {
         return roleDataMap.get("participant");
     }

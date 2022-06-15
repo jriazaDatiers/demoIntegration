@@ -218,7 +218,7 @@ public class StepDefinitions {
     @Then("I delete an article list")
     public void iDeleteAnArticleList( ) {
         String status = "true";
-        testUnidata.selectElementOnList(operations.getParticipant());
+        testUnidata.selectElementOnList(operations.getListOwner());
         testUnidata.clickOnActionsMenu();
         testUnidata.deleteArticleList(status);
     }

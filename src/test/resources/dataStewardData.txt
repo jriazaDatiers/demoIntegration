@@ -3,6 +3,7 @@ password,Donata0202@
 name,Donata
 addressee,Mr Escobar Datamaster
 participant,Mr Escobar Datamaster
+listOwner,Donata
 hasToSucceed,false
 newEmail,juan.moron-consultant@msf.org
 oldEmail,test.ignore@msf.org
