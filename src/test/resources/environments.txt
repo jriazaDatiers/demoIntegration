@@ -1,2 +1,2 @@
 Production,https://unidata.msf.org
-STAGING,https://vm20.unidata.msf.org
+STAGING,https://vm24.unidata.msf.org

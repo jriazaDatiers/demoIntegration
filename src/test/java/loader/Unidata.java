@@ -652,7 +652,7 @@ public class Unidata {
     }
 
     public void addArticleOnExistingList(){
-        selectElementOnList("Escobar");
+        selectElementOnList(operations.getName());
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[contains(text(),'Contains (Articles)')]"))));
         WebElement containButton = driver.findElement(By.xpath("//*[contains(text(),'Contains (Articles)')]"));
         act.click(containButton).perform();
@@ -744,7 +744,7 @@ public class Unidata {
     }
 
     public void detachElementsFromList() {
-        selectElementOnList("Escobar");
+        selectElementOnList(operations.getName());
 
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[contains(text(),'Contains (Articles)')]"))));
         WebElement containButton = driver.findElement(By.xpath("//*[contains(text(),'Contains (Articles)')]"));
@@ -954,7 +954,7 @@ public class Unidata {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        driver.findElement(By.xpath("//div[2]/input[2]")).sendKeys("Mr Escobar Datamaster");
+        driver.findElement(By.xpath("//div[2]/input[2]")).sendKeys(operations.getParticipant());
         try {
             Thread.sleep(timetoWait2);
         } catch (InterruptedException e) {
@@ -1047,33 +1047,47 @@ public class Unidata {
             priorityMenu.sendKeys("!! High Priority");
         }
 
-        try {
-            Thread.sleep(timetoWait2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/input[2]")).sendKeys(Keys.ENTER);
+        /*driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/input[2]")).sendKeys(Keys.ENTER);
         WebElement toHook = driver.findElement(By.xpath("//*[contains(text(),'Addressed to MSF Entity')]"));
         toHook.click();
 
         WebElement addMessage = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[2]/td[3]/div/div/div/div/div/div/button"));
         act.click(addMessage).perform();
         WebElement textArea = driver.findElement(By.xpath("//tr[2]/td[3]/div/div/div/div/div/ol/li[1]/div/div/table/tbody/tr[4]/td[3]/div/div/div/textarea"));
-        textArea.sendKeys("Test comment");
+        textArea.sendKeys("Test comment");*/
 
-        System.out.println("Select Priority and message added");
+        System.out.println("Select Priority");
     }
 
     public void goToFeedBackAddressedToMe(){
         goToFeedback();
+
+        long timetoWait = 1000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Feedback (Addressed to Me)')]")));
         WebElement feedBackMeMenu = driver.findElement(By.xpath("//*[contains(text(),'Feedback (Addressed to Me)')]"));
         //WebElement linkFeedBackMenu = driver.findElement(with(By.className("_ebx-link-tree_item")).toLeftOf(feedBackMeMenu));
         act.click(feedBackMeMenu).perform();
 
+        long timetoWait2 = 2000;
 
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        driver.switchTo().frame("ebx-legacy-component");
+        driver.switchTo().frame("feedbackFrame");
+        driver.switchTo().frame("ebx-legacy-component");
+
+        WebElement feedbackTextHook = driver.findElement(By.xpath("//*[contains(text(),'Feedback (Addressed to Me)')]"));
 
     }
 
@@ -1081,8 +1095,21 @@ public class Unidata {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[2]/td[3]/div/div/div/div/div/div/button")));
         WebElement addNewMessage = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[2]/td[3]/div/div/div/div/div/div/button"));
 
+        long timetoWait2 = 500;
+
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,1000)");
+
+
+        addNewMessage.click();
         WebElement newMessageTextArea = findNewTextAreaMessageFeedback();
-        act.click(addNewMessage);
+        //act.click(addNewMessage);
         newMessageTextArea.sendKeys("Text answer");
 
     }
@@ -1149,18 +1176,7 @@ public class Unidata {
     }
 
     public void iSelectFeedbacckAddressedToMe(){
-        long timetoWait2 = 2000;
 
-        try {
-            Thread.sleep(timetoWait2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        driver.switchTo().frame("ebx-legacy-component");
-        driver.switchTo().frame("feedbackFrame");
-
-        driver.switchTo().frame("ebx-legacy-component");
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[2]/div/table/tbody/tr[1]/td[1]/label/input")));
         WebElement feedbackElement = driver.findElement(By.xpath("//*[contains(text(),'Open')]"));
         act.doubleClick(feedbackElement).perform();

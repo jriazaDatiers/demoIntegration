@@ -7,6 +7,6 @@ Feature: Respond Feedback
     Then I go to Feedback Addressed to me
     Then I select a feedback addressed to me
     Then I type a new message Feedback
-    Then I add and addressee
     Then I change the priority
+    Then I add and addressee
     Then I save and close the feedback

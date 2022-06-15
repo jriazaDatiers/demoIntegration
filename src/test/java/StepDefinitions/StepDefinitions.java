@@ -31,7 +31,7 @@ public class StepDefinitions {
         act = driverManager.act;
         testUnidata = new Unidata(wait,driver, act, operations);
         //String role = System.getProperty("role");
-        String role = "UD_dataOwner";
+        String role = "UD_dataSteward";
         //String environment = System.getProperty("omgeving");
         String environment = "STAGING";
         //System.out.println(role + " " + environment);
