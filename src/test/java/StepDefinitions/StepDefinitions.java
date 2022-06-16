@@ -64,14 +64,11 @@ public class StepDefinitions {
     @Then("I go to My Unidata")
     public void iGoToMyUnidata() {
         testUnidata.unidataMSFME();
-        testUnidata.myUnidata();
     }
 
     @Then("I go to My Unidata and inside")
     public void iGoToMyUnidataAndInside() {
         testUnidata.unidataMSFME();
-        testUnidata.myUnidata();
-        testUnidata.goToMydataIFrame();
     }
 
     @After
