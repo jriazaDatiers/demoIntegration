@@ -1,6 +1,7 @@
 user,ESCDO
 password,Downy2020!!
 name,Escobar
+listOwner,Donata
 addressee,Mrs Conrad Sultanto
 participant,Mrs Conrad Sultanto
 hasToSucceed,false

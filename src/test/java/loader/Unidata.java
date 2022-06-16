@@ -514,8 +514,9 @@ public class Unidata {
         String preExpr = "//div/table/tbody/tr/td[1][contains(text(),'";
         String expr = preExpr + name + " list')]";
         //String expr = "//*[contains(text(),'Escobar list 683')]";
+        String toSearch = "//*[contains(text(),'"+ name + "')]";
 
-        WebElement rowToDelete = driver.findElement(By.xpath(expr));
+        WebElement rowToDelete = driver.findElement(By.xpath(toSearch));
         //TODO obtener el texto para mostrarlo en el log
         String listToDelete = rowToDelete.getText();
         act.doubleClick(rowToDelete).perform();
@@ -631,9 +632,10 @@ public class Unidata {
         act.click(okButton).perform();
 
         driver.switchTo().parentFrame();
-        driver.switchTo().frame("ebx-legacy-component");
+        //driver.switchTo().frame("ebx-legacy-component");
         WebElement saveCloseButton = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
-        saveCloseButton.click();
+        //saveCloseButton.click();
+        act.click(saveCloseButton).perform();
 
         driver.switchTo().defaultContent();
         System.out.println("Added Article");
