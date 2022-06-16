@@ -46,26 +46,6 @@ public class Unidata {
         this.operations = operations;
     }
 
-    public void firstSteps(){
-
-        driver.switchTo().newWindow(WindowType.TAB);
-        driver.get("https://staging.unidata.msf.org/");
-
-        unidataMSFME();
-        myUnidata();
-
-        int size = driver.findElements(By.tagName("iframe")).size();
-        System.out.println(size);
-        goToMydataIFrame();
-        checkEmail("test.ignore@msf.org");
-        updateEmail("juan.moron-consultant@msf.org");
-        checkEmail("juan.moron-consultant@msf.org");
-        updateEmail("test.ignore@msf.org");
-        checkEmail("test.ignore@msf.org");
-
-
-    }
-
     public void iGoTo(String url){
         driver.get(url);
     }
@@ -84,70 +64,39 @@ public class Unidata {
     }
 
     public void unidataMSFME(){
-/*        Function<WebDriver,WebElement> function;
-        function = arg0 ->
-        {
-            WebElement buttonMe = driver.findElement(By.xpath("/html/body/div/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/li[2]/div[2]/div/div/div[2]/span"));
-            buttonMe.click();
-            return buttonMe;
-        };
-        wait.until(function);*/
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//html/body/div/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/li[2]/div[2]/div/div/div[2]/span")));
-        WebElement buttonMe = driver.findElement(By.xpath("//html/body/div/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/li[2]/div[2]/div/div/div[2]/span"));
-        buttonMe.click();
-    }
 
-    public void myUnidata(){
-/*        Function<WebDriver,WebElement> function;
-        function = arg0 ->
-        {
-            WebElement myUnidata = driver.findElement(By.xpath("/html/body/div/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/ul[1]/li[1]/div[2]/a/span"));
-            myUnidata.click();
-            return myUnidata;
-        };
-        wait.until(function);*/
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/ul[1]/li[1]/div[2]/a/span")));
-        WebElement myUnidata = driver.findElement(By.xpath("/html/body/div/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/ul[1]/li[1]/div[2]/a/span"));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'UniData, MSF & Me')]")));
+        WebElement buttonMe = driver.findElement(By.xpath("//*[contains(text(),'UniData, MSF & Me')]"));
+        act.click(buttonMe).perform();
 
-        myUnidata.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'My UniData')]")));
+        WebElement buttonMyUnidata = driver.findElement(By.xpath("//*[contains(text(),'My UniData')]"));
+        act.click(buttonMyUnidata).perform();
 
+        driver.switchTo().frame("ebx-legacy-component");
+        long timetoWait = 2000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        driver.switchTo().frame("myUnidataFrame");
+        driver.switchTo().frame("ebx-legacy-component");
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'E-Mail')]")));
+        WebElement email = driver.findElement(By.xpath("//*[contains(text(),'E-Mail')]"));
+
+        System.out.println("My Unidata");
     }
 
     public void updateEmail(String emailComtent){
         WebElement emailField = driver.findElement(By.xpath("//*[@id=\"___40_cfvAO__email\"]"));
         emailField.clear();
         emailField.sendKeys(emailComtent);
-        WebElement saveButton = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/form/div[3]/div[1]/button[2]"));
+        WebElement saveButton = driver.findElement(By.xpath("//button[contains(text(),'Save')]"));
         saveButton.click();
-    }
-
-    public void goToMydataIFrame(){
-
-        driver.switchTo().frame("ebx-legacy-component");
-        /*Function<WebDriver,WebElement> function1;
-        function1 = arg0 ->
-        {
-            WebElement divEbxLegacy = driver.findElement(By.xpath("//*[@id=\"ebx_Workspace\"]"));
-            divEbxLegacy.isDisplayed();
-            return divEbxLegacy;
-        };
-        wait.until(function1);*/
-        //WebElement divEbxLegacy = driver.findElement(By.xpath("//*[@id=\"ebx_Workspace\"]"));
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"ebx_Workspace\"]")));
-        driver.switchTo().frame("myUnidataFrame");
-        /*Function<WebDriver,WebElement> function2;
-        function2 = arg0 ->
-        {
-            WebElement divmyUnidataFrame = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div[1]/div[1]/div/div/div[1]/div/div/div/div/h2[1]"));
-            divmyUnidataFrame.isDisplayed();
-            return divmyUnidataFrame;
-        };
-        wait.until(function2);*/
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div/div/div/div/div[1]/div[1]/div/div/div[1]/div/div/div/div/h2[1]")));
-        //WebElement divmyUnidataFrame = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div[1]/div[1]/div/div/div[1]/div/div/div/div/h2[1]"));
-
-        driver.switchTo().frame("ebx-legacy-component");
     }
 
     public void checkEmail(String emailComtent){
