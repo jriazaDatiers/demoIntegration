@@ -158,7 +158,7 @@ public class Unidata {
     }
 
     public void goToArticles(){
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Articles')]")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Articles')]")));
         String pathArticles = "//*[contains(text(),'Articles')]";
         WebElement articles = driver.findElement(By.xpath(pathArticles));
 
@@ -170,13 +170,10 @@ public class Unidata {
     }
 
     public void goToFeedback(){
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Feedback')]")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Feedback')]")));
         String pathFeedback = "//*[@id=\"_ebx-root\"]/div/div/div[2]/div/div[1]/div/div[2]/div/div[1]/div/div/div/ul/li[9]/div[2]/div/button";
         WebElement feedbackMenu = driver.findElement(By.xpath("//*[contains(text(),'Feedback')]"));
         act.click(feedbackMenu).perform();
-        /*if(feedbackMenu.getAttribute("title").equals("Collapsed")){
-            feedbackMenu.click();
-        }*/
 
         System.out.println("Feedback Menu");
     }
@@ -1146,7 +1143,14 @@ public class Unidata {
     public void clickSpecificArticle(){
         driver.switchTo().frame("ebx-legacy-component");
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div/table/tbody/tr/td[contains(text(),'ADAPADAP2I')]")));
-        //wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[14]/td[1]/table/tbody/tr/td[2]/button")));
+        WebElement elementADAPADAP2I = driver.findElement(By.xpath("//*[contains(text(),'ADAPADAP2I')]"));
+        act.click(elementADAPADAP2I).perform();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Standardization')]")));
+    }
+
+    public void clickShareLink(){
+        driver.switchTo().frame("ebx-legacy-component");
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div/table/tbody/tr/td[contains(text(),'ADAPADAP2I')]")));
 
         WebElement elementADAPADAP2I = driver.findElement(By.xpath("//*[contains(text(),'ADAPADAP2I')]"));
         WebElement shareLinkButton = driver.findElement(with(By.xpath("(//button[@type='button'])")).toLeftOf(elementADAPADAP2I));
@@ -1154,6 +1158,7 @@ public class Unidata {
         shareLinkButton.click();
 
     }
+
 
     public void validateOpenTabUnicat(){
         long timetoWait2 = 2000;
@@ -1230,6 +1235,7 @@ public class Unidata {
 
     public void clickOnDescriptionElement() {
         driver.switchTo().frame("ebx-legacy-component");
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[2]/div/table/tbody/tr[7]/td[2]/div/div")));
         WebElement record = driver.findElement(By.xpath("//div[2]/div/table/tbody/tr[7]/td[2]/div/div"));
         act.doubleClick(record).perform();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'URL to View Only')]")));

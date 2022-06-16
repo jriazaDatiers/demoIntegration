@@ -1,6 +1,6 @@
 Feature: Participate in Article list management
 
-  @article @Regression @ReadOnly
+  @TEST_SPIN-150 @UD_AllProfiles @UD_DataOwner @UD_DataServices @UD_DataSteward @UD_ReadOnly @UD_Referent @UD_Warrantor @UD_staging
   Scenario: Participate in Article list management
 
     When I go to url

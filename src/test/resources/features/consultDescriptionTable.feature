@@ -1,5 +1,5 @@
 Feature: Consult description
-
+  @TEST_SPIN-129 @UD_AllProfiles @UD_DataOwner @UD_DataServices @UD_DataSteward @UD_ReadOnly @UD_Referent @UD_Warrantor @UD_staging
   Scenario: Consult description
 
     When I go to url

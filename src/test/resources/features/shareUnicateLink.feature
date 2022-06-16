@@ -1,5 +1,5 @@
 Feature: Sharing unicat links from UniData
-
+@DASE
   @TEST_SPIN-138 @demo04 @UD_AllProfiles @UD_DataOwner @UD_DataSteward @UD_ReadOnly @UD_Referent @shareUnicatLink @unicat_MSF
   Scenario: Sharing unicat links from UniData
     When I go to url

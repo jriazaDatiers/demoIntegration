@@ -356,6 +356,11 @@ public class StepDefinitions {
     public void iCreateANSTArticle() {
         testUnidata.createNSTArticle();
     }
+
+    @Then("I click on the sharing link on specific article")
+    public void iClickOnTheSharingLinkOnSpecificArticle() {
+        testUnidata.clickShareLink();
+    }
 }
 
 
