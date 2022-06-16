@@ -1,6 +1,6 @@
 Feature: Delete Article list
 
-  @TEST_MSFDEM-147 @rq3
+  @TEST_SPIN-308 @rq3
   Scenario: Delete Article list
     When I go to url
     When I log in with user and password
