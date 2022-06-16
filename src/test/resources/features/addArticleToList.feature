@@ -1,7 +1,7 @@
-Feature: Add article to existing list
-@addArticleToExistingList
-  Scenario: Add article to existing list
+Feature: Add Article to existing list
 
+  @TEST_MSFDEM-146 @rq3
+  Scenario: Add Article to existing list
     When I go to url
     When I log in with user and password
     Then I go to Articles

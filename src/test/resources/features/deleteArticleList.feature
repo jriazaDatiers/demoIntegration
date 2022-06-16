@@ -1,7 +1,7 @@
-Feature: delete Article list
-@deleteArticleLists
-  Scenario: Delete Article Lists
+Feature: Delete Article list
 
+  @TEST_MSFDEM-147 @rq3
+  Scenario: Delete Article list
     When I go to url
     When I log in with user and password
     Then I go to Articles
