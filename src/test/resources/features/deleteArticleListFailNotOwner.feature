@@ -1,7 +1,7 @@
-Feature: Delete Article Lists but fail because not owner
-@deleteArticleFailNotOwner
-  Scenario: Delete Article Lists but fail because not owner
+Feature: Delete Article Lists but fail due read only user
 
+  @TEST_SPIN-314 @rq3
+  Scenario: Delete Article Lists but fail due read only user
     When I go to url
     When I log in with user and password
     Then I go to Articles
