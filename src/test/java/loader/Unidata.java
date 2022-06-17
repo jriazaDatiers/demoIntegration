@@ -263,9 +263,10 @@ public class Unidata {
             e.printStackTrace();
         }
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Composition Lists')]")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Composition Lists')]")));
         WebElement compositionLists = driver.findElement(By.xpath("//*[contains(text(),'Composition Lists')]"));
-        compositionLists.click();
+        //compositionLists.click();
+        act.click(compositionLists).perform();
 
         System.out.println("Composition");
 
@@ -387,7 +388,7 @@ public class Unidata {
 
     public void iClickOnTreeViewBranch(){
         driver.switchTo().frame("ebx-legacy-component");
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'KADMKLIF08')]")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'KADMKLIF08')]")));
         WebElement KADMKLIF08 = driver.findElement(By.xpath("//*[contains(text(),'KADMKLIF08')]"));
 
         long timetoWait = 2000;
@@ -451,7 +452,7 @@ public class Unidata {
         article.setCode(status.getText().replaceAll("[^\\d]", ""));
         System.out.println("Collected");
 
-        WebElement buttonClose = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
+        WebElement buttonClose = driver.findElement(By.xpath("//button[contains(text(),'Close')]"));
         //buttonClose.click();
         act.click(buttonClose).perform();
         driver.switchTo().alert().accept();
