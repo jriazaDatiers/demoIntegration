@@ -60,6 +60,7 @@ public class Unidata {
         passwordField.sendKeys(password);
         WebElement submit = driver.findElement(By.id("edit-submit"));
         submit.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'UniData, MSF & Me')]")));
         System.out.println("Logged in");
     }
 
