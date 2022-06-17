@@ -3,6 +3,8 @@ password,Conrad2020@
 name,Conrad
 addressee,Juan Manuel Moron Riaza
 participant,Juan
-hasToSucceed,true
+otherListOwner,Escobar
+listOwner,Conrad
+hasToSucceed,false
 newEmail,juan.moron-consultant@msf.org
 oldEmail,test.ignore@msf.org
