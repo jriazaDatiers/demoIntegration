@@ -32,16 +32,12 @@ public class DManager {
 
         WebDriverManager.chromedriver().setup();
         //WebDriverManager.firefoxdriver().setup();
-        //String downloadDir = System.getProperty("user.dir") + "/target/test-classes";
-        //String downloadDir = System.getProperty("user.dir") + "\\target\\test-classes";
+
         downloadDirectory = createDownloadDirectory();
 
 
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", downloadDirectory);
-        System.out.println(downloadDirectory);
-
-
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--log-level=3", "--disable-gpu", "--disable-logging", "--output=/dev/null", "--disable-in-process-stack-traces");
@@ -105,10 +101,7 @@ public class DManager {
 
     private char charReturn() {
         Random random = new Random();
-        char randomChar = (char) (random.nextInt(26) + 'a');
-        System.out.println("Generated random Character: " + randomChar);
-
-        return randomChar;
+        return  (char) (random.nextInt(26) + 'a');
     }
 
     private String createDownloadDirectory() {

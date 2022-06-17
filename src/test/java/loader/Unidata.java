@@ -35,15 +35,17 @@ public class Unidata {
     Wait<WebDriver> wait;
     WebDriver driver;
     Actions act;
+    String downloadDirectory;
     ArrayList<String> articleList = new ArrayList<>();
     Article article = new Article();
     final AuxOperations operations;
 
-    public Unidata(Wait<WebDriver> wait, WebDriver driver, Actions act, AuxOperations operations) {
+    public Unidata(Wait<WebDriver> wait, WebDriver driver, Actions act, AuxOperations operations, String downloadDirectory) {
         this.wait = wait;
         this.driver = driver;
         this.act = act;
         this.operations = operations;
+        this.downloadDirectory = downloadDirectory;
     }
 
     public void iGoTo(String url){
@@ -129,7 +131,6 @@ public class Unidata {
     }
 
     public void creteListFromExcel(String name){
-        long timetoWait = 2000;
 
         driver.switchTo().frame("ebx-legacy-component");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List')]")));
@@ -137,12 +138,15 @@ public class Unidata {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List')]")));
         createList.click();
         act.click(createList).perform();
+
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[type='file']")));
         WebElement chooseFile = driver.findElement(By.cssSelector("input[type='file']"));
         String dir = System.getProperty("user.dir");
-
         chooseFile.sendKeys(dir + "/target/test-classes/Article-Belongs-to-List.xlsx");
-        System.out.println(dir);
+
+        //String lastFile = String.valueOf(findLast(downLoadDirectory));
+        //chooseFile.sendKeys(lastFile);
+
         WebElement listName = driver.findElement(By.xpath("//html/body/div[1]/div/div/div/div/div[2]/div/form/div[3]/table/tbody/tr[1]/td[3]/div/input"));
         listName.sendKeys(name + " list " + getIntRandom());
         System.out.println("createList");
@@ -466,11 +470,11 @@ public class Unidata {
         return rawString.substring(0,rawString.indexOf('-')).replaceAll("\\s+","");
     }
 
-    public void iCheckExcel(String downLoadDirectory) throws IOException {
+    public void iCheckExcel() throws IOException {
         ArrayList<String> fromExcel = new ArrayList<>();
-        //Todo Remember to place a different source for the file
-        String lastFile = String.valueOf(findLast(downLoadDirectory));
-        System.out.println(downLoadDirectory);
+
+        String lastFile = String.valueOf(findLast(downloadDirectory));
+
         FileInputStream fs = new FileInputStream(lastFile);
         XSSFWorkbook workbook = new XSSFWorkbook(fs);
         XSSFSheet sheet = workbook.getSheetAt(0);
@@ -851,45 +855,66 @@ public class Unidata {
         WebElement launchExport = driver.findElement(By.xpath("//*[contains(text(),'Launch export')]"));
         act.click(launchExport).perform();
 
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Click here to download the excel')]")));
+        WebElement downloadExcel = driver.findElement(By.xpath("//*[contains(text(),'Click here to download the excel')]"));
+        act.click(downloadExcel).perform();
+
+        long timetoWait=3000;
+        try {
+
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        WebElement buttonClose = driver.findElement(By.xpath("//*[contains(text(),'Close')]"));
+        act.click(buttonClose).perform();
+
         System.out.println("Export excel Biomed");
     }
 
     public void checkResultsExcelAlphaOrder(){
         boolean isEqual = false;
         ArrayList<String> fromExcel = new ArrayList<>();
-        //Todo Remember to place a different source for the file
+        List<String> sortedList;
 
-        String dir = System.getProperty("user.dir");
-        System.out.println(dir);
-        String path = dir + "/src/test/resources/biomed";
-        String lastFile = String.valueOf(findLast(path));
+
+        //String dir = System.getProperty("user.dir");
+        //System.out.println(dir);
+        //String path = dir + "/src/test/resources/biomed";
+        String lastFile = String.valueOf(findLast(downloadDirectory));
 
         try {
             FileInputStream fs = new FileInputStream(lastFile);
             XSSFWorkbook workbook = new XSSFWorkbook(fs);
             XSSFSheet sheet = workbook.getSheetAt(0);
             Iterator<Row> rowItr = sheet.rowIterator();
+            int count = 1;
 
             while ( rowItr.hasNext() ) {
+
                 XSSFRow row = (XSSFRow) rowItr.next();
-                XSSFCell cell;
+                if (count >1) {
+                    XSSFCell cell;
 
-                Iterator<Cell> cellItr = row.cellIterator();
+                    Iterator<Cell> cellItr = row.cellIterator();
 
-                if(cellItr.hasNext()) {
-                    cell = (XSSFCell) cellItr.next();
-                    fromExcel.add(iExtractDataFromExcel(cell.toString()));
+                    if(cellItr.hasNext()) {
+                        cell = (XSSFCell) cellItr.next();
+                        fromExcel.add(iExtractDataFromExcel(cell.toString()));
+                    }
                 }
+                count ++;
             }
 
-            List<String> sortedList = fromExcel.stream().sorted().collect(Collectors.toList());
+            sortedList = fromExcel.stream().sorted().collect(Collectors.toList());
 
             isEqual = fromExcel.equals(sortedList);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(isEqual);
+        //System.out.println(isEqual);
         assertTrue(isEqual);
         System.out.println("Excel checked");
     }

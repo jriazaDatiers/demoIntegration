@@ -31,7 +31,7 @@ public class StepDefinitions {
         wait = driverManager.wait;
         act = driverManager.act;
         downLoadDirectory = driverManager.downloadDirectory;
-        testUnidata = new Unidata(wait,driver, act, operations);
+        testUnidata = new Unidata(wait,driver, act, operations, downLoadDirectory);
         String role = System.getProperty("role");
         //String role = "UD_dataSteward";
         String environment = System.getProperty("omgeving");
@@ -120,7 +120,7 @@ public class StepDefinitions {
 
     @Then("I check the excel")
     public void iCheckTheExcel() throws IOException {
-        testUnidata.iCheckExcel(downLoadDirectory);
+        testUnidata.iCheckExcel();
     }
 
     @Then("I go to Articles")
