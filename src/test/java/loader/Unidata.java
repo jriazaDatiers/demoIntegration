@@ -237,9 +237,9 @@ public class Unidata {
     }
 
     public void iGoToKitCompositions(){
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'STD')]")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'STD')]")));
         WebElement std = driver.findElement(By.xpath("//*[contains(text(),'STD')]"));
-        std.click();
+        act.click(std).perform();
     }
 
     public void iClickOnTreeView(){
@@ -344,17 +344,19 @@ public class Unidata {
         //TODO to review
         WebElement contains = driver.findElement(By.xpath("//*[contains(text(),'KADMKADM1EX')]"));
         System.out.println(contains.getText());
-        System.out.println("Done");
+        System.out.println("Kits selected");
     }
 
     public void iExportGrouped(){
-        WebElement exportButton = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[1]/div[1]/div[2]/button"));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[contains(text(),'Export')]")));
+        WebElement exportButton = driver.findElement(By.xpath("//button[contains(text(),'Export')]"));
         exportButton.click();
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/form/div[4]/div[1]/button[2]")));
-        WebElement lauchExport = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/form/div[4]/div[1]/button[2]"));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[contains(text(),'Launch export')]")));
+        WebElement lauchExport = driver.findElement(By.xpath("//button[contains(text(),'Launch export')]"));
         lauchExport.click();
 
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"download\"]")));
         System.out.println("Exported selected");
     }
 
@@ -464,13 +466,12 @@ public class Unidata {
         return rawString.substring(0,rawString.indexOf('-')).replaceAll("\\s+","");
     }
 
-    public void iCheckExcel() throws IOException {
+    public void iCheckExcel(String downLoadDirectory) throws IOException {
         ArrayList<String> fromExcel = new ArrayList<>();
         //Todo Remember to place a different source for the file
-        String downloadDir = System.getProperty("user.dir") + "/target/test-classes";
-        String lastFile = String.valueOf(findLast("/target/test-classes"));
-
-        FileInputStream fs = new FileInputStream(downloadDir);
+        String lastFile = String.valueOf(findLast(downLoadDirectory));
+        System.out.println(downLoadDirectory);
+        FileInputStream fs = new FileInputStream(lastFile);
         XSSFWorkbook workbook = new XSSFWorkbook(fs);
         XSSFSheet sheet = workbook.getSheetAt(0);
         Iterator<Row> rowItr = sheet.rowIterator();
@@ -487,9 +488,11 @@ public class Unidata {
             }
         }
 
+        workbook.close();
+
         boolean var  = fromExcel.containsAll(articleList);
         assertTrue(var);
-        System.out.println("Excel checked");
+        System.out.println("Excel checked successfully");
     }
 
     public File findLast(String sdir) {

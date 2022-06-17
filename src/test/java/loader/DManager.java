@@ -9,30 +9,42 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DManager {
-    public  WebDriver driver;
-    public  Wait<WebDriver> wait;
+    public WebDriver driver;
+    public Wait<WebDriver> wait;
     public Actions act;
+    public String downloadDirectory;
 
 
     public void setupClass() {
 
         WebDriverManager.chromedriver().setup();
         //WebDriverManager.firefoxdriver().setup();
-        String downloadDir = System.getProperty("user.dir") + "/target/test-classes";
-        System.out.println(downloadDir);
-        Map<String, Object> prefs = new HashMap<>();
-        prefs.put("download.default_directory", downloadDir);
+        //String downloadDir = System.getProperty("user.dir") + "/target/test-classes";
+        //String downloadDir = System.getProperty("user.dir") + "\\target\\test-classes";
+        downloadDirectory = createDownloadDirectory();
 
+
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", downloadDirectory);
+        System.out.println(downloadDirectory);
 
 
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--log-level=3","--disable-gpu","--disable-logging","--output=/dev/null","--disable-in-process-stack-traces");
+        options.addArguments("--log-level=3", "--disable-gpu", "--disable-logging", "--output=/dev/null", "--disable-in-process-stack-traces");
         options.addArguments("--disable-setuid-sandbox");
         options.addArguments("start-maximized");
 
@@ -52,11 +64,11 @@ public class DManager {
                 .ignoring(NoSuchElementException.class);
         System.out.println("Driver started");
 
-        //driver.switchTo().newWindow(WindowType.TAB);
+
     }
 
 
-    public void addFortiCientExtension(){
+    public void addFortiCientExtension() {
         driver.get("https://addons.mozilla.org/en-US/firefox/search/?q=fortiClient");
         //driver.get("https://chrome.google.com/webstore/detail/forticlient-chromebook-we/igbgpehnbmhgdgjbhkkpedommgmfbeao");
         //WebElement inputExtensions = driver.findElement(By.xpath("//*[@id=\"AutoSearchInput-q\"]"));
@@ -73,7 +85,52 @@ public class DManager {
     public void teardown() {
         driver.quit();
         System.out.println("Driver closed");
+
+        try {
+            Files.walk(Path.of(downloadDirectory))
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+            System.out.println("Directory deleted");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
+
+    private int getIntRandom() {
+
+        return ThreadLocalRandom.current().nextInt(100, 1000 + 1);
+    }
+
+    private char charReturn() {
+        Random random = new Random();
+        char randomChar = (char) (random.nextInt(26) + 'a');
+        System.out.println("Generated random Character: " + randomChar);
+
+        return randomChar;
+    }
+
+    private String createDownloadDirectory() {
+        String userDir = System.getProperty("user.dir");
+
+        String dir = charReturn() + String.valueOf(getIntRandom());
+        String fullPath = userDir +"/"+ dir;
+        System.out.println(fullPath);
+        Path path = Paths.get(fullPath);
+
+        try {
+            Files.createDirectories(path);
+            System.out.println("Directory is created!");
+
+        } catch (IOException e) {
+            System.err.println("Failed to create directory!" + e.getMessage());
+        }
+
+        return fullPath;
+    }
+
+
 
 
 }

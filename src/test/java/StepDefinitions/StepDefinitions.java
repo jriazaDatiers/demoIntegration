@@ -19,6 +19,7 @@ public class StepDefinitions {
     static WebDriver driver;
     static Wait<WebDriver> wait;
     static Actions act;
+    static String downLoadDirectory;
     final AuxOperations operations = new AuxOperations();
 
 
@@ -29,6 +30,7 @@ public class StepDefinitions {
         driver = driverManager.driver;
         wait = driverManager.wait;
         act = driverManager.act;
+        downLoadDirectory = driverManager.downloadDirectory;
         testUnidata = new Unidata(wait,driver, act, operations);
         String role = System.getProperty("role");
         //String role = "UD_dataSteward";
@@ -40,7 +42,6 @@ public class StepDefinitions {
 
     }
 
-    //To deprecate?
     @Given("I can connect")
     public void i_can_connect() {
         driverManager = new DManager();
@@ -103,7 +104,6 @@ public class StepDefinitions {
 
     @Then("I select kit articles")
     public void iSelectKitArticles() {
-        //testUnidata.iSelectKitArticles();
         testUnidata.iSelectKitArticlesAndextractData();
     }
 
@@ -120,7 +120,7 @@ public class StepDefinitions {
 
     @Then("I check the excel")
     public void iCheckTheExcel() throws IOException {
-        testUnidata.iCheckExcel();
+        testUnidata.iCheckExcel(downLoadDirectory);
     }
 
     @Then("I go to Articles")
@@ -154,7 +154,7 @@ public class StepDefinitions {
 
     @Then("I add a participant in my list")
     public void iAddAParticipantInMyListNameParticipant() {
-        testUnidata.addParticipantOnList(operations.getName(), operations.getParticipant());
+        testUnidata.addParticipantOnList(operations.getListOwner(), operations.getParticipant());
     }
 
     @Then("I add an article to existing List")
@@ -222,6 +222,7 @@ public class StepDefinitions {
 
     @Then("I find the lists where I am participant")
     public void iFindTheListsWhereIAmParticipant() {
+        //TODO REMEMBER TO COMPLETE
         testUnidata.filterAsParticipant();
 
         }

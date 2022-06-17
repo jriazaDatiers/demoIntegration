@@ -5,6 +5,7 @@ listOwner,Escobar
 otherListOwner,Donata
 addressee,Mrs Conrad Sultanto
 participant,Mrs Conrad Sultanto
+participantMe,Donata test Stewart
 hasToSucceed,false
 newEmail,juan.moron-consultant@msf.org
 oldEmail,test.ignore@msf.org
