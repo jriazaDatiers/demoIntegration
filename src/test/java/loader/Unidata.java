@@ -652,18 +652,18 @@ public class Unidata {
     }
 
     public void addArticleOnExistingListAsParticipant(){
-        long timetoWait = 2000;
+        long timetoWait = 3000;
 
         try {
             Thread.sleep(timetoWait);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"ebx_workspaceTable_mainScroller\"]/table/tbody/tr/td[1]")));
         WebElement element = driver.findElement(By.xpath("//*[@id=\"ebx_workspaceTable_mainScroller\"]/table/tbody/tr/td[1]"));
         act.doubleClick(element).perform();
 
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[contains(text(),'Contains (Articles)')]"))));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Contains (Articles)')]")));
         WebElement containButton = driver.findElement(By.xpath("//*[contains(text(),'Contains (Articles)')]"));
         act.click(containButton).perform();
 
@@ -673,7 +673,7 @@ public class Unidata {
             e.printStackTrace();
         }
 
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Attach')]"))));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[contains(text(),'Attach')]")));
         WebElement attachButton = driver.findElement(By.xpath("//button[contains(text(),'Attach')]"));
         act.click(attachButton).perform();
 
