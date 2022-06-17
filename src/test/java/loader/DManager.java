@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DManager {
     public  WebDriver driver;
@@ -21,11 +23,21 @@ public class DManager {
 
         WebDriverManager.chromedriver().setup();
         //WebDriverManager.firefoxdriver().setup();
+        String downloadDir = System.getProperty("user.dir") + "/target/test-classes";
+
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", downloadDir);
+
+
+
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--log-level=3","--disable-gpu","--disable-logging","--output=/dev/null","--disable-in-process-stack-traces");
         options.addArguments("--disable-setuid-sandbox");
         options.addArguments("start-maximized");
+
+        options.setExperimentalOption("prefs", prefs);
+
         //options.addArguments("--remote-debugging-port=9222");
         options.setHeadless(true);
         driver = new ChromeDriver(options);

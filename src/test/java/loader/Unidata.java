@@ -466,7 +466,7 @@ public class Unidata {
     public void iCheckExcel() throws IOException {
         ArrayList<String> fromExcel = new ArrayList<>();
         //Todo Remember to place a different source for the file
-        String lastFile = String.valueOf(findLast("C:\\Users\\jmr\\Downloads"));
+        String lastFile = String.valueOf(findLast("/target/test-classes"));
 
         FileInputStream fs = new FileInputStream(lastFile);
         XSSFWorkbook workbook = new XSSFWorkbook(fs);
