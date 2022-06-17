@@ -147,7 +147,7 @@ public class StepDefinitions {
 
     @Then("I delete an article list but fail not owner")
     public void iDeleteAnArticleListButFailNotOwner() {
-        testUnidata.selectElementOnList(operations.getName());
+        testUnidata.selectElementOnList(operations.getotherListOwner());
         testUnidata.clickOnActionsMenu();
         testUnidata.deleteArticleList(operations.getHasToSucceed());
     }
