@@ -24,7 +24,7 @@ public class DManager {
         WebDriverManager.chromedriver().setup();
         //WebDriverManager.firefoxdriver().setup();
         String downloadDir = System.getProperty("user.dir") + "/target/test-classes";
-
+        System.out.println(downloadDir);
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", downloadDir);
 
