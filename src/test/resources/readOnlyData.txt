@@ -1,8 +1,9 @@
 user,CONS
 password,Conrad2020@
 name,Conrad
-addressee,Juan Manuel Moron Riaza
-participant,Juan
+addressee,Mr Escobar Datamaster
+participant,Mr Escobar Datamaster
+participantMe,Conrad Sultanto
 otherListOwner,Escobar
 listOwner,Conrad
 hasToSucceed,false

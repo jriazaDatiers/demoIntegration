@@ -1,8 +1,9 @@
 user,ITCDS
 password,Donata0202@
 name,Donata
-addressee,Mr Escobar Datamaster
-participant,Mr Escobar Datamaster
+addressee,Conrad Sultanto
+participant,Conrad Sultanto
+participantMe,Donata test Stewart
 listOwner,Donata
 otherListOwner,Conrad
 hasToSucceed,false

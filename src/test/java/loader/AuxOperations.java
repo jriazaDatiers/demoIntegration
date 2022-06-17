@@ -140,6 +140,14 @@ public class AuxOperations {
         return roleDataMap.get("oldEmail");
     }
 
+    public String getotherListOwner() {
+        return roleDataMap.get("otherListOwner");
+    }
+
+    public String getparticipantMe() {
+        return roleDataMap.get("participantMe");
+    }
+
 
 
 }

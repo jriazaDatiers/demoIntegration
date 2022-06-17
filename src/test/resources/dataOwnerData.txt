@@ -3,9 +3,9 @@ password,Downy2020!!
 name,Escobar
 listOwner,Escobar
 otherListOwner,Donata
-addressee,Mrs Conrad Sultanto
-participant,Mrs Conrad Sultanto
-participantMe,Donata test Stewart
+addressee,Donata test Stewart
+participant,Donata test Stewart
+participantMe,Mr Escobar Datamaster
 hasToSucceed,false
 newEmail,juan.moron-consultant@msf.org
 oldEmail,test.ignore@msf.org

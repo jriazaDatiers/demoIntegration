@@ -923,7 +923,7 @@ public class Unidata {
     public void filterAsParticipant(){
         driver.switchTo().frame("ebx-legacy-component");
 
-        long timetoWait2 = 2000;
+        long timetoWait2 = 3000;
         driver.findElement(By.xpath("//button[@id='ebx_filtersButton']/span")).click();
         driver.findElement(By.id("ebx_SimpleSearchFilterNodeSelectorList_FILTER_0")).click();
         {
@@ -935,7 +935,7 @@ public class Unidata {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        driver.findElement(By.xpath("//div[2]/input[2]")).sendKeys(operations.getParticipant());
+        driver.findElement(By.xpath("//div[2]/input[2]")).sendKeys(operations.getparticipantMe());
         try {
             Thread.sleep(timetoWait2);
         } catch (InterruptedException e) {
