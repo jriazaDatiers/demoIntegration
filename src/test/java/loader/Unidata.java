@@ -455,7 +455,7 @@ public class Unidata {
         WebElement buttonClose = driver.findElement(By.xpath("//button[contains(text(),'Close')]"));
         //buttonClose.click();
         act.click(buttonClose).perform();
-        driver.switchTo().alert().accept();
+        //driver.switchTo().alert().accept();
         driver.switchTo().parentFrame();
         driver.switchTo().parentFrame();
     }
