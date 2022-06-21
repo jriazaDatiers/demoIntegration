@@ -786,7 +786,8 @@ public class Unidata {
 
         driver.switchTo().frame("ebx-legacy-component");
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[14]/td[1]/table/tbody/tr/td[2]/button")));
+        //wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[14]/td[1]/table/tbody/tr/td[2]/button")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[14]/td[1]/table/tbody/tr/td[2]/button")));
 
         String pathArticleToSelect = "//div/table/tbody/tr/td[contains(text(),'ADAPADAP2I')]";
         WebElement articleToSelect = driver.findElement(By.xpath(pathArticleToSelect));
@@ -798,7 +799,9 @@ public class Unidata {
             e.printStackTrace();
         }
 
-        WebElement feedbackTabButton = driver.findElement(By.xpath("//*[@id=\"ebx_WorkspaceFormTabviewTabs\"]/li[8]/a"));
+        //WebElement feedbackTabButton = driver.findElement(By.xpath("//*[@id=\"ebx_WorkspaceFormTabviewTabs\"]/li[8]/a"));
+        WebElement feedbackTabButton = driver.findElement(By.xpath("//*[contains(text(),'Feedback')]"));
+
         act.doubleClick(feedbackTabButton).perform();
 
         try {
@@ -808,8 +811,12 @@ public class Unidata {
         }
         wait.until(ExpectedConditions.presenceOfElementLocated((By.xpath("//div[8]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"))));
         WebElement addFeedbackButton = driver.findElement(By.xpath("//div[8]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"));
-        //addFeedbackButton.click();
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", addFeedbackButton);
+        //act.moveToElement(addFeedbackButton).build().perform();
         act.click(addFeedbackButton).perform();
+        //addFeedbackButton.click();
 
         driver.switchTo().frame("ebx_InternalPopup_frame");
 

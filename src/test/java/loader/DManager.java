@@ -42,7 +42,8 @@ public class DManager {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--log-level=3", "--disable-gpu", "--disable-logging", "--output=/dev/null", "--disable-in-process-stack-traces", "--output=/dev/null", "--disable-dev-shm-usage");
         options.addArguments("--disable-setuid-sandbox", "--no-sandbox");
-        options.addArguments("start-maximized");
+        options.addArguments("--window-size=1325x1200");
+        //options.addArguments("start-maximized");
 
         options.setExperimentalOption("prefs", prefs);
 
