@@ -1,6 +1,5 @@
 package loader;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -132,24 +131,23 @@ public class Unidata {
     }
 
     public void creteListFromExcel(String name){
-        String dir = System.getProperty("user.dir");
-        driver.switchTo().frame("ebx-legacy-component");
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List')]")));
-        WebElement createList = driver.findElement(By.xpath("//*[contains(text(),'Create List')]"));
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List')]")));
 
-        //Take the screenshot
-        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        long timetoWait = 2000;
 
-        //Copy the file to a location and use try catch block to handle exception
         try {
-            FileUtils.copyFile(screenshot, new File(dir + "/target/homePageScreenshot.png"));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
+        String dir = System.getProperty("user.dir");
+        driver.switchTo().frame("ebx-legacy-component");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Create List with')]")));
+        WebElement createList = driver.findElement(By.xpath("//button[contains(text(),'Create List with')]"));
+
         createList.click();
-        act.click(createList).perform();
+        //createList.click();
+        //act.click(createList).perform();
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[type='file']")));
         WebElement chooseFile = driver.findElement(By.cssSelector("input[type='file']"));
@@ -160,16 +158,6 @@ public class Unidata {
         WebElement listName = driver.findElement(By.xpath("//html/body/div[1]/div/div/div/div/div[2]/div/form/div[3]/table/tbody/tr[1]/td[3]/div/input"));
         listName.sendKeys(name + " list " + getIntRandom());
         System.out.println("createList");
-
-        //Take the screenshot
-        File screenshot2 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-
-        //Copy the file to a location and use try catch block to handle exception
-        try {
-            FileUtils.copyFile(screenshot2, new File(dir + "/target/homePageScreenshot2.png"));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
 
         WebElement upload = driver.findElement(By.xpath("//*[contains(text(),'Upload')]"));
         upload.click();
