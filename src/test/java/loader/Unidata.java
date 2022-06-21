@@ -429,9 +429,11 @@ public class Unidata {
         for (String module : article.getModules()) {
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'"+module+"')]")));
             WebElement moduleToCheck = driver.findElement(By.xpath("//*[contains(text(),'"+module+"')]"));
+            System.out.println("module to check: "+ moduleToCheck.getText() + " , module: " + module);
             assertTrue(moduleToCheck.getText().contains(module));
-            System.out.println(module);
         }
+
+        System.out.println("Modules checked");
     }
 
     public void iCollectArticleData(){
@@ -800,7 +802,7 @@ public class Unidata {
         act.doubleClick(feedbackTabButton).perform();
 
         try {
-            Thread.sleep(3500);
+            Thread.sleep(4000);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -964,24 +966,21 @@ public class Unidata {
     public void addAddressee(){
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (Exception e) {
             e.printStackTrace();
         }
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//table[4]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/div/button")));
         WebElement addAddressee = driver.findElement(By.xpath("//table[4]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/div/button"));
         WebElement anchorToMove = driver.findElement(By.xpath("//*[contains(text(),'Addressed to UniData User')]"));
-        act.click(anchorToMove).perform();
-        act.moveToElement(anchorToMove).perform();
-        act.sendKeys(Keys.TAB).perform();
-        act.sendKeys(Keys.TAB).perform();
-        act.sendKeys(Keys.TAB).perform();
-        act.sendKeys(Keys.TAB).perform();
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", addAddressee);
 
         addAddressee.click();
 
         try {
-            Thread.sleep(4000);
+            Thread.sleep(5500);
         } catch (Exception e) {
             e.printStackTrace();
         }
