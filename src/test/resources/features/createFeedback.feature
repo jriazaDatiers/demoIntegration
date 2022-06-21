@@ -5,8 +5,9 @@ Feature: Create a Feedback from an article record
     When I go to url
     When I log in with user and password
     Then I go to Articles
-    Then I create a new feedback addressing to addressee
+    Then I go to Articles (All)
+    Then I create a new feedback
+    Then I add and addressee
     Then I type a new message Feedback
     Then I change the priority
-    Then I add and addressee
     Then I save and close the feedback

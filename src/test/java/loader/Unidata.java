@@ -144,8 +144,6 @@ public class Unidata {
         String dir = System.getProperty("user.dir");
         chooseFile.sendKeys(dir + "/target/test-classes/Article-Belongs-to-List.xlsx");
 
-        //String lastFile = String.valueOf(findLast(downLoadDirectory));
-        //chooseFile.sendKeys(lastFile);
 
         WebElement listName = driver.findElement(By.xpath("//html/body/div[1]/div/div/div/div/div[2]/div/form/div[3]/table/tbody/tr[1]/td[3]/div/input"));
         listName.sendKeys(name + " list " + getIntRandom());
@@ -429,6 +427,7 @@ public class Unidata {
     public void iReviewArticleModules(){
 
         for (String module : article.getModules()) {
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'"+module+"')]")));
             WebElement moduleToCheck = driver.findElement(By.xpath("//*[contains(text(),'"+module+"')]"));
             assertTrue(moduleToCheck.getText().contains(module));
             System.out.println(module);
@@ -520,7 +519,7 @@ public class Unidata {
     public void selectElementOnList(String name){
         driver.switchTo().frame("ebx-legacy-component");
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[1]/td[2]/table/tbody/tr/td[2]/button")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tbody/tr[1]/td[2]/table/tbody/tr/td[2]/button")));
         String preExpr = "//div/table/tbody/tr/td[1][contains(text(),'";
         String expr = preExpr + name + " list')]";
         //String expr = "//*[contains(text(),'Escobar list 683')]";
@@ -774,16 +773,18 @@ public class Unidata {
 
     }
 
-    public void createFeedbackToAddressee(String assignee){
-
+    public void iGotoArticlesAll(){
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Articles (All)')]")));
         String pathArticlesAll = "//*[contains(text(),'Articles (All)')]";
         WebElement articlesAllMenu = driver.findElement(By.xpath(pathArticlesAll));
         articlesAllMenu.click();
+    }
+
+    public void createFeedback(){
 
         driver.switchTo().frame("ebx-legacy-component");
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[14]/td[1]/table/tbody/tr/td[2]/button")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[14]/td[1]/table/tbody/tr/td[2]/button")));
 
         String pathArticleToSelect = "//div/table/tbody/tr/td[contains(text(),'ADAPADAP2I')]";
         WebElement articleToSelect = driver.findElement(By.xpath(pathArticleToSelect));
@@ -799,7 +800,7 @@ public class Unidata {
         act.doubleClick(feedbackTabButton).perform();
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(3500);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -807,18 +808,8 @@ public class Unidata {
         WebElement addFeedbackButton = driver.findElement(By.xpath("//div[8]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"));
         //addFeedbackButton.click();
         act.click(addFeedbackButton).perform();
-       /* try {
-            Thread.sleep(2000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
+
         driver.switchTo().frame("ebx_InternalPopup_frame");
-
-        addAddressee();
-        addPriorityToMessage();
-
-        WebElement saveCloseButton = driver.findElement(By.xpath("//button[@title='Save and go back to the table']"));
-        act.click(saveCloseButton).perform();
 
         System.out.println("Feedback Menu");
 
@@ -879,10 +870,6 @@ public class Unidata {
         ArrayList<String> fromExcel = new ArrayList<>();
         List<String> sortedList;
 
-
-        //String dir = System.getProperty("user.dir");
-        //System.out.println(dir);
-        //String path = dir + "/src/test/resources/biomed";
         String lastFile = String.valueOf(findLast(downloadDirectory));
 
         try {
@@ -983,12 +970,15 @@ public class Unidata {
         }
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//table[4]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/div/button")));
         WebElement addAddressee = driver.findElement(By.xpath("//table[4]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/div/button"));
-        WebElement anchorToMove = driver.findElement(By.xpath("//*[contains(text(),'Copy to WG Leader?')]"));
-        act.moveToElement(anchorToMove);
-        System.out.println(addAddressee.getAttribute("disabled"));
+        WebElement anchorToMove = driver.findElement(By.xpath("//*[contains(text(),'Addressed to UniData User')]"));
+        act.click(anchorToMove).perform();
+        act.moveToElement(anchorToMove).perform();
+        act.sendKeys(Keys.TAB).perform();
+        act.sendKeys(Keys.TAB).perform();
+        act.sendKeys(Keys.TAB).perform();
+        act.sendKeys(Keys.TAB).perform();
 
         addAddressee.click();
-        //act.click(addAddressee).perform();
 
         try {
             Thread.sleep(4000);
@@ -1024,18 +1014,15 @@ public class Unidata {
         try {
             WebElement findPriority = driver.findElement(By.xpath("//*[contains(text(),'!! High Priority')]"));
             priorityMenu.sendKeys("! Normal Priority");
+
         } catch (Exception e) {
             priorityMenu.sendKeys("!! High Priority");
         }
 
-        /*driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/input[2]")).sendKeys(Keys.ENTER);
-        WebElement toHook = driver.findElement(By.xpath("//*[contains(text(),'Addressed to MSF Entity')]"));
-        toHook.click();
 
-        WebElement addMessage = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[2]/td[3]/div/div/div/div/div/div/button"));
-        act.click(addMessage).perform();
-        WebElement textArea = driver.findElement(By.xpath("//tr[2]/td[3]/div/div/div/div/div/ol/li[1]/div/div/table/tbody/tr[4]/td[3]/div/div/div/textarea"));
-        textArea.sendKeys("Test comment");*/
+        act.click(priorityMenu).sendKeys(Keys.ENTER).perform();
+
+        driver.findElement(By.xpath("//tr[1]/td[3]/div/div/div/div/div/ol/li[1]/div/div/div/div/input[2]")).sendKeys(Keys.ENTER);
 
         System.out.println("Select Priority");
     }
@@ -1053,7 +1040,6 @@ public class Unidata {
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Feedback (Addressed to Me)')]")));
         WebElement feedBackMeMenu = driver.findElement(By.xpath("//*[contains(text(),'Feedback (Addressed to Me)')]"));
-        //WebElement linkFeedBackMenu = driver.findElement(with(By.className("_ebx-link-tree_item")).toLeftOf(feedBackMeMenu));
         act.click(feedBackMeMenu).perform();
 
         long timetoWait2 = 2000;
@@ -1073,24 +1059,16 @@ public class Unidata {
     }
 
     public void addNewMessageFeedback(){
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[2]/td[3]/div/div/div/div/div/div/button")));
+        WebElement priorityHook = driver.findElement(By.xpath("//*[contains(text(),'Priority')]"));
+        WebElement messagesHook = driver.findElement(By.xpath("//*[contains(text(),'Messages')]"));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[2]/td[3]/div/div/div/div/div/div/button")));
         WebElement addNewMessage = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[2]/td[3]/div/div/div/div/div/div/button"));
 
-        long timetoWait2 = 500;
-
-        try {
-            Thread.sleep(timetoWait2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,1000)");
-
-
+        js.executeScript("arguments[0].scrollIntoView();", addNewMessage);
         addNewMessage.click();
         WebElement newMessageTextArea = findNewTextAreaMessageFeedback();
-        //act.click(addNewMessage);
+
         newMessageTextArea.sendKeys("Text answer");
 
     }
@@ -1186,17 +1164,10 @@ public class Unidata {
         WebElement groupInput = driver.findElement(By.xpath("//tr[3]/td[3]/div/div/div/div/div/input[2]"));
         groupInput.sendKeys("N - Nutrition");
         act.sendKeys(Keys.ENTER);
-       /* long timetoWait = 2000;
 
-        try {
-            Thread.sleep(timetoWait);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
         groupInput.click();
         act.doubleClick(groupInput).perform();
-        //groupInput.sendKeys(Keys.ENTER);
-        //groupInput.sendKeys(Keys.RETURN);
+
         WebElement anchor = driver.findElement(By.xpath("//div[1]/table/tbody/tr[2]/td[3]/div/span"));
         act.click(anchor).perform();
 

@@ -2,7 +2,6 @@ package StepDefinitions;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import loader.AuxOperations;
@@ -11,6 +10,7 @@ import loader.Unidata;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Wait;
+
 import java.io.IOException;
 
 public class StepDefinitions {
@@ -33,7 +33,7 @@ public class StepDefinitions {
         downLoadDirectory = driverManager.downloadDirectory;
         testUnidata = new Unidata(wait,driver, act, operations, downLoadDirectory);
         String role = System.getProperty("role");
-        //String role = "UD_dataSteward";
+        //String role = "UD_dataOwner";
         String environment = System.getProperty("omgeving");
         //String environment = "STAGING";
         //System.out.println(role + " " + environment);
@@ -42,15 +42,7 @@ public class StepDefinitions {
 
     }
 
-    @Given("I can connect")
-    public void i_can_connect() {
-        driverManager = new DManager();
-        driverManager.setupClass();
-        driver = driverManager.driver;
-        wait = driverManager.wait;
-        act = driverManager.act;
 
-    }
     @When("I install the FortiClient")
     public void i_install_the_forti_client() {
         driverManager.addFortiCientExtension();
@@ -174,7 +166,7 @@ public class StepDefinitions {
 
     @Then("I create a new feedback addressing to addressee")
     public void iCreateANewFeedbackAddressingToAssignee() {
-        testUnidata.createFeedbackToAddressee(operations.getAddressee());
+        testUnidata.createFeedback();
     }
 
     @Then("I select the Biomed Articles view")
@@ -358,6 +350,16 @@ public class StepDefinitions {
     @Then("I click on the sharing link on specific article")
     public void iClickOnTheSharingLinkOnSpecificArticle() {
         testUnidata.clickShareLink();
+    }
+
+    @Then("I create a new feedback")
+    public void iCreateANewFeedback() {
+        testUnidata.createFeedback();
+    }
+
+    @Then("I go to Articles \\(All)")
+    public void iGoToArticlesAll() {
+        testUnidata.iGotoArticlesAll();
     }
 }
 
