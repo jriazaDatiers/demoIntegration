@@ -835,12 +835,12 @@ public class Unidata {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        wait.until(ExpectedConditions.presenceOfElementLocated((By.xpath("//div[9]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"))));
-        WebElement addFeedbackButton = driver.findElement(By.xpath("//div[9]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"));
+        //wait.until(ExpectedConditions.presenceOfElementLocated((By.xpath("//div[9]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"))));
+        //WebElement addFeedbackButton = driver.findElement(By.xpath("//div[9]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"));
 
 
-        //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@title = 'Create']")));
-        //WebElement addFeedbackButton = driver.findElement(By.xpath("//button[@title = 'Create']"));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@title = 'Create']")));
+        WebElement addFeedbackButton = driver.findElement(By.xpath("//button[@title = 'Create']"));
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", addFeedbackButton);
@@ -890,7 +890,7 @@ public class Unidata {
         WebElement downloadExcel = driver.findElement(By.xpath("//*[contains(text(),'Click here to download the excel')]"));
         act.click(downloadExcel).perform();
 
-        long timetoWait=3000;
+        long timetoWait=5000;
         try {
 
             Thread.sleep(timetoWait);
@@ -909,7 +909,7 @@ public class Unidata {
         ArrayList<String> fromExcel = new ArrayList<>();
         List<String> sortedList;
 
-        String lastFile = String.valueOf(findLast(downloadDirectory));
+        String lastFile = String.valueOf(findLast("downloadDirectory"));
 
         try {
             FileInputStream fs = new FileInputStream(lastFile);
