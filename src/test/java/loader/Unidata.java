@@ -820,7 +820,7 @@ public class Unidata {
         act.doubleClick(articleToSelect).perform();
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -831,7 +831,7 @@ public class Unidata {
         act.doubleClick(feedbackTabButton).perform();
 
         try {
-            Thread.sleep(4000);
+            Thread.sleep(5000);
         } catch (Exception e) {
             e.printStackTrace();
         }
