@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -242,6 +243,14 @@ public class Unidata {
         System.out.println("Checked links on unidata Home");
 
     }
+
+    public void checkUnicatPage(Article article){
+        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(1));
+        checkTitle(article.getCode());
+    }
+
+
 
     public void checkTitle(String requiredTitle){
         assertTrue(driver.getTitle().contains(requiredTitle));
@@ -797,7 +806,14 @@ public class Unidata {
         driver.switchTo().frame("ebx-legacy-component");
 
         //wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[14]/td[1]/table/tbody/tr/td[2]/button")));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[14]/td[1]/table/tbody/tr/td[2]/button")));
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//html/body/div[1]/div/div/div/div/div[2]/div[2]/div/div[1]/div/div/div/div[3]/table/tbody/tr[14]/td[1]/table/tbody/tr/td[2]/button")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div/table/tbody/tr/td[contains(text(),'ADAPADAP2I')]")));
+
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         String pathArticleToSelect = "//div/table/tbody/tr/td[contains(text(),'ADAPADAP2I')]";
         WebElement articleToSelect = driver.findElement(By.xpath(pathArticleToSelect));
@@ -819,14 +835,18 @@ public class Unidata {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        wait.until(ExpectedConditions.presenceOfElementLocated((By.xpath("//div[8]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"))));
-        WebElement addFeedbackButton = driver.findElement(By.xpath("//div[8]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"));
+        wait.until(ExpectedConditions.presenceOfElementLocated((By.xpath("//div[9]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"))));
+        WebElement addFeedbackButton = driver.findElement(By.xpath("//div[9]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"));
+
+
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@title = 'Create']")));
+        //WebElement addFeedbackButton = driver.findElement(By.xpath("//button[@title = 'Create']"));
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", addFeedbackButton);
         //act.moveToElement(addFeedbackButton).build().perform();
-        act.click(addFeedbackButton).perform();
-        //addFeedbackButton.click();
+        //act.click(addFeedbackButton).perform();
+        addFeedbackButton.click();
 
         driver.switchTo().frame("ebx_InternalPopup_frame");
 
@@ -1018,8 +1038,8 @@ public class Unidata {
 
     public void addPriorityToMessage(){
         long timetoWait2 = 1000;
-        WebElement clearPriority = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/button[1]"));
-        act.click(clearPriority).perform();
+        //WebElement clearPriority = driver.findElement(By.xpath("//table[5]/tbody/tr/td/div/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div/div/div/div/button[1]"));
+        //act.click(clearPriority).perform();
         try {
             Thread.sleep(timetoWait2);
         } catch (InterruptedException e) {
@@ -1086,6 +1106,8 @@ public class Unidata {
         WebElement newMessageTextArea = findNewTextAreaMessageFeedback();
 
         newMessageTextArea.sendKeys("Text answer");
+
+        System.out.println("Feedback message");
 
     }
 
@@ -1163,7 +1185,16 @@ public class Unidata {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Open')]")));
 
         WebElement feedbackElement = driver.findElement(By.xpath("//*[contains(text(),'Open')]"));
-        act.click(feedbackElement).perform();
+        act.doubleClick(feedbackElement).perform();
+
+        long timetoWait2 = 2000;
+
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("Feedback selected");
 
     }
@@ -1228,4 +1259,15 @@ public class Unidata {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Descriptions (All)')]")));
         System.out.println("Descriptions All");
     }
+
+    public void launchAPICall(APICalls call){
+
+
+        try {
+            call.httpGetRequest();
+        } catch (URISyntaxException | InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
