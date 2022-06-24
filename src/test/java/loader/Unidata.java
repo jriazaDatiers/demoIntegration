@@ -583,19 +583,34 @@ public class Unidata {
 
     public void addParticipantOnList(String name, String participant){
         selectElementOnList(name);
-        long timetoWait = 5000;
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Active')]")));
+        String addParticpantButton = "//button[@title = 'Add an occurrence']";
+
+        long timetoWait2 = 2000;
 
         try {
-            Thread.sleep(timetoWait);
+            Thread.sleep(timetoWait2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        String addParticpantButton = "//button[@title = 'Add an occurrence']";
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(addParticpantButton))));
         WebElement addParticipantButton = driver.findElement(By.xpath(addParticpantButton));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", addParticipantButton);
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(addParticpantButton))));
         addParticipantButton.click();
 
+        findLastspotForParticipant(participant);
+
+
+        WebElement saveCloseButton = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
+        saveCloseButton.click();
+        System.out.println("Participant added");
+
+    }
+
+    public void findLastspotForParticipant(String participant){
         boolean participantEmpty = false;
         int iterator = 0;
 
@@ -622,12 +637,6 @@ public class Unidata {
             }
             iterator++;
         } while (!participantEmpty);
-
-
-        WebElement saveCloseButton = driver.findElement(By.xpath("//button[contains(text(),'Save and close')]"));
-        saveCloseButton.click();
-        System.out.println("Participant added");
-
     }
 
     public void addArticleOnExistingList(){
@@ -839,11 +848,11 @@ public class Unidata {
         //WebElement addFeedbackButton = driver.findElement(By.xpath("//div[9]/table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button"));
 
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@title = 'Create']")));
-        WebElement addFeedbackButton = driver.findElement(By.xpath("//button[@title = 'Create']"));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@title ='Create']")));
+        WebElement addFeedbackButton = driver.findElement(By.xpath("//button[@title ='Create']"));
 
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", addFeedbackButton);
+        //JavascriptExecutor js = (JavascriptExecutor) driver;
+        //js.executeScript("arguments[0].scrollIntoView();", addFeedbackButton);
         //act.moveToElement(addFeedbackButton).build().perform();
         //act.click(addFeedbackButton).perform();
         addFeedbackButton.click();
