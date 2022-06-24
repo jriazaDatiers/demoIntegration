@@ -551,6 +551,14 @@ public class Unidata {
         String listToDelete = rowToDelete.getText();
         act.doubleClick(rowToDelete).perform();
 
+        long timetoWait2 = 2000;
+
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void clickOnActionsMenu(){
