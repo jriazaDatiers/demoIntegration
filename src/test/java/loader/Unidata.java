@@ -1,6 +1,5 @@
 package loader;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -549,15 +548,18 @@ public class Unidata {
         WebElement rowToDelete = driver.findElement(By.xpath(toSearch));
         //TODO obtener el texto para mostrarlo en el log
         String listToDelete = rowToDelete.getText();
+        rowToDelete.click();
         act.doubleClick(rowToDelete).perform();
 
-        long timetoWait2 = 2000;
+        long timetoWait2 = 5000;
 
         try {
             Thread.sleep(timetoWait2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+
 
     }
 
@@ -591,17 +593,6 @@ public class Unidata {
 
     public void addParticipantOnList(String name, String participant){
         selectElementOnList(name);
-
-        String dir = System.getProperty("user.dir");
-        //Take the screenshot
-        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-
-        //Copy the file to a location and use try catch block to handle exception
-        try {
-            FileUtils.copyFile(screenshot, new File(dir + "/target/test-classes/participant"+getIntRandom()+".png"));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Active')]")));
         String addParticpantButton = "//button[@title = 'Add an occurrence']";
