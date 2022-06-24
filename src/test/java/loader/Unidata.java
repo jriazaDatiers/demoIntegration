@@ -1,5 +1,6 @@
 package loader;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -203,7 +204,7 @@ public class Unidata {
 
     public void clickOnArticleList(){
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Article Lists')]")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Article Lists')]")));
         WebElement articleLists = driver.findElement(By.xpath("//*[contains(text(),'Article Lists')]"));
         articleLists.click();
         System.out.println("Article List");
@@ -542,8 +543,7 @@ public class Unidata {
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tbody/tr[1]/td[2]/table/tbody/tr/td[2]/button")));
         String preExpr = "//div/table/tbody/tr/td[1][contains(text(),'";
-        String expr = preExpr + name + " list')]";
-        //String expr = "//*[contains(text(),'Escobar list 683')]";
+
         String toSearch = "//*[contains(text(),'"+ name + "')]";
 
         WebElement rowToDelete = driver.findElement(By.xpath(toSearch));
@@ -583,6 +583,17 @@ public class Unidata {
 
     public void addParticipantOnList(String name, String participant){
         selectElementOnList(name);
+
+        String dir = System.getProperty("user.dir");
+        //Take the screenshot
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+
+        //Copy the file to a location and use try catch block to handle exception
+        try {
+            FileUtils.copyFile(screenshot, new File(dir + "/target/test-classes/participant01.png"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Active')]")));
         String addParticpantButton = "//button[@title = 'Add an occurrence']";
