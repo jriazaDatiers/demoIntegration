@@ -598,7 +598,7 @@ public class Unidata {
 
         //Copy the file to a location and use try catch block to handle exception
         try {
-            FileUtils.copyFile(screenshot, new File(dir + "/target/test-classes/participant01.png"));
+            FileUtils.copyFile(screenshot, new File(dir + "/target/test-classes/participant"+getIntRandom()+".png"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
