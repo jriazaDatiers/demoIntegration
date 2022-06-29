@@ -27,8 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 public class Unidata {
@@ -222,7 +221,7 @@ public class Unidata {
         System.out.println("tab closed");
         driver.switchTo().window(tabs.get(0));
 
-        WebElement supportLink = driver.findElement(By.xpath("/html/body/div[4]/div[8]/a"));
+        WebElement supportLink = driver.findElement(By.xpath("//html/body/div[4]/div[8]/a"));
         supportLink.click();
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(tabs.size()-1));
@@ -534,7 +533,7 @@ public class Unidata {
 
     private int getIntRandom(){
 
-        return ThreadLocalRandom.current().nextInt(100, 1000 + 1);
+        return ThreadLocalRandom.current().nextInt(100, 10000+ 1);
     }
 
     public void selectElementOnList(String name){
@@ -1287,6 +1286,201 @@ public class Unidata {
         } catch (URISyntaxException | InterruptedException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void iSelectSpecificArticleToDuplicate(){
+
+        driver.switchTo().frame("ebx-legacy-component");
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Actions')]")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//tr[14]/td[1]/table/tbody/tr/td[2]/button")));
+        WebElement checkbox = driver.findElement(By.xpath("//tr[17]/td[1]/label/input"));
+        act.click(checkbox).perform();
+        WebElement actionsButton = driver.findElement(By.xpath("//*[contains(text(),'Actions')]"));
+        actionsButton.click();
+        WebElement duplicateAction = driver.findElement(By.xpath("//*[contains(text(),'Duplicate this record')]"));
+        duplicateAction.click();
+
+        System.out.println("Actions duplicate");
+
+
+    }
+
+    public void iModifiRecord(){
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'MSF Id')]")));
+        WebElement specificationInput = driver.findElement(By.xpath("//div[1]/table/tbody/tr[6]/td[3]/div/div/div/div/div/input"));
+        specificationInput.sendKeys(changeSpecification());
+        System.out.println("Specification changed");
+        addArticlePicture();
+        changeStandarization();
+        changeLabelEnglish();
+        changeLyfecycleStatus();
+        checkManufacturer();
+        saveAndClose();
+
+
+    }
+
+    public String changeSpecification(){
+        WebElement specificationInput = driver.findElement(By.xpath("//div[1]/table/tbody/tr[6]/td[3]/div/div/div/div/div/input"));
+        String specificationContent = specificationInput.getAttribute("value");
+        specificationInput.clear();
+
+        int incremental;
+
+        String [] contentSplit = specificationContent.split("-");
+        if (specificationContent.contains("-")) {
+            if(contentSplit.length>1){
+                incremental = Integer.parseInt(contentSplit[1])+1;
+                specificationContent = contentSplit[0]+"-"+incremental;
+            }else{
+                specificationContent = specificationContent + 1;
+            }
+        } else {
+            specificationContent = specificationContent + "-" + 1;
+        }
+        article.setSpecification(specificationContent);
+        return specificationContent;
+    }
+
+    public void changeStandarization(){
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Main')]")));
+        WebElement mainTabButton = driver.findElement(By.xpath("//*[contains(text(),'Main')]"));
+        mainTabButton.click();
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[1]")));
+        WebElement cleanStandarization = driver.findElement(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[1]"));
+        cleanStandarization.click();
+        long timetoWait = 3000;
+
+        WebElement standarizationArrowButton = driver.findElement(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[2]"));
+        standarizationArrowButton.click();
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        WebElement hook = driver.findElement(By.xpath("//*[contains(text(),'Unidata Lifecycle Status')]"));
+        WebElement standarizationOption = driver.findElement(By.xpath("//*[contains(text(),'STD')]"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", hook);
+        standarizationOption.click();
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        WebElement msfid = driver.findElement(By.xpath("//*[contains(text(),'MSF Id')]"));
+        msfid.click();
+    }
+
+    public void changeLabelEnglish(){
+        WebElement labelEnglishInput = driver.findElement(By.xpath("//tr[9]/td[3]/div/div/div/div/div/div/div/input"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", labelEnglishInput);
+        String contentLabelEnglish = labelEnglishInput.getAttribute("value") + getIntRandom();
+        labelEnglishInput.clear();
+        labelEnglishInput.sendKeys(contentLabelEnglish);
+
+
+    }
+
+    public void changeLyfecycleStatus(){
+        WebElement cleanLyfecycle = driver.findElement(By.xpath("//div[1]/table/tbody/tr[12]/td[3]/div/div/div/div/div/div/button[1]"));
+        cleanLyfecycle.click();
+
+        long timetoWait = 2000;
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        WebElement lyfeCycleArrow = driver.findElement(By.xpath("//div[1]/table/tbody/tr[12]/td[3]/div/div/div/div/div/div/button[2]"));
+        lyfeCycleArrow.click();
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        WebElement lyfeCycleUpdate = driver.findElement(By.xpath("//*[contains(text(),'Valid Articles')]"));
+        lyfeCycleUpdate.click();
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void checkManufacturer(){
+        WebElement hook = driver.findElement(By.xpath("//*[contains(text(),'External Client Info')]"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", hook);
+
+        WebElement manufacturerTextArea = driver.findElement(By.xpath("//div[1]/table/tbody/tr[19]/td[4]/div/div/div/div/div/textarea"));
+        String textAreaContent = manufacturerTextArea.getAttribute("value");
+        assertEquals(0, textAreaContent.length());
+
+    }
+
+    public void addArticlePicture(){
+        long timetoWait = 2500;
+        long timetoWait2 = 1500;
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        try {
+            Thread.sleep(timetoWait2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Supply')]")));
+        WebElement supplyTab = driver.findElement(By.xpath("//*[contains(text(),'Supply')]"));
+        act.click(supplyTab).perform();
+
+        WebElement hook = driver.findElement(By.xpath("//*[contains(text(),'Main Article Picture')]"));
+        js.executeScript("arguments[0].scrollIntoView();", hook);
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@title = 'Upload new digital asset(s)']")));
+        WebElement uploadButton = driver.findElement(By.xpath("//button[@title = 'Upload new digital asset(s)']"));
+        //uploadButton.click();
+        act.click(uploadButton).perform();
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        driver.switchTo().frame("ebx_InternalPopup_frame");
+        driver.switchTo().frame("serviceIframe");
+        driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\excelDownloads\\LEVO.jpg");
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@title = 'Attach and upload']")));
+        WebElement attachUploadButton = driver.findElement(By.xpath("//button[@title = 'Attach and upload']"));
+        //attachUploadButton.click();
+        act.click(attachUploadButton).perform();
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Image uploaded");
+        driver.switchTo().parentFrame();
+        driver.switchTo().parentFrame();
+
+
+    }
+
+    public void iCheckArticleDuplicated(){
+        System.out.println(article.getSpecification());
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'"+ article.getSpecification()+"')]")));
+        WebElement articleDuplicated = driver.findElement(By.xpath("//*[contains(text(),'"+ article.getSpecification()+"')]"));
+        System.out.println("Article duplicated confirmed");
     }
 
 }

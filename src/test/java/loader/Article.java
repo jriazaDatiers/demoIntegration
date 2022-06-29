@@ -6,9 +6,16 @@ import java.util.List;
 public class Article {
 
     public String code;
-    public int MSFid;
+    public String unidataURLStatus;
+    public String unicatURLStatus;
     public String type;
+    public String state;
     public String lifeCycleStatus;
+    public String standardizationLevel;
+    public String unidataURL;
+    public String unicatURL;
+    public String labelEnglish;
+    public String specification;
     public ArrayList<String> modules = new ArrayList<>();
 
     public Article() {
@@ -21,14 +28,6 @@ public class Article {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public int getMSFid() {
-        return MSFid;
-    }
-
-    public void setMSFid(int MSFid) {
-        this.MSFid = MSFid;
     }
 
     public String getLifeCycleStatus() {
@@ -59,5 +58,69 @@ public class Article {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getStandardizationLevel() {
+        return standardizationLevel;
+    }
+
+    public String getUnidataURL() {
+        return unidataURL;
+    }
+
+    public String getUnicatURL() {
+        return unicatURL;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setStandardizationLevel(String standardizationLevel) {
+        this.standardizationLevel = standardizationLevel;
+    }
+
+    public void setUnidataURL(String unidataURL) {
+        this.unidataURL = unidataURL;
+    }
+
+    public void setUnicatURL(String unicatURL) {
+        this.unicatURL = unicatURL;
+    }
+
+    public String getUnidataURLStatus() {
+        return unidataURLStatus;
+    }
+
+    public String getUnicatURLStatus() {
+        return unicatURLStatus;
+    }
+
+    public void setUnidataURLStatus(String unidataURLStatus) {
+        this.unidataURLStatus = unidataURLStatus;
+    }
+
+    public void setUnicatURLStatus(String unicatURLStatus) {
+        this.unicatURLStatus = unicatURLStatus;
+    }
+
+    public String getLabelEnglish() {
+        return labelEnglish;
+    }
+
+    public void setLabelEnglish(String labelEnglish) {
+        this.labelEnglish = labelEnglish;
+    }
+
+    public String getSpecification() {
+        return specification;
+    }
+
+    public void setSpecification(String specification) {
+        this.specification = specification;
     }
 }

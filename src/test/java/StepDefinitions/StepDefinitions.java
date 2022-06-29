@@ -4,6 +4,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import loader.APICalls;
 import loader.AuxOperations;
 import loader.DManager;
 import loader.Unidata;
@@ -32,10 +33,10 @@ public class StepDefinitions {
         act = driverManager.act;
         downLoadDirectory = driverManager.downloadDirectory;
         testUnidata = new Unidata(wait,driver, act, operations, downLoadDirectory);
-        String role = System.getProperty("role");
-        //String role = "UD_dataOwner";
-        String environment = System.getProperty("omgeving");
-        //String environment = "STAGING";
+        //String role = System.getProperty("role");
+        String role = "UD_dataSteward";
+        //String environment = System.getProperty("omgeving");
+        String environment = "STAGING";
         //System.out.println(role + " " + environment);
 
         operations.performUnidata(role,environment);
@@ -245,6 +246,10 @@ public class StepDefinitions {
         testUnidata.iGoTo(operations.getUrl());
     }
 
+    public void iGoToUrl(String url) {
+        testUnidata.iGoTo(url);
+    }
+
     @Then("I log in with user and password")
     public void iLogInWithUserAndPassword() {
         testUnidata.login(operations.getUser(),operations.getPassword());
@@ -360,6 +365,34 @@ public class StepDefinitions {
     @Then("I go to Articles \\(All)")
     public void iGoToArticlesAll() {
         testUnidata.iGotoArticlesAll();
+    }
+
+    @When("I launch an API call")
+    public void iLaunchAnAPICall() {
+        iCloseTheDriver();
+        APICalls call = new APICalls();
+        testUnidata.launchAPICall(call);
+        for (String key : call.articleMap.keySet()) {
+            System.out.println(key + ":" + call.articleMap.get(key));
+            i_connect();
+            iGoToUrl(call.articleMap.get(key).getUnicatURL());
+            iCheckTheLinksInUnidataHome();
+        }
+    }
+
+    @Then("I select an article and the duplicate functionality")
+    public void iSelectAnArticleAndTheDuplicateFunctionality() {
+        testUnidata.iSelectSpecificArticleToDuplicate();
+    }
+
+    @Then("I modify the new record")
+    public void iModifyTheNewRecord() {
+        testUnidata.iModifiRecord();
+    }
+
+    @Then("I check if the record was created")
+    public void iCheckIfTheRecordWasCreated() {
+        testUnidata.iCheckArticleDuplicated();
     }
 }
 
