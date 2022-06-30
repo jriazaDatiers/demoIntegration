@@ -1293,7 +1293,11 @@ public class Unidata {
         driver.switchTo().frame("ebx-legacy-component");
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Actions')]")));
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//tr[14]/td[1]/table/tbody/tr/td[2]/button")));
-        WebElement checkbox = driver.findElement(By.xpath("//tr[17]/td[1]/label/input"));
+
+
+        WebElement ADAPADAPDV = driver.findElement(By.xpath("//*[contains(text(),'ADAPADAPDV-')]"));
+        WebElement checkbox = driver.findElement(with(By.className("ebx_checkboxCustom")).toLeftOf(ADAPADAPDV));
+        //WebElement checkbox = driver.findElement(By.xpath("//tr[17]/td[1]/label/input"));
         act.click(checkbox).perform();
         WebElement actionsButton = driver.findElement(By.xpath("//*[contains(text(),'Actions')]"));
         actionsButton.click();
