@@ -453,6 +453,11 @@ public class StepDefinitions {
     public void iGoToTheMainTab() {
         testUnidata.iGotoMainTab();
     }
+
+    @Then("I update the standardization to NSL")
+    public void iUpdateTheStandardizationToNSL() {
+        testUnidata.changeStandardizationToNSL();
+    }
 }
 
 
