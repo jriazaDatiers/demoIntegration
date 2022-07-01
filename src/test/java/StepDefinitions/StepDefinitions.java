@@ -394,6 +394,21 @@ public class StepDefinitions {
     public void iCheckIfTheRecordWasCreated() {
         testUnidata.iCheckArticleDuplicated();
     }
+
+    @Then("I check the article has status unmatched")
+    public void iCheckTheArticleHasStatusUnmatched() {
+        testUnidata.checkUnmatchedStatus();
+    }
+
+    @Then("I close the article")
+    public void iCloseTheArticle() {
+        testUnidata.iCloseTheArticle();
+    }
+
+    @Then("I save the record")
+    public void iSaveTheRecord() {
+        testUnidata.iSaveTheArticle();
+    }
 }
 
 

@@ -249,8 +249,6 @@ public class Unidata {
         checkTitle(article.getCode());
     }
 
-
-
     public void checkTitle(String requiredTitle){
         assertTrue(driver.getTitle().contains(requiredTitle));
         System.out.println("Title :" + requiredTitle + ", checked");
@@ -534,6 +532,11 @@ public class Unidata {
     private int getIntRandom(){
 
         return ThreadLocalRandom.current().nextInt(100, 10000+ 1);
+    }
+
+    private int getInt2Random(){
+
+        return ThreadLocalRandom.current().nextInt(5, 99+ 1);
     }
 
     public void selectElementOnList(String name){
@@ -1175,7 +1178,6 @@ public class Unidata {
 
     }
 
-
     public void validateOpenTabUnicat(){
         long timetoWait2 = 2000;
 
@@ -1251,7 +1253,6 @@ public class Unidata {
 
     }
 
-
     public void clickOnDescriptionElement() {
         driver.switchTo().frame("ebx-legacy-component");
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[2]/div/table/tbody/tr[7]/td[2]/div/div")));
@@ -1294,8 +1295,11 @@ public class Unidata {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Actions')]")));
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//tr[14]/td[1]/table/tbody/tr/td[2]/button")));
 
-
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'ADAPADAPDV-')]")));
         WebElement ADAPADAPDV = driver.findElement(By.xpath("//*[contains(text(),'ADAPADAPDV-')]"));
+        //System.out.println(ADAPADAPDV.getText());
+        String content = ADAPADAPDV.getAttribute("innerHTML");
+        //System.out.println(content);
         WebElement checkbox = driver.findElement(with(By.className("ebx_checkboxCustom")).toLeftOf(ADAPADAPDV));
         //WebElement checkbox = driver.findElement(By.xpath("//tr[17]/td[1]/label/input"));
         act.click(checkbox).perform();
@@ -1319,8 +1323,6 @@ public class Unidata {
         changeLabelEnglish();
         changeLyfecycleStatus();
         checkManufacturer();
-        saveAndClose();
-
 
     }
 
@@ -1333,14 +1335,16 @@ public class Unidata {
 
         String [] contentSplit = specificationContent.split("-");
         if (specificationContent.contains("-")) {
-            if(contentSplit.length>1){
+            /*if(contentSplit.length>1){
                 incremental = Integer.parseInt(contentSplit[1])+1;
                 specificationContent = contentSplit[0]+"-"+incremental;
             }else{
                 specificationContent = specificationContent + 1;
-            }
+            }*/
+            specificationContent = specificationContent + getInt2Random();
         } else {
-            specificationContent = specificationContent + "-" + 1;
+            //specificationContent = specificationContent + "-" + 1;
+            specificationContent = specificationContent + "-" + getInt2Random();
         }
         article.setSpecification(specificationContent);
         return specificationContent;
@@ -1376,9 +1380,10 @@ public class Unidata {
             e.printStackTrace();
         }
 
-
         WebElement msfid = driver.findElement(By.xpath("//*[contains(text(),'MSF Id')]"));
         msfid.click();
+
+        System.out.println("Standardization updated");
     }
 
     public void changeLabelEnglish(){
@@ -1388,7 +1393,7 @@ public class Unidata {
         String contentLabelEnglish = labelEnglishInput.getAttribute("value") + getIntRandom();
         labelEnglishInput.clear();
         labelEnglishInput.sendKeys(contentLabelEnglish);
-
+        System.out.println("Label updated");
 
     }
 
@@ -1417,7 +1422,7 @@ public class Unidata {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        System.out.println("Lifecycle updated");
 
     }
 
@@ -1429,6 +1434,7 @@ public class Unidata {
         WebElement manufacturerTextArea = driver.findElement(By.xpath("//div[1]/table/tbody/tr[19]/td[4]/div/div/div/div/div/textarea"));
         String textAreaContent = manufacturerTextArea.getAttribute("value");
         assertEquals(0, textAreaContent.length());
+        System.out.println("Manufacturer checked");
 
     }
 
@@ -1477,14 +1483,62 @@ public class Unidata {
         driver.switchTo().parentFrame();
         driver.switchTo().parentFrame();
 
-
     }
 
     public void iCheckArticleDuplicated(){
         System.out.println(article.getSpecification());
+        long timetoWait = 2500;
+        boolean created = false;
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'"+ article.getSpecification()+"')]")));
-        WebElement articleDuplicated = driver.findElement(By.xpath("//*[contains(text(),'"+ article.getSpecification()+"')]"));
-        System.out.println("Article duplicated confirmed");
+
+        try {
+            WebElement articleCreated = driver.findElement(By.xpath("//*[contains(text(),'"+ article.getSpecification()+"')]"));
+            created = true;
+            System.out.println("Article duplicated confirmed");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Article not duplicated, ERROR ");
+        }
+        assertTrue(created);
+    }
+
+    public void checkUnmatchedStatus(){
+        long timetoWait = 2000;
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        driver.switchTo().parentFrame();
+        boolean matched = false;
+        try {
+            WebElement unmatchedText = driver.findElement(By.xpath("//*[contains(text(),'[Unmatched]')]"));
+            matched = true;
+            System.out.println("Unmatched status confirmed");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Article not in unmatched status, ERROR");
+        }
+        assertTrue(matched);
+    }
+
+    public void iSaveTheArticle(){
+        WebElement saveButton = driver.findElement(By.xpath("//button[text()='Save']"));
+        saveButton.click();
+    }
+
+    public void iCloseTheArticle(){
+        driver.switchTo().frame("ebx-legacy-component");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Close']")));
+        WebElement saveButton = driver.findElement(By.xpath("//button[text()='Close']"));
+        saveButton.click();
+        System.out.println("Article saved");
     }
 
 }
