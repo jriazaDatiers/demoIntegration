@@ -380,15 +380,20 @@ public class StepDefinitions {
         }
     }
 
-    @Then("I select an article and the duplicate functionality")
-    public void iSelectAnArticleAndTheDuplicateFunctionality() {
-        testUnidata.iSelectSpecificArticleToDuplicate();
+    @Then("I select a STD article and the duplicate functionality")
+    public void iSelectSTDArticleAndTheDuplicateFunctionality() {
+        testUnidata.iSelectSpecificSTDArticleToDuplicate();
     }
 
-    @Then("I modify the new record")
-    public void iModifyTheNewRecord() {
-        testUnidata.iModifiRecord();
+    @Then("I select a NST article and the duplicate functionality")
+    public void iSelecNSTArticleAndTheDuplicateFunctionality() {
+        testUnidata.iSelectSpecificNSTArticleToDuplicate();
     }
+
+/*    @Then("I modify the new record")
+    public void iModifyTheNewRecord() {
+        //testUnidata.iModifiRecord();
+    }*/
 
     @Then("I check if the record was created")
     public void iCheckIfTheRecordWasCreated() {
@@ -408,6 +413,45 @@ public class StepDefinitions {
     @Then("I save the record")
     public void iSaveTheRecord() {
         testUnidata.iSaveTheArticle();
+    }
+
+    @Then("I update the standardization to STD")
+    public void iChangeTheStandarizationToSTD() {
+        testUnidata.changeStandardizationToSTD();
+    }
+
+    @Then("I update the standardization to NST")
+    public void iUpdateTheStandardizationToNST() {
+        testUnidata.changeStandardizationToNST();
+    }
+
+    @Then("I add a picture to the Article")
+    public void iAddAPictureToTheArticle() {
+        testUnidata.addArticlePicture();
+    }
+
+    @Then("I update the Label English")
+    public void iUpdateTheLabelEnglish() {
+        testUnidata.changeLabelEnglish();
+    }
+
+    @Then("I update the lyfecycle to Valid")
+    public void iUpdatheTheLyfecycleToValid() {
+        testUnidata.changeLyfecycleStatus();
+    }
+
+    @Then("I verify the manufacturer is empty")
+    public void iVerifyTheManufacturerIsEmpty() {
+    }
+
+    @Then("I update the specification")
+    public void iUpdateTheSpecification() {
+        testUnidata.iUpdateSpecification();
+    }
+
+    @Then("I go to the Main tab")
+    public void iGoToTheMainTab() {
+        testUnidata.iGotoMainTab();
     }
 }
 
