@@ -442,6 +442,7 @@ public class StepDefinitions {
 
     @Then("I verify the manufacturer is empty")
     public void iVerifyTheManufacturerIsEmpty() {
+        testUnidata.checkManufacturer();
     }
 
     @Then("I update the specification")
@@ -457,6 +458,51 @@ public class StepDefinitions {
     @Then("I update the standardization to NSL")
     public void iUpdateTheStandardizationToNSL() {
         testUnidata.changeStandardizationToNSL();
+    }
+
+    @Then("I click on Add Description button")
+    public void iClickOnAddDescriptionButton() {
+        testUnidata.clickAddDescription();
+    }
+
+    @Then("I change type to FFF")
+    public void iChangeTypeToFFF() {
+        testUnidata.changeTypeFFF();
+    }
+
+    @Then("I change family to CWAT")
+    public void iChangeFamilyToCWAT() {
+        testUnidata.changeFamilyCWAT();
+    }
+
+    @Then("I upload definition image")
+    public void iUploadDefinitionImage() {
+        testUnidata.upluadDefinitionImage();
+    }
+
+    @Then("I fill the Form \\(English)")
+    public void iFillTheFormEnglish() {
+        testUnidata.fillFormEnglish();
+    }
+
+    @Then("I add Label ENG")
+    public void iAddLabelENG() {
+        testUnidata.fillLabelEng();
+    }
+
+    @Then("I add Label FR")
+    public void iAddLabelFR() {
+        testUnidata.fillLabelFR();
+    }
+
+    @Then("I save the description")
+    public void iSaveTheDescription() {
+        testUnidata.saveDescription();
+    }
+
+    @Then("I confirm there is an identifier")
+    public void iConfirmThereIsAnIdentifier() {
+        testUnidata.checkidentifier();
     }
 }
 
