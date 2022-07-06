@@ -909,7 +909,7 @@ public class Unidata {
         WebElement downloadExcel = driver.findElement(By.xpath("//*[contains(text(),'Click here to download the excel')]"));
         act.click(downloadExcel).perform();
 
-        long timetoWait=5000;
+        long timetoWait=7000;
         try {
 
             Thread.sleep(timetoWait);
@@ -928,7 +928,7 @@ public class Unidata {
         ArrayList<String> fromExcel = new ArrayList<>();
         List<String> sortedList;
 
-        String lastFile = String.valueOf(findLast("downloadDirectory"));
+        String lastFile = String.valueOf(findLast(downloadDirectory));
 
         try {
             FileInputStream fs = new FileInputStream(lastFile);
