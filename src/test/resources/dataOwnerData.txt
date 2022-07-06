@@ -5,7 +5,7 @@ listOwner,Escobar
 otherListOwner,Donata
 addressee,Donata test Stewart
 participant,Donata test Stewart
-participantMe,Mr Escobar Datamaster
+participantMe,Mr Escobar
 hasToSucceed,false
 newEmail,juan.moron-consultant@msf.org
 oldEmail,test.ignore@msf.org

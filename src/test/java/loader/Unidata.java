@@ -1376,8 +1376,8 @@ public class Unidata {
 
     public void clickOnDescriptionElement() {
         driver.switchTo().frame("ebx-legacy-component");
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[2]/div/table/tbody/tr[7]/td[2]/div/div")));
-        WebElement record = driver.findElement(By.xpath("//div[2]/div/table/tbody/tr[7]/td[2]/div/div"));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'FFF')]")));
+        WebElement record = driver.findElement(By.xpath("//*[contains(text(),'FFF')]"));
         act.doubleClick(record).perform();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'URL to View Only')]")));
 

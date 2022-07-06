@@ -1,8 +1,8 @@
 user,CONS
 password,Conrad2020@
 name,Conrad
-addressee,Mr Escobar Datamaster
-participant,Mr Escobar Datamaster
+addressee,Mr Escobar
+participant,Mr Escobar
 participantMe,Conrad Sultanto
 otherListOwner,Escobar
 listOwner,Conrad
