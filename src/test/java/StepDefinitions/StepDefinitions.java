@@ -33,10 +33,10 @@ public class StepDefinitions {
         act = driverManager.act;
         downLoadDirectory = driverManager.downloadDirectory;
         testUnidata = new Unidata(wait,driver, act, operations, downLoadDirectory);
-        //String role = System.getProperty("role");
-        String role = "UD_dataSteward";
-        //String environment = System.getProperty("omgeving");
-        String environment = "STAGING";
+        String role = System.getProperty("role");
+        //String role = "UD_dataSteward";
+        String environment = System.getProperty("omgeving");
+        //String environment = "STAGING";
         //System.out.println(role + " " + environment);
 
         operations.performUnidata(role,environment);
@@ -347,11 +347,6 @@ public class StepDefinitions {
         testUnidata.iSelectFeedbacckAddressedToMe();
     }
 
-    @Then("I create a NST Article")
-    public void iCreateANSTArticle() {
-        testUnidata.createNSTArticle();
-    }
-
     @Then("I click on the sharing link on specific article")
     public void iClickOnTheSharingLinkOnSpecificArticle() {
         testUnidata.clickShareLink();
@@ -432,7 +427,7 @@ public class StepDefinitions {
 
     @Then("I update the Label English")
     public void iUpdateTheLabelEnglish() {
-        testUnidata.changeLabelEnglish();
+        testUnidata.updateLabelEnglish();
     }
 
     @Then("I update the lyfecycle to Valid")
@@ -503,6 +498,75 @@ public class StepDefinitions {
     @Then("I confirm there is an identifier")
     public void iConfirmThereIsAnIdentifier() {
         testUnidata.checkidentifier();
+    }
+
+    @Then("I click on an Article")
+    public void iClickOnAddArticle() {
+        testUnidata.clickOnCreateArticle();
+    }
+
+    @Then("I add group to Article")
+    public void iAddGroupToArticle() {
+        testUnidata.addGroupToArticle();
+    }
+
+    @Then("I add Family to Article")
+    public void iAddFamilyToArticle() {
+        testUnidata.addFamilyArticle();
+    }
+
+    @Then("I add Specification to Article")
+    public void iAddSpecificationToArticle() {
+        testUnidata.addSpecificationArticle();
+    }
+
+    @Then("I change lyfeCycle Article to valid")
+    public void iChangeLyfeCycleArticleToValid() {
+    }
+
+    @Then("I save the Article")
+    public void iSaveTheArticle() {
+        testUnidata.iSaveTheArticle();
+    }
+
+    @Then("I add Article Label ENG")
+    public void iAddArticleLabelENG() {
+        testUnidata.fillArticleLabelEng();
+    }
+
+    @Then("I add Article Label FR")
+    public void iAddArticleLabelFR() {
+        testUnidata.fillArticleLabelFR();
+    }
+
+    @Then("I check if there are errors on screen")
+    public void iCheckIfThereAreErrorsOnScreen() {
+        testUnidata.checkErrorArticle();
+    }
+
+    @Then("I add Root to Article")
+    public void iAddRootToArticle() {
+        testUnidata.addRootArticle();
+    }
+
+    @Then("I select an specific Description")
+    public void iSelectAnSpecificDescription() {
+        testUnidata.selectSpecificDescription();
+    }
+
+    @Then("I perform the duplicate action")
+    public void iPerformTheDuplicateAction() {
+        testUnidata.performDuplicateAction();
+    }
+
+    @Then("I update the Article code")
+    public void iUpdateTheArticleCode() {
+        testUnidata.updateArticleCode();
+    }
+
+    @Then("I update the Label French")
+    public void iUpdateTheLabelFrench() {
+        testUnidata.updateLabelFrench();
     }
 }
 

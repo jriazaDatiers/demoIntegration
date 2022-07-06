@@ -13,7 +13,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -26,7 +25,6 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 import static org.junit.Assert.*;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
@@ -68,7 +66,6 @@ public class Unidata {
     }
 
     public void unidataMSFME(){
-
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'UniData, MSF & Me')]")));
         WebElement buttonMe = driver.findElement(By.xpath("//*[contains(text(),'UniData, MSF & Me')]"));
@@ -862,13 +859,13 @@ public class Unidata {
 
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@title ='Create']")));
-        WebElement addFeedbackButton = driver.findElement(By.xpath("//button[@title ='Create']"));
+        WebElement addFeedbackButton = driver.findElement(By.xpath("//table/tbody/tr[1]/td[3]/div/div/div[1]/div/div[1]/div[1]/button[@title ='Create']"));
 
         //JavascriptExecutor js = (JavascriptExecutor) driver;
         //js.executeScript("arguments[0].scrollIntoView();", addFeedbackButton);
         //act.moveToElement(addFeedbackButton).build().perform();
-        //act.click(addFeedbackButton).perform();
-        addFeedbackButton.click();
+        act.click(addFeedbackButton).perform();
+        //addFeedbackButton.click();
 
         driver.switchTo().frame("ebx_InternalPopup_frame");
 
@@ -1220,27 +1217,70 @@ public class Unidata {
 
     }
 
-    public void createNSTArticle(){
+    public void clickOnCreateArticle(){
+        long timetoWait = 2000;
+        try {
+
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         driver.switchTo().frame("ebx-legacy-component");
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[2]/div[1]/div[1]/div[1]/button")));
         WebElement addArticleButton = driver.findElement(By.xpath("//div[2]/div[1]/div[1]/div[1]/button"));
         act.click(addArticleButton).perform();
+    }
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Save and close')]")));
-
+    public void addGroupToArticle(){
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[3]/td[3]/div/div/div/div/div/button[2]")));
         WebElement groupDropDown = driver.findElement(By.xpath("//tr[3]/td[3]/div/div/div/div/div/button[2]"));
         act.click(groupDropDown).perform();
         WebElement groupInput = driver.findElement(By.xpath("//tr[3]/td[3]/div/div/div/div/div/input[2]"));
         groupInput.sendKeys("N - Nutrition");
+        long timetoWait = 2000;
+        try {
+
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         act.sendKeys(Keys.ENTER);
 
-        groupInput.click();
-        act.doubleClick(groupInput).perform();
-
-        WebElement anchor = driver.findElement(By.xpath("//div[1]/table/tbody/tr[2]/td[3]/div/span"));
+        WebElement anchor = driver.findElement(By.xpath("//*[contains(text(),'Group')]"));
         act.click(anchor).perform();
+        System.out.println("Group");
 
-        System.out.println("Anchor");
+    }
+
+    public void addFamilyArticle(){
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[4]/td[3]/div/div/div/div/div/input[2]")));
+        WebElement groupDropDown = driver.findElement(By.xpath("//tr[4]/td[3]/div/div/div/div/div/button[2]"));
+        act.click(groupDropDown).perform();
+        WebElement groupInput = driver.findElement(By.xpath("//tr[4]/td[3]/div/div/div/div/div/input[2]"));
+        groupInput.sendKeys("NFOO - Food commodities");
+        long timetoWait = 2000;
+        try {
+
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        act.sendKeys(Keys.ENTER);
+
+        WebElement anchor = driver.findElement(By.xpath("//*[contains(text(),'Family')]"));
+        act.click(anchor).perform();
+        System.out.println("Family");
+    }
+
+    public void addSpecificationArticle(){
+        WebElement specificationInput = driver.findElement(By.xpath("//div[1]/table/tbody/tr[6]/td[3]/div/div/div/div/div/input"));
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", specificationInput);
+
+        specificationInput.sendKeys("TRY" + getInt2Random());
     }
 
     public void goToDescriptions() {
@@ -1316,7 +1356,8 @@ public class Unidata {
 
         driver.switchTo().frame("ebx_InternalPopup_frame");
         driver.switchTo().frame("serviceIframe");
-        driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\excelDownloads\\LEVO.jpg");
+        String userDir = System.getProperty("user.dir");
+        driver.findElement(By.xpath("//input[@type='file']")).sendKeys(userDir + "/src/test/resources/LEVO.jpg");
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@title = 'Attach and upload']")));
         WebElement attachUploadButton = driver.findElement(By.xpath("//button[@title = 'Attach and upload']"));
@@ -1424,26 +1465,12 @@ public class Unidata {
         System.out.println("Specification changed");
     }
 
-/*    public void iModifiRecord(){
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'MSF Id')]")));
-        WebElement specificationInput = driver.findElement(By.xpath("//div[1]/table/tbody/tr[6]/td[3]/div/div/div/div/div/input"));
-        specificationInput.sendKeys(changeSpecification());
-        System.out.println("Specification changed");
-        addArticlePicture();
-        changeLabelEnglish();
-        changeLyfecycleStatus();
-        checkManufacturer();
-
-    }*/
-
     public String changeSpecification(){
+
         WebElement specificationInput = driver.findElement(By.xpath("//div[1]/table/tbody/tr[6]/td[3]/div/div/div/div/div/input"));
         String specificationContent = specificationInput.getAttribute("value");
         specificationInput.clear();
 
-        int incremental;
-
-        String [] contentSplit = specificationContent.split("-");
         if (specificationContent.contains("-")) {
             /*if(contentSplit.length>1){
                 incremental = Integer.parseInt(contentSplit[1])+1;
@@ -1500,17 +1527,29 @@ public class Unidata {
 
     public void changeStandardizationToNST(){
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Main')]")));
-        WebElement mainTabButton = driver.findElement(By.xpath("//*[contains(text(),'Main')]"));
-        mainTabButton.click();
+        try {
+            driver.switchTo().frame("ebx-legacy-component");
+        } catch (Exception ignored) {
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[1]")));
-        WebElement cleanStandarization = driver.findElement(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[1]"));
-        cleanStandarization.click();
+        }
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[contains(text(),'Standardization')]")));
+        WebElement standardizationText = driver.findElement(By.xpath("//label[contains(text(),'Standardization')]"));
+        //WebElement standarizationInput = driver.findElement(with(By.xpath("//input[@type='text']")).toRightOf(standarizationText));
+        //standarizationInput.click();
+
+        WebElement cleanstandardizationText = driver.findElement(with(By.xpath("//button[@title = 'Clear field']")).toRightOf(standardizationText));
+        cleanstandardizationText.click();
+
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[1]")));
+        //WebElement cleanStandarization = driver.findElement(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[1]"));
+        //cleanStandarization.click();
         long timetoWait = 3000;
 
-        WebElement standarizationArrowButton = driver.findElement(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[2]"));
-        standarizationArrowButton.click();
+        //WebElement standarizationArrowButton = driver.findElement(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[2]"));
+        WebElement standardizationTextArrowButton = driver.findElement(with(By.xpath("//button[@title = 'Open drop-down list']")).toRightOf(standardizationText));
+
+        standardizationTextArrowButton.click();
         try {
             Thread.sleep(timetoWait);
         } catch (InterruptedException e) {
@@ -1518,6 +1557,7 @@ public class Unidata {
         }
         WebElement hook = driver.findElement(By.xpath("//*[contains(text(),'Unidata Lifecycle Status')]"));
         WebElement standarizationOption = driver.findElement(By.xpath("//*[contains(text(),'NST')]"));
+
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", hook);
         standarizationOption.click();
@@ -1570,7 +1610,7 @@ public class Unidata {
         System.out.println("Standardization updated");
     }
 
-    public void changeLabelEnglish(){
+    public void updateLabelEnglish(){
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//tr[9]/td[3]/div/div/div/div/div/div/div/input")));
         WebElement labelEnglishInput = driver.findElement(By.xpath("//tr[9]/td[3]/div/div/div/div/div/div/div/input"));
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -1578,6 +1618,18 @@ public class Unidata {
         String contentLabelEnglish = labelEnglishInput.getAttribute("value") + getInt2Random();
         labelEnglishInput.clear();
         labelEnglishInput.sendKeys(contentLabelEnglish);
+        System.out.println("Label updated");
+
+    }
+
+    public void updateLabelFrench(){
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//tr[12]/td[3]/div/div/div/div/div/div/div/input")));
+        WebElement labelFrenchInput = driver.findElement(By.xpath("//tr[12]/td[3]/div/div/div/div/div/div/div/input"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", labelFrenchInput);
+        String contentLabelEnglish = labelFrenchInput.getAttribute("value") + getInt2Random();
+        labelFrenchInput.clear();
+        labelFrenchInput.sendKeys(contentLabelEnglish);
         System.out.println("Label updated");
 
     }
@@ -1652,7 +1704,8 @@ public class Unidata {
 
         driver.switchTo().frame("ebx_InternalPopup_frame");
         driver.switchTo().frame("serviceIframe");
-        driver.findElement(By.xpath("//input[@type='file']")).sendKeys("C:\\excelDownloads\\LEVO.jpg");
+        String userDir = System.getProperty("user.dir");
+        driver.findElement(By.xpath("//input[@type='file']")).sendKeys(userDir + "/src/test/resources/LEVO.jpg");
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@title = 'Attach and upload']")));
         WebElement attachUploadButton = driver.findElement(By.xpath("//button[@title = 'Attach and upload']"));
@@ -1716,6 +1769,7 @@ public class Unidata {
     public void iSaveTheArticle(){
         WebElement saveButton = driver.findElement(By.xpath("//button[text()='Save']"));
         saveButton.click();
+        System.out.println("Article saved");
     }
 
     public void iCloseTheArticle(){
@@ -1735,6 +1789,25 @@ public class Unidata {
         System.out.println("Form English");
     }
 
+    public void fillArticleLabelEng(){
+
+        WebElement labelEng = driver.findElement(By.xpath("//tr[9]/td[3]/div/div/div/div/div/div/div/input"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", labelEng);
+
+        common2Random = getInt2Random();
+        String randomSuffix = "Label ENG test " + common2Random;
+        labelEng.sendKeys(randomSuffix);
+        System.out.println("Label ENG");
+    }
+
+    public void fillArticleLabelFR(){
+        WebElement labelEng = driver.findElement(By.xpath("//tr[10]/td[3]/div/div/div/div/div/div/div/input"));
+        String randomSuffix = "Label FR test " + common2Random;
+        labelEng.sendKeys(randomSuffix);
+        System.out.println("Label FR");
+    }
+
     public void fillLabelEng(){
 
         WebElement labelEng = driver.findElement(By.xpath("//div[1]/table/tbody/tr[11]/td[3]/div/div/div/div/input"));
@@ -1745,6 +1818,21 @@ public class Unidata {
         String randomSuffix = "Label ENG test " + common2Random;
         labelEng.sendKeys(randomSuffix);
         System.out.println("Label ENG");
+    }
+
+    public void checkErrorArticle(){
+        boolean successful = true;
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'MSF Id')]")));
+        WebElement msfId = driver.findElement(By.xpath("//*[contains(text(),'MSF Id')]"));
+        try {
+            WebElement error = driver.findElement(By.xpath("//*[contains(text(),'error')]"));
+        } catch (Exception e) {
+            successful = false;
+            System.out.println("Article created with errors");
+        }
+
+        assertTrue(successful);
+        System.out.println("Article created successfully");
     }
 
     public void fillLabelFR(){
@@ -1761,13 +1849,79 @@ public class Unidata {
     }
 
     public void checkidentifier(){
-
+        boolean successful = false;
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div")));
         WebElement identifier = driver.findElement(By.xpath("//div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div"));
         String identifierContent = identifier.getText();
-        System.out.println(identifierContent);
-        assertTrue(identifierContent.length()>0);
+        String numberClean = identifierContent.replaceAll(",","").replaceAll(" ","");
+        int convertedString = Integer.parseInt(numberClean);
+
+        try {
+            if(identifierContent.contains("auto")||(identifierContent.contains("auto-incremented value"))){
+                successful=false;
+            }else{
+                if(convertedString>0){
+                    successful=true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error checking msfIdentifier, wrong format, maybe empty/null");
+        }
+
+        assertTrue(successful);
         System.out.println("Identifier checked");
     }
+
+    public void addRootArticle(){
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[5]/td[3]/div/div/div/div/div/div/input[2]")));
+        WebElement rootInput = driver.findElement(By.xpath("//tr[5]/td[3]/div/div/div/div/div/div/input[2]"));
+        rootInput.sendKeys("NFOOBISC - Biscuits");
+        long timetoWait = 2000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        rootInput.sendKeys(Keys.ENTER);
+        WebElement rootText = driver.findElement(By.xpath("//*[contains(text(),'Root')]"));
+        rootText.click();
+        System.out.println("Root");
+    }
+
+    public void selectSpecificDescription(){
+        driver.switchTo().frame("ebx-legacy-component");
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[2]/div/table/tbody/tr[11]/td[1]/label/input")));
+        WebElement checkBoxDescription = driver.findElement(By.xpath("//div[2]/div/table/tbody/tr[11]/td[1]/label/input"));
+        act.click(checkBoxDescription).perform();
+
+    }
+
+    public void performDuplicateAction(){
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Actions')]")));
+        WebElement actionsButton = driver.findElement(By.xpath("//*[contains(text(),'Actions')]"));
+        actionsButton.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Duplicate this record')]")));
+        WebElement duplicateAction = driver.findElement(By.xpath("//*[contains(text(),'Duplicate this record')]"));
+        duplicateAction.click();
+
+        System.out.println("Actions duplicate");
+    }
+
+    public void updateArticleCode(){
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/input")));
+        WebElement codeInput = driver.findElement(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/input"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", codeInput);
+        String inputContent = codeInput.getAttribute("value");
+        String newCode = inputContent + getInt2Random();
+        codeInput.clear();
+        codeInput.sendKeys(newCode);
+
+    }
+
+
 
 }

@@ -16,4 +16,4 @@ Feature: Duplicate an STD/NST/NSL article and make a NST article
     Then I save the record
     Then I check the article has status unmatched
     Then I close the article
-    Then I check if the record was created
+
