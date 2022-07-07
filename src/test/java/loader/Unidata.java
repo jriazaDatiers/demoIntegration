@@ -199,9 +199,13 @@ public class Unidata {
     }
 
     public void clickOnArticleList(){
-
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Article Lists')]")));
+
         WebElement articleLists = driver.findElement(By.xpath("//*[contains(text(),'Article Lists')]"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", articleLists);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Article Lists')]")));
+
         articleLists.click();
         System.out.println("Article List");
 
