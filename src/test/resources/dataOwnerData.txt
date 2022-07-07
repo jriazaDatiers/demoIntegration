@@ -3,8 +3,8 @@ password,Downy2020!!
 name,Escobar
 listOwner,Escobar
 otherListOwner,Donata
-addressee,Donata test Stewart
-participant,Donata test Stewart
+addressee,Donata
+participant,Donata
 participantMe,Mr Escobar
 hasToSucceed,false
 newEmail,juan.moron-consultant@msf.org

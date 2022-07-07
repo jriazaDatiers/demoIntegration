@@ -3,7 +3,7 @@ password,Donata0202@
 name,Donata
 addressee,Conrad Sultanto
 participant,Conrad Sultanto
-participantMe,Donata test Stewart
+participantMe,Donata
 listOwner,Donata
 otherListOwner,Conrad
 hasToSucceed,false

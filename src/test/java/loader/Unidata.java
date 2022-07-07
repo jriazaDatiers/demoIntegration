@@ -546,8 +546,8 @@ public class Unidata {
         String toSearch = "//*[contains(text(),'"+ name + "')]";
 
         WebElement rowToDelete = driver.findElement(By.xpath(toSearch));
-        //TODO obtener el texto para mostrarlo en el log
-        String listToDelete = rowToDelete.getText();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", rowToDelete);
         rowToDelete.click();
         act.doubleClick(rowToDelete).perform();
 
