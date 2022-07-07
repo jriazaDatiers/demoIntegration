@@ -6,6 +6,6 @@ otherListOwner,Donata
 addressee,Donata
 participant,Donata
 participantMe,Mr Escobar
-hasToSucceed,false
+hasToSucceed,true
 newEmail,juan.moron-consultant@msf.org
 oldEmail,test.ignore@msf.org
