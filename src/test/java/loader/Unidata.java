@@ -304,7 +304,7 @@ public class Unidata {
 
     public void iClickOnKitArticleTabs(){
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div[2]/form/div[2]/div[1]/div/div[1]/ul/li[4]/a")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//html/body/div[1]/div/div/div/div/div[2]/div[2]/form/div[2]/div[1]/div/div[1]/ul/li[4]/a")));
         WebElement containsModulesButton = driver.findElement(By.xpath("//*[contains(text(),'Contains (Modules)')]"));
         containsModulesButton.click();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Close')]")));
@@ -470,7 +470,11 @@ public class Unidata {
         WebElement buttonClose = driver.findElement(By.xpath("//button[contains(text(),'Close')]"));
         //buttonClose.click();
         act.click(buttonClose).perform();
-        //driver.switchTo().alert().accept();
+        try {
+            driver.switchTo().alert().accept();
+        } catch (Exception e) {
+            System.out.println("Alert not shown");
+        }
         driver.switchTo().parentFrame();
         driver.switchTo().parentFrame();
     }
