@@ -1,7 +1,7 @@
-Feature: Duplicate an STD/NST/NSL article and make a NST article
+Feature: Duplicate an STD/NST/NSL article and make a NSL article
 
-  @TEST_SPIN-349 @UD_DataOwner @UD_dataSteward @rq3
-  Scenario: Duplicate an STD/NST/NSL article and make a NST article
+  @TEST_SPIN-350 @UD_DataOwner @UD_dataSteward @rq3
+  Scenario: Duplicate an STD/NST/NSL article and make a NSL article
     When I go to url
     When I log in with user and password
     Then I go to Articles

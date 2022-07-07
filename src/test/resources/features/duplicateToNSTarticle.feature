@@ -1,6 +1,6 @@
 Feature: Duplicate an STD article and make a NST article
 
-  @TEST_SPIN-92 @UD_dataSteward @rq3
+  @TEST_SPIN-349 @UD_dataSteward @rq3
   Scenario: Duplicate an STD article and make a NST article
     When I go to url
     When I log in with user and password
