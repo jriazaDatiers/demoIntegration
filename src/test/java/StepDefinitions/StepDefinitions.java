@@ -4,7 +4,6 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import loader.APICalls;
 import loader.AuxOperations;
 import loader.DManager;
 import loader.Unidata;
@@ -34,7 +33,7 @@ public class StepDefinitions {
         downLoadDirectory = driverManager.downloadDirectory;
         testUnidata = new Unidata(wait,driver, act, operations, downLoadDirectory);
         String role = System.getProperty("role");
-        //String role = "UD_dataSteward";
+        //String role = "UD_dataOwner";
         String environment = System.getProperty("omgeving");
         //String environment = "STAGING";
         //System.out.println(role + " " + environment);
@@ -362,7 +361,7 @@ public class StepDefinitions {
         testUnidata.iGotoArticlesAll();
     }
 
-    @When("I launch an API call")
+   /* @When("I launch an API call")
     public void iLaunchAnAPICall() {
         iCloseTheDriver();
         APICalls call = new APICalls();
@@ -373,7 +372,7 @@ public class StepDefinitions {
             iGoToUrl(call.articleMap.get(key).getUnicatURL());
             iCheckTheLinksInUnidataHome();
         }
-    }
+    }*/
 
     @Then("I select a STD article and the duplicate functionality")
     public void iSelectSTDArticleAndTheDuplicateFunctionality() {
