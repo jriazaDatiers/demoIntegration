@@ -12,7 +12,9 @@ import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -25,6 +27,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 import static org.junit.Assert.*;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
@@ -1527,8 +1530,8 @@ public class Unidata {
             e.printStackTrace();
         }
 
-        WebElement msfid = driver.findElement(By.xpath("//*[contains(text(),'MSF Id')]"));
-        msfid.click();
+        //WebElement msfid = driver.findElement(By.xpath("//*[contains(text(),'MSF Id')]"));
+        //msfid.click();
 
         System.out.println("Standardization updated");
     }
@@ -1538,59 +1541,50 @@ public class Unidata {
         try {
             driver.switchTo().frame("ebx-legacy-component");
         } catch (Exception ignored) {
-
+            System.out.println("Frame change not needed, flow continues");
         }
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[contains(text(),'Standardization')]")));
         WebElement standardizationText = driver.findElement(By.xpath("//label[contains(text(),'Standardization')]"));
-        //WebElement standarizationInput = driver.findElement(with(By.xpath("//input[@type='text']")).toRightOf(standarizationText));
-        //standarizationInput.click();
 
-        WebElement cleanstandardizationText = driver.findElement(with(By.xpath("//button[@title = 'Clear field']")).toRightOf(standardizationText));
-        cleanstandardizationText.click();
+/*        WebElement cleanstandardizationText = driver.findElement(with(By.xpath("//button[@title = 'Clear field']")).toRightOf(standardizationText));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", cleanstandardizationText);
+        cleanstandardizationText.click();*/
 
-        //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[1]")));
-        //WebElement cleanStandarization = driver.findElement(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[1]"));
-        //cleanStandarization.click();
+
         long timetoWait = 3000;
 
-        //WebElement standarizationArrowButton = driver.findElement(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[2]"));
+        WebElement hook = driver.findElement(By.xpath("//*[contains(text(),'Standardization')]"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", hook);
         WebElement standardizationTextArrowButton = driver.findElement(with(By.xpath("//button[@title = 'Open drop-down list']")).toRightOf(standardizationText));
 
         standardizationTextArrowButton.click();
-        try {
-            Thread.sleep(timetoWait);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        WebElement hook = driver.findElement(By.xpath("//*[contains(text(),'Unidata Lifecycle Status')]"));
-        WebElement standarizationOption = driver.findElement(By.xpath("//*[contains(text(),'NST')]"));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("___40_cfvAO__standardizationLevel")));
+        WebElement standarizationOption = driver.findElement(By.id("___40_cfvAO__standardizationLevel"));
+        standarizationOption.sendKeys("NST");
+        standarizationOption.sendKeys(Keys.ENTER);
+        //act.click(standarizationOption).perform();
 
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", hook);
-        standarizationOption.click();
-
-        try {
-            Thread.sleep(timetoWait);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        WebElement msfid = driver.findElement(By.xpath("//*[contains(text(),'MSF Id')]"));
-        msfid.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Label (English)')]")));
+        WebElement label = driver.findElement(By.xpath("//*[contains(text(),'Label (English)')]"));
+        act.click(label).perform();
 
         System.out.println("Standardization updated");
     }
 
     public void changeStandardizationToNSL(){
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Main')]")));
-        WebElement mainTabButton = driver.findElement(By.xpath("//*[contains(text(),'Main')]"));
-        mainTabButton.click();
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Main')]")));
+        //WebElement mainTabButton = driver.findElement(By.xpath("//*[contains(text(),'Main')]"));
+        //mainTabButton.click()
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[1]")));
-        WebElement cleanStandarization = driver.findElement(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[1]"));
-        cleanStandarization.click();
+        WebElement cleanStandard = driver.findElement(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[1]"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", cleanStandard);
+        cleanStandard.click();
         long timetoWait = 3000;
 
         WebElement standarizationArrowButton = driver.findElement(By.xpath("//div[1]/table/tbody/tr[8]/td[3]/div/div/div/div/div/button[2]"));
@@ -1602,7 +1596,6 @@ public class Unidata {
         }
         WebElement hook = driver.findElement(By.xpath("//*[contains(text(),'Unidata Lifecycle Status')]"));
         WebElement standarizationOption = driver.findElement(By.xpath("//*[contains(text(),'NSL')]"));
-        JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", hook);
         standarizationOption.click();
 
@@ -1612,8 +1605,8 @@ public class Unidata {
             e.printStackTrace();
         }
 
-        WebElement msfid = driver.findElement(By.xpath("//*[contains(text(),'MSF Id')]"));
-        msfid.click();
+        WebElement family = driver.findElement(By.xpath("//*[contains(text(),'Family')]"));
+        family.click();
 
         System.out.println("Standardization updated");
     }
@@ -1778,6 +1771,25 @@ public class Unidata {
         WebElement saveButton = driver.findElement(By.xpath("//button[text()='Save']"));
         saveButton.click();
         System.out.println("Article saved");
+        long timetoWait = 2000;
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'MSF Id')]")));
+        WebElement msfId = driver.findElement(By.xpath("//*[contains(text(),'MSF Id')]"));
+        WebElement idText = driver.findElement(with(By.xpath("//div/div[@class = 'ebx_FieldDecorator']")).toRightOf(msfId));
+
+        try {
+            System.out.println("Article with MSF Id: " + idText.getText());
+            article.setMsfId(idText.getText());
+        } catch (Exception e) {
+            System.out.println("Error handling the MSF Id");
+        }
+
     }
 
     public void iCloseTheArticle(){
@@ -1791,9 +1803,9 @@ public class Unidata {
     public void fillFormEnglish(){
         WebElement formEnglish = driver.findElement(By.xpath("//tr[59]/td[3]/div/div/div[1]/div/table/tbody/tr[5]/td[1]/div/div/div[1]"));
         act.doubleClick(formEnglish).perform();
-        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
+        //ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         //driver.switchTo().window(tabs2.get(1));
-        System.out.println(tabs.size());
+        //System.out.println(tabs.size());
         System.out.println("Form English");
     }
 
@@ -1858,9 +1870,19 @@ public class Unidata {
 
     public void checkidentifier(){
         boolean successful = false;
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div")));
-        WebElement identifier = driver.findElement(By.xpath("//div[2]/div[1]/table/tbody/tr[1]/td[3]/div/div"));
-        String identifierContent = identifier.getText();
+
+        long timetoWait = 3000;
+
+        try {
+            Thread.sleep(timetoWait);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Identifier')]")));
+        WebElement identifier = driver.findElement(By.xpath("//*[contains(text(),'Identifier')]"));
+        WebElement identifierId = driver.findElement(with(By.xpath("//td[3]/div/div[@class = 'ebx_FieldDecorator']")).toRightOf(identifier));
+        String identifierContent = identifierId.getText();
         String numberClean = identifierContent.replaceAll(",","").replaceAll(" ","");
         int convertedString = Integer.parseInt(numberClean);
 
@@ -1900,11 +1922,59 @@ public class Unidata {
     }
 
     public void selectSpecificDescription(){
+
+        boolean found = false;
+        try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'ADAPTER')]")));
+            WebElement adapter = driver.findElement(By.xpath("//*[contains(text(),'ADAPTER')]"));
+            WebElement checkBok = driver.findElement(with(By.xpath("//*[@type ='checkbox']")).toLeftOf(adapter));
+            checkBok.click();
+            found = true;
+        } catch (Exception e) {
+            WebElement adapter = driver.findElement(By.xpath("//*[contains(text(),'ETHERNET')]"));
+            WebElement checkBok = driver.findElement(with(By.xpath("//*[@type ='checkbox']")).toLeftOf(adapter));
+            checkBok.click();
+            found = true;
+
+        } finally {
+            System.out.println("Unable to find ADAPTER, neither ETHERNET, test failed, please check the data");
+            assertTrue(found);
+        }
+
+        System.out.println("Search criteria placed");
+
+    }
+
+    public void filterValidDescription(){
         driver.switchTo().frame("ebx-legacy-component");
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[2]/div/table/tbody/tr[11]/td[1]/label/input")));
-        WebElement checkBoxDescription = driver.findElement(By.xpath("//div[2]/div/table/tbody/tr[11]/td[1]/label/input"));
-        act.click(checkBoxDescription).perform();
+        WebElement filtersButton = driver.findElement(By.id("ebx_filtersButton"));
+        act.click(filtersButton).perform();
 
+        WebElement selectMenu = driver.findElement(By.id("ebx_SimpleSearchFilterNodeSelectorList_FILTER_0"));
+        Select filterDropDown = new Select(selectMenu);
+        selectMenu.click();
+        filterDropDown.selectByVisibleText("Status");
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@title = 'Open drop-down list']")));
+        WebElement selectMenu2 = driver.findElement(By.xpath("//*[@title = 'Open drop-down list']"));
+        act.click(selectMenu2).perform();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'Valid Description')]")));
+        WebElement validOption = driver.findElement(By.xpath("//*[contains(text(),'Valid Description')]"));
+        validOption.click();
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ebx_SimpleSearchFilterNodeSelectorList_FILTER_0")));
+        WebElement selectMenu3 = driver.findElement(By.id("ebx_SimpleSearchFilterNodeSelectorList_FILTER_0"));
+        Select filterDropDown3 = new Select(selectMenu3);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(),'Publish on Web')]")));
+        filterDropDown3.selectByVisibleText("Publish on Web");
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@value = 'true']")));
+        WebElement checkBoxHasValue = driver.findElement(By.xpath("//input[@value = 'true']"));
+        act.click(checkBoxHasValue).perform();
+
+        WebElement applyButton = driver.findElement(By.id("FILTER_0_applyButton"));
+        act.click(applyButton).perform();
     }
 
     public void performDuplicateAction(){

@@ -1,5 +1,5 @@
 Feature: Create a new NST Description
-  @TEST_SPIN-32 @UD_DataOwner @UD_DataSteward @UD_Referent @UD_Warrantor @UD_staging
+  @TEST_SPIN-32 @UD_DataOwner @UD_DataSteward @UD_Referent @UD_Warrantor @UD_staging @rq3
   Scenario: Create a new NST Description
     When I go to url
     When I log in with user and password

@@ -1,5 +1,7 @@
 Feature: Data Owner: Create a NST article
 
+	#create an article record in the UniData Article table.
+  @TEST_SPIN-61 @UD_DataOwner @UD_DataSteward @UD_staging @rq3
   Scenario: Data Owner: Create a NST article
 
     When I go to url

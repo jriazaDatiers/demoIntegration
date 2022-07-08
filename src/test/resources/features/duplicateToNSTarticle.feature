@@ -9,11 +9,11 @@ Feature: Duplicate an STD article and make a NST article
     Then I add a picture to the Article
     Then I go to the Main tab
     Then I update the specification
-    Then I update the Label English
+    Then I update the Article Label English
     Then I update the lyfecycle to Valid
     Then I verify the manufacturer is empty
     Then I update the standardization to NST
-    Then I save the record
+    Then I save the Article
     Then I check the article has status unmatched
     Then I close the article
     Then I check if the record was created
