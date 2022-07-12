@@ -48,7 +48,7 @@ public class DManager {
         options.setExperimentalOption("prefs", prefs);
 
         //options.addArguments("--remote-debugging-port=9222");
-        options.setHeadless(true);
+        //options.setHeadless(true);
         driver = new ChromeDriver(options);
 
         driver.manage().window().maximize();

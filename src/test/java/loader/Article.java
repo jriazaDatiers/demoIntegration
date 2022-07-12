@@ -16,6 +16,7 @@ public class Article {
     public String unicatURL;
     public String labelEnglish;
     public String specification;
+    public String msfId;
     public ArrayList<String> modules = new ArrayList<>();
 
     public Article() {
@@ -122,5 +123,13 @@ public class Article {
 
     public void setSpecification(String specification) {
         this.specification = specification;
+    }
+
+    public String getMsfId() {
+        return msfId;
+    }
+
+    public void setMsfId(String msfId) {
+        this.msfId = msfId;
     }
 }

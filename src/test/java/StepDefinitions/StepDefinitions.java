@@ -6,6 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import loader.AuxOperations;
 import loader.DManager;
+import loader.MSL;
 import loader.Unidata;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -16,6 +17,7 @@ import java.io.IOException;
 public class StepDefinitions {
     DManager driverManager;
     Unidata testUnidata;
+    MSL testMSL;
     static WebDriver driver;
     static Wait<WebDriver> wait;
     static Actions act;
@@ -24,21 +26,30 @@ public class StepDefinitions {
 
 
     @Before
-    public void i_connect() {
+    public void iloadData() {
         driverManager = new DManager();
         driverManager.setupClass();
         driver = driverManager.driver;
         wait = driverManager.wait;
         act = driverManager.act;
         downLoadDirectory = driverManager.downloadDirectory;
-        testUnidata = new Unidata(wait,driver, act, operations, downLoadDirectory);
-        String role = System.getProperty("role");
+
+        String role = System.getProperty("Role");
         //String role = "UD_dataSteward";
-        String environment = System.getProperty("omgeving");
+        String environment = System.getProperty("Test_Environment");
         //String environment = "STAGING";
         System.out.println(role + " " + environment);
 
         operations.performUnidata(role,environment);
+
+        if(role.contains("UD_")){
+            testUnidata = new Unidata(wait,driver, act, operations, downLoadDirectory);
+        }
+
+        if(role.contains("OCB")){
+            testMSL = new MSL(wait,driver, act, operations, downLoadDirectory);
+        }
+
 
     }
 
@@ -51,7 +62,12 @@ public class StepDefinitions {
     @When("I log in with user {string} and password {string}")
     public void i_log_in_with_user_and_password(String userName, String password) {
 
-        testUnidata.login(userName,password);
+        if(userName.contains("UD_")){
+            testUnidata.login(userName,password);
+        }
+        if(userName.contains("OCB")){
+            testMSL.login(userName,password);
+        }
     }
 
     @Then("I go to My Unidata")
